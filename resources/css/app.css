@@ -1,11 +1,86 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Base Styles */
+:root {
+  --primary: #E91E63;
+  --primary-dark: #C2185B;
+  --primary-light: #F50057;
+  --secondary: #009688;
+  --accent: #FF6F00;
+  --dark: #1A1A1A;
+  --light: #F5F5F5;
+}
+
+html, body {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-poppins bg-white text-dark;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-dark;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-all duration-300 active:scale-95;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-secondary text-white font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-300;
+}
+
+.btn-outline {
+  @apply px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300;
+}
+
+/* Link Styles */
+a {
+  @apply transition-colors duration-300;
+}
+
+a:hover {
+  @apply text-primary;
+}
+
+/* Utility Classes */
+.gradient-primary {
+  @apply bg-gradient-to-r from-primary via-primary-light to-primary-dark;
+}
+
+.transition-smooth {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.container-max {
+  @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-enter {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.mobile-menu-exit {
+  animation: slideIn 0.3s ease-in-out reverse;
 }
