@@ -74,13 +74,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <!-- Image -->
             <div class="order-2 md:order-1">
-                <div class="relative h-96 md:h-[550px]">
-                    <div class="absolute inset-0 bg-gradient-primary rounded-3xl transform -rotate-3 opacity-20"></div>
-                    <div class="absolute inset-0 bg-gradient-primary rounded-3xl transform rotate-2 shadow-2xl flex items-center justify-center">
-                        <svg class="w-64 h-64 text-white opacity-30" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path>
-                        </svg>
-                    </div>
+                <div class="relative h-96 md:h-[550px] rounded-3xl overflow-hidden shadow-2xl">
+                    <img 
+                        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=700&fit=crop" 
+                        alt="Kolam Pemancingan Balong Hardi" 
+                        class="w-full h-full object-cover"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
             </div>
 
@@ -156,69 +156,129 @@
         <!-- Facilities Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Facility 1 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop" 
+                        alt="Kolam Pemancingan" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">Kolam Pemancingan</h3>
-                <p class="text-gray-600 leading-relaxed">Kolam dengan luas 5 hektar yang terawat dengan baik dan penuh dengan berbagai jenis ikan berkualitas premium.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">Kolam Pemancingan</h3>
+                    <p class="text-gray-600 leading-relaxed">Kolam dengan luas 5 hektar yang terawat dengan baik dan penuh dengan berbagai jenis ikan berkualitas premium.</p>
+                </div>
             </div>
 
             <!-- Facility 2 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M11 9H9V2H7v7H5V2H3v7c0 2.55 1.92 4.63 4.39 4.94V22h2.42v-8.06C11.05 13.63 13 11.55 13 9v-7h-2v7zm6-7h-2v7h2V2zm0 11h-2v9h2v-9z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1504674900304-7a58e53d8cde?w=400&h=300&fit=crop" 
+                        alt="Warung Makan" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">Warung Makan</h3>
-                <p class="text-gray-600 leading-relaxed">Warung dengan menu lengkap menyediakan minuman segar dan makanan untuk menemani waktu memancing Anda.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11 9H9V2H7v7H5V2H3v7c0 2.55 1.92 4.63 4.39 4.94V22h2.42v-8.06C11.05 13.63 13 11.55 13 9v-7h-2v7zm6-7h-2v7h2V2zm0 11h-2v9h2v-9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">Warung Makan</h3>
+                    <p class="text-gray-600 leading-relaxed">Warung dengan menu lengkap menyediakan minuman segar dan makanan untuk menemani waktu memancing Anda.</p>
+                </div>
             </div>
 
             <!-- Facility 3 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5s-5 2.24-5 5v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6-2c1.66 0 3 1.34 3 3v2H9V6c0-1.66 1.34-3 3-3z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop" 
+                        alt="Kamar Mandi" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">Kamar Mandi</h3>
-                <p class="text-gray-600 leading-relaxed">Fasilitas kamar mandi yang bersih dan lengkap untuk kenyamanan Anda setelah memancing seharian.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5s-5 2.24-5 5v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6-2c1.66 0 3 1.34 3 3v2H9V6c0-1.66 1.34-3 3-3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">Kamar Mandi</h3>
+                    <p class="text-gray-600 leading-relaxed">Fasilitas kamar mandi yang bersih dan lengkap untuk kenyamanan Anda setelah memancing seharian.</p>
+                </div>
             </div>
 
             <!-- Facility 4 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H6V4h12v16zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.39-.48-1.02-.48-1.41 0-.39.49-.39 1.28 0 1.77l2 2.34c.39.48 1.02.48 1.41 0l3.83-4.87c.39-.49.39-1.28 0-1.77-.39-.48-1.02-.48-1.41 0z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400&h=300&fit=crop" 
+                        alt="Area Parkir" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">Area Parkir Luas</h3>
-                <p class="text-gray-600 leading-relaxed">Parkir yang luas dan aman dengan sistem pengamanan 24 jam untuk kendaraan Anda.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H6V4h12v16zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.39-.48-1.02-.48-1.41 0-.39.49-.39 1.28 0 1.77l2 2.34c.39.48 1.02.48 1.41 0l3.83-4.87c.39-.49.39-1.28 0-1.77-.39-.48-1.02-.48-1.41 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">Area Parkir Luas</h3>
+                    <p class="text-gray-600 leading-relaxed">Parkir yang luas dan aman dengan sistem pengamanan 24 jam untuk kendaraan Anda.</p>
+                </div>
             </div>
 
             <!-- Facility 5 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 5.23 11.08 5 12 5c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45c.45-.34.85-.75 1.19-1.22.99-1.62 1.63-3.55 1.63-5.65-.02-1.8-.35-3.51-.99-5.11zM19 13h-4V9h-2v4h-4l5 5 5-5z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1562480947-230b5c3b2fa4?w=400&h=300&fit=crop" 
+                        alt="WiFi" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">WiFi Gratis</h3>
-                <p class="text-gray-600 leading-relaxed">Nikmati WiFi gratis untuk tetap terhubung atau mengabadikan momen memancing Anda.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 5.23 11.08 5 12 5c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45c.45-.34.85-.75 1.19-1.22.99-1.62 1.63-3.55 1.63-5.65-.02-1.8-.35-3.51-.99-5.11zM19 13h-4V9h-2v4h-4l5 5 5-5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">WiFi Gratis</h3>
+                    <p class="text-gray-600 leading-relaxed">Nikmati WiFi gratis untuk tetap terhubung atau mengabadikan momen memancing Anda.</p>
+                </div>
             </div>
 
             <!-- Facility 6 -->
-            <div class="card-modern p-8 group">
-                <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
-                    </svg>
+            <div class="card-modern overflow-hidden group">
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" 
+                        alt="Pemandu" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
-                <h3 class="text-xl font-bold text-secondary mb-3">Pemandu Profesional</h3>
-                <p class="text-gray-600 leading-relaxed">Tim pemandu berpengalaman siap membantu dan memberikan tips memancing untuk pemula.</p>
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-secondary mb-3">Pemandu Profesional</h3>
+                    <p class="text-gray-600 leading-relaxed">Tim pemandu berpengalaman siap membantu dan memberikan tips memancing untuk pemula.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -386,9 +446,11 @@
                 </div>
                 <p class="text-gray-700 mb-6 leading-relaxed italic">"Balong Hardi adalah tempat memancing terbaik di Sumedang. Kolam luas, ikan banyak, dan harga terjangkau. Saya sudah datang berkali-kali!"</p>
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                        BH
-                    </div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=faces" 
+                        alt="Budi Hermawan" 
+                        class="w-12 h-12 rounded-full object-cover"
+                    >
                     <div>
                         <p class="font-bold text-secondary">Budi Hermawan</p>
                         <p class="text-sm text-gray-600">Sumedang</p>
@@ -407,9 +469,11 @@
                 </div>
                 <p class="text-gray-700 mb-6 leading-relaxed italic">"Pelayanan yang sangat baik, pemandu yang ramah, dan fasilitas yang lengkap. Puas banget memancing di sini bersama keluarga!"</p>
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                        RS
-                    </div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop&crop=faces" 
+                        alt="Rini Suryani" 
+                        class="w-12 h-12 rounded-full object-cover"
+                    >
                     <div>
                         <p class="font-bold text-secondary">Rini Suryani</p>
                         <p class="text-sm text-gray-600">Bandung</p>
@@ -428,9 +492,11 @@
                 </div>
                 <p class="text-gray-700 mb-6 leading-relaxed italic">"Rekomendasi terbaik untuk mereka yang menyukai memancing. Harga kompetitif dan hasil tangkapan yang memuaskan setiap kali berkunjung."</p>
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                        AH
-                    </div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop&crop=faces" 
+                        alt="Ahmad Hidayat" 
+                        class="w-12 h-12 rounded-full object-cover"
+                    >
                     <div>
                         <p class="font-bold text-secondary">Ahmad Hidayat</p>
                         <p class="text-sm text-gray-600">Garut</p>
@@ -454,10 +520,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Blog Card 1 -->
             <div class="card-modern overflow-hidden group">
-                <div class="h-48 bg-gradient-primary relative overflow-hidden">
-                    <svg class="w-full h-full opacity-20 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-                    </svg>
+                <div class="relative h-48 overflow-hidden bg-gray-200">
+                    <img 
+                        src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop" 
+                        alt="Tips Memancing Pagi" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
                 <div class="p-6">
                     <p class="text-sm text-primary font-bold mb-3 uppercase tracking-wider">Tips Memancing</p>
@@ -474,10 +543,13 @@
 
             <!-- Blog Card 2 -->
             <div class="card-modern overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-accent-dark to-primary relative overflow-hidden flex items-center justify-center">
-                    <svg class="w-24 h-24 text-white opacity-30" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
-                    </svg>
+                <div class="relative h-48 overflow-hidden bg-gray-200">
+                    <img 
+                        src="https://images.unsplash.com/photo-1504674900304-7a58e53d8cde?w=400&h=300&fit=crop" 
+                        alt="Jenis Ikan" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
                 <div class="p-6">
                     <p class="text-sm text-accent-dark font-bold mb-3 uppercase tracking-wider">Jenis Ikan</p>
@@ -494,10 +566,13 @@
 
             <!-- Blog Card 3 -->
             <div class="card-modern overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-secondary-light to-dark relative overflow-hidden flex items-center justify-center">
-                    <svg class="w-24 h-24 text-white opacity-20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
-                    </svg>
+                <div class="relative h-48 overflow-hidden bg-gray-200">
+                    <img 
+                        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" 
+                        alt="Cerita Memancing" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30"></div>
                 </div>
                 <div class="p-6">
                     <p class="text-sm text-secondary font-bold mb-3 uppercase tracking-wider">Cerita</p>
@@ -637,15 +712,20 @@
 
 <!-- Map Section -->
 <section class="h-96 md:h-[500px] bg-gray-300 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-primary opacity-10"></div>
+    <img 
+        src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&h=600&fit=crop" 
+        alt="Peta Lokasi Balong Hardi" 
+        class="w-full h-full object-cover"
+    >
+    <div class="absolute inset-0 bg-gradient-to-br from-black to-transparent opacity-40"></div>
     <div class="absolute inset-0 flex items-center justify-center">
         <div class="text-center z-10">
             <svg class="w-20 h-20 text-white mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            <p class="text-white font-bold text-lg">Lokasi Balong Hardi</p>
-            <p class="text-white text-opacity-80 text-sm">Jln. Raya Sumedang - Cirebon, Sumedang, Jawa Barat</p>
+            <p class="text-white font-bold text-lg drop-shadow-lg">Lokasi Balong Hardi</p>
+            <p class="text-white text-opacity-90 text-sm drop-shadow-lg">Jln. Raya Sumedang - Cirebon, Sumedang, Jawa Barat</p>
             <a href="https://maps.google.com/?q=Balong+Hardi+Sumedang" target="_blank" class="inline-block mt-4 px-6 py-3 bg-white text-primary font-bold rounded-xl hover:bg-opacity-90 transition-all duration-300 shadow-lg">
                 Buka di Maps
             </a>
