@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Gallery extends Model
+class BlogPost extends Model
 {
     use HasFactory;
 
-    protected $table = 'galleries';
+    protected $table = 'blog_posts';
     protected $fillable = [
         'title',
+        'slug',
+        'content',
         'image',
         'category',
-        'order',
-        'is_published'
+        'is_published',
+        'published_at'
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
+        'published_at' => 'datetime',
     ];
 }

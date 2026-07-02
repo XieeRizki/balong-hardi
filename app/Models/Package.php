@@ -5,21 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Facility extends Model
+class Package extends Model
 {
     use HasFactory;
 
-    protected $table = 'facilities';
+    protected $table = 'packages';
     protected $fillable = [
         'name',
         'description',
-        'image',
-        'icon',
-        'order',
+        'price',
+        'duration',
+        'features',
+        'is_popular',
         'is_active'
     ];
 
     protected $casts = [
+        'features' => 'json',
+        'is_popular' => 'boolean',
         'is_active' => 'boolean',
     ];
 }

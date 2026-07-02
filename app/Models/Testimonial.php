@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Facility extends Model
+class Testimonial extends Model
 {
     use HasFactory;
 
-    protected $table = 'facilities';
+    protected $table = 'testimonials';
     protected $fillable = [
         'name',
-        'description',
+        'location',
+        'content',
         'image',
-        'icon',
-        'order',
-        'is_active'
+        'rating',
+        'is_published'
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'is_published' => 'boolean',
     ];
 }
