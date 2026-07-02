@@ -11,22 +11,23 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('galleries', function (Blueprint $table) {
+    Schema::create('heroes', function (Blueprint $table) {
         $table->id();
-        $table->string('title')->nullable();
-        $table->string('image');
-        $table->string('category')->nullable();
-        $table->integer('order')->default(0);
+        $table->string('title');
+        $table->text('subtitle')->nullable();
+        $table->string('image')->nullable();
+        $table->string('button_text')->nullable();
+        $table->string('button_link')->nullable();
+        $table->boolean('is_active')->default(true);
         $table->timestamps();
     });
 }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('galleries');
+        Schema::dropIfExists('heroes');
     }
 };

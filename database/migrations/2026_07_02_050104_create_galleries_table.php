@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('packages', function (Blueprint $table) {
+    Schema::create('galleries', function (Blueprint $table) {
         $table->id();
-        $table->string('name');         // Nama paket (contoh: Paket Harian)
-        $table->decimal('price', 10, 2); // Harga paket
-        $table->text('description');    // Penjelasan paket
+        $table->string('title')->nullable();
+        $table->string('image');
+        $table->string('category')->nullable();
+        $table->integer('order')->default(0);
         $table->timestamps();
     });
 }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('galleries');
     }
 };

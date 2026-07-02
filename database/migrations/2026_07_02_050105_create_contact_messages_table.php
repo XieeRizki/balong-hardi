@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('testimonials', function (Blueprint $table) {
+    Schema::create('contact_messages', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('city')->nullable();
-        $table->tinyInteger('rating')->default(5); // 1-5
+        $table->string('email')->nullable();
+        $table->string('phone')->nullable();
+        $table->foreignId('package_id')->nullable()->constrained()->onDelete('set null');
         $table->text('message');
-        $table->string('avatar')->nullable();
-        $table->integer('order')->default(0);
-        $table->boolean('is_active')->default(true);
+        $table->boolean('is_read')->default(false);
         $table->timestamps();
     });
 }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('testimonials');
+        Schema::dropIfExists('contact_messages');
     }
 };

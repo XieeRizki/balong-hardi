@@ -9,25 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up(): void
+    public function up(): void
 {
-    Schema::create('contact_messages', function (Blueprint $table) {
+    Schema::create('testimonials', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('email')->nullable();
-        $table->string('phone')->nullable();
-        $table->foreignId('package_id')->nullable()->constrained()->onDelete('set null');
+        $table->string('city')->nullable();
+        $table->tinyInteger('rating')->default(5); // 1-5
         $table->text('message');
-        $table->boolean('is_read')->default(false);
+        $table->string('avatar')->nullable();
+        $table->integer('order')->default(0);
+        $table->boolean('is_active')->default(true);
         $table->timestamps();
     });
 }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('contact_messages');
+        Schema::dropIfExists('testimonials');
     }
 };

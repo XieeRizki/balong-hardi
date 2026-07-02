@@ -11,22 +11,25 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('heroes', function (Blueprint $table) {
+    Schema::create('blog_posts', function (Blueprint $table) {
         $table->id();
+        $table->string('category')->nullable(); // "Tips Memancing"
         $table->string('title');
-        $table->text('subtitle')->nullable();
+        $table->string('slug')->unique();
+        $table->text('excerpt')->nullable();
+        $table->longText('content');
         $table->string('image')->nullable();
-        $table->string('button_text')->nullable();
-        $table->string('button_link')->nullable();
-        $table->boolean('is_active')->default(true);
+        $table->boolean('is_published')->default(false);
+        $table->timestamp('published_at')->nullable();
         $table->timestamps();
     });
 }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('heroes');
+        Schema::dropIfExists('blog_posts');
     }
 };
