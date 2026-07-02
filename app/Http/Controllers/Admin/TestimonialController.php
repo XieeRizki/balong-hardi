@@ -5,73 +5,82 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        $testimonials = Testimonial::all();
-        return view('admin.testimonial.index', compact('testimonials'));
+        $testimonials = Testimonial::orderBy('order')->paginate(10);
+        return view('admin.testimonials.index', compact('testimonials'));
     }
 
     public function create()
     {
-        return view('admin.testimonial.create');
+        return view('admin.testimonials.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'city' => 'nullable|string|max:100',
             'rating' => 'required|integer|min:1|max:5',
-            'is_published' => 'nullable|boolean',
+            'message' => 'required|string',
+            'avatar' => 'nullable|image|max:2048',
+            'order' => 'nullable|integer|min:0',
+            'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('testimonial', 'public');
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('testimonials', 'public');
         }
+        $validated['is_active'] = $request->boolean('is_active');
+        $validated['order'] = $validated['order'] ?? 0;
 
         Testimonial::create($validated);
 
-        return redirect()->route('admin.testimonial.index')->with('success', 'Testimoni berhasil ditambahkan!');
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimoni berhasil ditambahkan.');
     }
 
     public function edit(Testimonial $testimonial)
     {
-        return view('admin.testimonial.edit', compact('testimonial'));
+        return view('admin.testimonials.edit', compact('testimonial'));
     }
 
     public function update(Request $request, Testimonial $testimonial)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'city' => 'nullable|string|max:100',
             'rating' => 'required|integer|min:1|max:5',
-            'is_published' => 'nullable|boolean',
+            'message' => 'required|string',
+            'avatar' => 'nullable|image|max:2048',
+            'order' => 'nullable|integer|min:0',
+            'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('testimonial', 'public');
+        if ($request->hasFile('avatar')) {
+            if ($testimonial->avatar) {
+                Storage::disk('public')->delete($testimonial->avatar);
+            }
+            $validated['avatar'] = $request->file('avatar')->store('testimonials', 'public');
         }
+        $validated['is_active'] = $request->boolean('is_active');
+        $validated['order'] = $validated['order'] ?? $testimonial->order;
 
         $testimonial->update($validated);
 
-        return redirect()->route('admin.testimonial.index')->with('success', 'Testimoni berhasil diperbarui!');
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimoni berhasil diperbarui.');
     }
 
     public function destroy(Testimonial $testimonial)
     {
+        if ($testimonial->avatar) {
+            Storage::disk('public')->delete($testimonial->avatar);
+        }
         $testimonial->delete();
-        return redirect()->route('admin.testimonial.index')->with('success', 'Testimoni berhasil dihapus!');
+
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimoni berhasil dihapus.');
     }
 }

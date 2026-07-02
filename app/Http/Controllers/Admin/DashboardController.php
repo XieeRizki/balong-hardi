@@ -3,29 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Facility;
-use App\Models\Package;
 use App\Models\BlogPost;
-use App\Models\Testimonial;
+use App\Models\Facility;
 use App\Models\Gallery;
+use App\Models\Package;
+use App\Models\Testimonial;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $stats = [
             'facilities' => Facility::count(),
             'packages' => Package::count(),
-            'blog_posts' => BlogPost::count(),
-            'testimonials' => Testimonial::count(),
             'galleries' => Gallery::count(),
+            'testimonials' => Testimonial::count(),
+            'blog_posts' => BlogPost::count(),
+            'published_posts' => BlogPost::where('is_published', true)->count(),
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        $recentPosts = BlogPost::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('stats', 'recentPosts'));
     }
 }

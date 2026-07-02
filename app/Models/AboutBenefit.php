@@ -4,20 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class About extends Model
+class AboutBenefit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'about_id',
         'title',
         'description',
-        'image',
+        'order',
     ];
 
-    public function benefits(): HasMany
+    public function about(): BelongsTo
     {
-        return $this->hasMany(AboutBenefit::class)->orderBy('order');
+        return $this->belongsTo(About::class);
     }
 }
