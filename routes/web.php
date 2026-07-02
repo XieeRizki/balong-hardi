@@ -1,4 +1,3 @@
-// routes/web.php
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -17,20 +16,20 @@ Route::get('/', function () {
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Facilities
-    Route::resource('facilities', FacilityController::class);
+    // Facility (singular)
+    Route::resource('facility', FacilityController::class);
     
-    // Packages
-    Route::resource('packages', PackageController::class);
+    // Package
+    Route::resource('package', PackageController::class);
     
     // Blog Posts
-    Route::resource('blog-posts', BlogPostController::class);
+    Route::resource('blog-post', BlogPostController::class);
     
-    // Testimonials
-    Route::resource('testimonials', TestimonialController::class);
+    // Testimonial
+    Route::resource('testimonial', TestimonialController::class);
     
     // Gallery
-    Route::resource('galleries', GalleryController::class);
+    Route::resource('gallery', GalleryController::class);
 });
 
 // Auth Routes
