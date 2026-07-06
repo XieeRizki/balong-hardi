@@ -1,38 +1,44 @@
 @extends('layouts.admin')
-
 @section('title', 'Tambah Fasilitas')
-
 @section('content')
-<style>
-    .form-header {
-        margin-bottom: 2rem;
-    }
 
+<style>
     .form-header h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--secondary);
-        margin-bottom: 0.5rem;
+        margin: 0 0 0.3rem 0;
     }
 
-    .form-container {
+    .form-header p {
+        font-size: 0.85rem;
+        color: var(--neutral);
+        margin: 0 0 1.5rem 0;
+    }
+
+    .form-box {
         background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        max-width: 600px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.5rem;
+        max-width: 550px;
     }
 
     .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
     }
 
     label {
         display: block;
-        font-weight: 600;
+        font-weight: 700;
         color: var(--secondary);
         margin-bottom: 0.5rem;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    .required {
+        color: var(--danger);
+        margin-left: 0.2rem;
     }
 
     input[type="text"],
@@ -40,12 +46,13 @@
     input[type="file"],
     textarea {
         width: 100%;
-        padding: 0.75rem 1rem;
-        border: 2px solid #E5E7EB;
-        border-radius: 8px;
-        font-size: 0.95rem;
+        padding: 0.75rem 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
         font-family: inherit;
-        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        transition: all 0.15s ease;
+        box-sizing: border-box;
     }
 
     input[type="text"]:focus,
@@ -54,139 +61,196 @@
     textarea:focus {
         outline: none;
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
     textarea {
         resize: vertical;
-        min-height: 120px;
+        min-height: 90px;
     }
 
-    .checkbox-group {
+    .form-hint {
+        font-size: 0.8rem;
+        color: var(--neutral);
+        margin-top: 0.35rem;
+    }
+
+    .form-error {
+        font-size: 0.8rem;
+        color: var(--danger);
+        margin-top: 0.35rem;
+    }
+
+    .checkbox-wrap {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.6rem;
     }
 
     input[type="checkbox"] {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.1rem;
+        height: 1.1rem;
         cursor: pointer;
         accent-color: var(--primary);
     }
 
-    .checkbox-group label {
-        margin-bottom: 0;
-    }
-
-    .error-message {
-        color: var(--danger);
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
+    .checkbox-wrap label {
+        margin: 0;
+        font-weight: 500;
+        cursor: pointer;
     }
 
     .form-actions {
         display: flex;
-        gap: 1rem;
+        gap: 0.75rem;
         margin-top: 2rem;
     }
 
-    .form-actions button,
-    .form-actions a {
+    .btn {
         flex: 1;
-        padding: 0.875rem 1.5rem;
+        padding: 0.85rem;
         border: none;
-        border-radius: 8px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.9rem;
         cursor: pointer;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
         text-decoration: none;
         text-align: center;
+        transition: all 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
     }
 
-    .btn-submit {
-        background: linear-gradient(135deg, var(--primary) 0%, #ff8555 100%);
+    .btn-save {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         color: white;
     }
 
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    .btn-save:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
     }
 
-    .btn-cancel {
-        background-color: #E5E7EB;
+    .btn-back {
+        background: var(--border);
         color: var(--secondary);
     }
 
-    .btn-cancel:hover {
-        background-color: #D1D5DB;
+    .btn-back:hover {
+        background: #D1D5DB;
     }
 
-    .help-text {
-        font-size: 0.875rem;
-        color: #6B7280;
-        margin-top: 0.25rem;
+    @media (max-width: 768px) {
+        .form-box {
+            padding: 1.25rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
     }
 </style>
 
 <div class="form-header">
-    <h1>➕ Tambah Fasilitas Baru</h1>
+    <h1>➕ Tambah Fasilitas</h1>
+    <p>Tambahkan fasilitas baru ke Balong Hardi</p>
 </div>
 
-<div class="form-container">
+<div class="form-box">
     <form action="{{ route('admin.facility.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
-            <label for="name">Nama Fasilitas <span style="color: var(--danger);">*</span></label>
-            <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Contoh: Kolam Renang Utama">
-            @error('name') <p class="error-message">{{ $message }}</p> @enderror
+            <label for="name">
+                Nama Fasilitas
+                <span class="required">*</span>
+            </label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Contoh: Kolam Renang Utama"
+                value="{{ old('name') }}"
+                required
+            >
+            @error('name')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
         <div class="form-group">
-            <label for="description">Deskripsi <span style="color: var(--danger);">*</span></label>
-            <textarea id="description" name="description" required placeholder="Jelaskan detail fasilitas...">{{ old('description') }}</textarea>
-            @error('description') <p class="error-message">{{ $message }}</p> @enderror
+            <label for="description">
+                Deskripsi
+                <span class="required">*</span>
+            </label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Jelaskan detail fasilitas..."
+                required
+            >{{ old('description') }}</textarea>
+            @error('description')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
         <div class="form-group">
             <label for="image">Gambar Fasilitas</label>
             <input type="file" id="image" name="image" accept="image/*">
-            <p class="help-text">Format: JPG, PNG. Ukuran maksimal: 2MB</p>
-            @error('image') <p class="error-message">{{ $message }}</p> @enderror
+            <div class="form-hint">JPG, PNG · Maks 2MB</div>
+            @error('image')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
         <div class="form-group">
-            <label for="icon">Icon (Emoji/Unicode) <span style="opacity: 0.6;">(Opsional)</span></label>
-            <input type="text" id="icon" name="icon" value="{{ old('icon') }}" placeholder="Contoh: 🏊 🎢 🍽️">
-            <p class="help-text">Copy emoji dari internet dan paste di sini</p>
-            @error('icon') <p class="error-message">{{ $message }}</p> @enderror
+            <label for="icon">Icon (Emoji)</label>
+            <input
+                type="text"
+                id="icon"
+                name="icon"
+                placeholder="Contoh: 🏊 🎢 🍽️"
+                value="{{ old('icon') }}"
+            >
+            <div class="form-hint">Copy emoji dan paste di sini</div>
+            @error('icon')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
         <div class="form-group">
             <label for="order">Urutan Tampil</label>
-            <input type="number" id="order" name="order" value="{{ old('order', 0) }}" min="0">
-            <p class="help-text">Angka lebih kecil = tampil lebih depan</p>
-            @error('order') <p class="error-message">{{ $message }}</p> @enderror
+            <input
+                type="number"
+                id="order"
+                name="order"
+                min="0"
+                value="{{ old('order', 0) }}"
+            >
+            <div class="form-hint">Angka lebih kecil = tampil lebih depan</div>
+            @error('order')<div class="form-error">{{ $message }}</div>@enderror
         </div>
 
         <div class="form-group">
-            <div class="checkbox-group">
-                <input type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active') ? 'checked' : '' }}>
-                <label for="is_active">✓ Aktifkan Fasilitas Ini</label>
+            <div class="checkbox-wrap">
+                <input
+                    type="checkbox"
+                    id="is_active"
+                    name="is_active"
+                    value="1"
+                    {{ old('is_active') ? 'checked' : '' }}
+                >
+                <label for="is_active">Aktifkan fasilitas ini</label>
             </div>
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-save"></i> Simpan Fasilitas
+            <button type="submit" class="btn btn-save">
+                <i class="fas fa-save"></i> Simpan
             </button>
-            <a href="{{ route('admin.facility.index') }}" class="btn-cancel">
-                <i class="fas fa-times"></i> Batal
+            <a href="{{ route('admin.facility.index') }}" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Batal
             </a>
         </div>
     </form>
 </div>
+
 @endsection

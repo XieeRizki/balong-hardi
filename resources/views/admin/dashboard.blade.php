@@ -9,31 +9,30 @@
     }
 
     .dashboard-header h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
         font-weight: 700;
         color: var(--secondary);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
 
     .dashboard-header p {
-        color: #6B7280;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        color: var(--neutral);
     }
 
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
         margin-bottom: 2rem;
     }
 
     .stat-card {
         background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
-        border-top: 4px solid var(--primary);
+        padding: 1.25rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        transition: all 0.2s ease;
         position: relative;
         overflow: hidden;
     }
@@ -43,41 +42,22 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 80px;
-        height: 80px;
-        background: rgba(255, 107, 53, 0.05);
+        width: 60px;
+        height: 60px;
+        background: rgba(249, 115, 22, 0.08);
         border-radius: 50%;
-        transform: translate(30%, -30%);
+        transform: translate(40%, -40%);
     }
 
     .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
-
-    .stat-card.facilities {
-        border-top-color: #00A8E8;
-    }
-
-    .stat-card.packages {
-        border-top-color: #06D6A0;
-    }
-
-    .stat-card.blog {
-        border-top-color: #FFB703;
-    }
-
-    .stat-card.testimonials {
-        border-top-color: #EF476F;
-    }
-
-    .stat-card.gallery {
-        border-top-color: #9D4EDD;
+        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+        transform: translateY(-2px);
     }
 
     .stat-label {
-        font-size: 0.875rem;
-        color: #6B7280;
+        font-size: 0.75rem;
+        color: var(--neutral);
         font-weight: 600;
         margin-bottom: 0.5rem;
         text-transform: uppercase;
@@ -85,158 +65,241 @@
     }
 
     .stat-value {
-        font-size: 2.5rem;
+        font-size: 1.75rem;
         font-weight: 700;
         color: var(--secondary);
         margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
     }
 
     .stat-icon {
-        font-size: 2rem;
-        opacity: 0.8;
+        font-size: 1.5rem;
+        opacity: 0.7;
         position: relative;
         z-index: 1;
     }
 
     .quick-actions {
         background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
         margin-bottom: 2rem;
     }
 
     .quick-actions h2 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         font-weight: 700;
         color: var(--secondary);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
     }
 
+    .quick-actions h2 i {
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+
     .actions-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.75rem;
     }
 
     .action-btn {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 0.75rem;
+        justify-content: center;
         padding: 1rem;
-        background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 168, 232, 0.1) 100%);
-        border: 2px solid transparent;
-        border-radius: 10px;
+        background: white;
+        border: 2px solid var(--border);
+        border-radius: 8px;
         text-decoration: none;
         color: var(--secondary);
         font-weight: 600;
-        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
         cursor: pointer;
     }
 
     .action-btn:hover {
         border-color: var(--primary);
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        color: white;
-        transform: translateX(4px);
+        background: rgba(249, 115, 22, 0.05);
+        color: var(--primary);
+        transform: translateY(-1px);
     }
 
     .action-btn i {
-        font-size: 1.25rem;
-        width: 1.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
     }
 
     .recent-posts {
         background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
     }
 
     .recent-posts h2 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         font-weight: 700;
         color: var(--secondary);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .recent-posts h2 i {
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+
+    .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
     .post-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 0;
-        border-bottom: 1px solid #E5E7EB;
+        padding: 0.875rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        transition: all 0.2s ease;
     }
 
-    .post-item:last-child {
-        border-bottom: none;
+    .post-item:hover {
+        background: rgba(249, 115, 22, 0.05);
+        border-color: var(--primary);
+    }
+
+    .post-info {
+        flex: 1;
     }
 
     .post-title {
         font-weight: 600;
         color: var(--secondary);
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
     }
 
     .post-date {
-        font-size: 0.875rem;
-        color: #9CA3AF;
+        font-size: 0.8rem;
+        color: var(--neutral);
     }
 
     .badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 600;
     }
 
     .badge-success {
-        background-color: rgba(6, 214, 160, 0.1);
+        background: rgba(16, 185, 129, 0.15);
         color: #047857;
     }
 
     .badge-warning {
-        background-color: rgba(255, 183, 3, 0.1);
+        background: rgba(245, 158, 11, 0.15);
         color: #92400e;
+    }
+
+    @media (max-width: 1200px) {
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .stat-card {
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+        }
+
+        .actions-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .action-btn {
+            padding: 0.875rem;
+            font-size: 0.8rem;
+        }
+
+        .action-btn i {
+            font-size: 1.25rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .post-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .post-info {
+            width: 100%;
+        }
     }
 </style>
 
 <div class="dashboard-header">
-    <h1>🎯 Dashboard</h1>
-    <p>Selamat datang di Admin Panel Balong Hardi</p>
+    <h1>Dashboard</h1>
+    <p>Selamat datang kembali, Admin! 👋</p>
 </div>
 
-<!-- Stats Grid -->
+<!-- Stats -->
 <div class="stats-grid">
-    <div class="stat-card facilities">
-        <div class="stat-label">Total Fasilitas</div>
+    <div class="stat-card">
+        <div class="stat-label">Fasilitas</div>
         <div class="stat-value">{{ $stats['facilities'] }}</div>
         <div class="stat-icon">🏊</div>
     </div>
 
-    <div class="stat-card packages">
-        <div class="stat-label">Total Paket</div>
+    <div class="stat-card">
+        <div class="stat-label">Paket</div>
         <div class="stat-value">{{ $stats['packages'] }}</div>
         <div class="stat-icon">📦</div>
     </div>
 
-    <div class="stat-card blog">
-        <div class="stat-label">Total Blog</div>
+    <div class="stat-card">
+        <div class="stat-label">Blog</div>
         <div class="stat-value">{{ $stats['blog_posts'] }}</div>
         <div class="stat-icon">📝</div>
     </div>
 
-    <div class="stat-card testimonials">
-        <div class="stat-label">Total Testimoni</div>
+    <div class="stat-card">
+        <div class="stat-label">Testimoni</div>
         <div class="stat-value">{{ $stats['testimonials'] }}</div>
         <div class="stat-icon">⭐</div>
     </div>
 
-    <div class="stat-card gallery">
-        <div class="stat-label">Total Galeri</div>
+    <div class="stat-card">
+        <div class="stat-label">Galeri</div>
         <div class="stat-value">{{ $stats['galleries'] }}</div>
         <div class="stat-icon">🖼️</div>
     </div>
@@ -245,55 +308,57 @@
 <!-- Quick Actions -->
 <div class="quick-actions">
     <h2>
-        <i class="fas fa-lightning-bolt" style="color: var(--primary);"></i>
+        <i class="fas fa-rocket"></i>
         Akses Cepat
     </h2>
     <div class="actions-grid">
         <a href="{{ route('admin.facility.create') }}" class="action-btn">
             <i class="fas fa-plus"></i>
-            <span>Tambah Fasilitas</span>
+            Fasilitas
         </a>
         <a href="{{ route('admin.packages.create') }}" class="action-btn">
             <i class="fas fa-plus"></i>
-            <span>Tambah Paket</span>
+            Paket
         </a>
         <a href="{{ route('admin.blog-posts.create') }}" class="action-btn">
             <i class="fas fa-plus"></i>
-            <span>Tulis Blog</span>
+            Blog
         </a>
         <a href="{{ route('admin.testimonials.create') }}" class="action-btn">
             <i class="fas fa-plus"></i>
-            <span>Tambah Testimoni</span>
+            Testimoni
         </a>
         <a href="{{ route('admin.gallery.create') }}" class="action-btn">
             <i class="fas fa-plus"></i>
-            <span>Upload Galeri</span>
+            Galeri
         </a>
     </div>
 </div>
 
 <!-- Recent Posts -->
 @if($recentPosts->count() > 0)
-    <div class="recent-posts" style="margin-top: 2rem;">
+    <div class="recent-posts">
         <h2>
-            <i class="fas fa-history" style="color: var(--primary);"></i>
+            <i class="fas fa-list"></i>
             Blog Terbaru
         </h2>
-        @foreach($recentPosts as $post)
-            <div class="post-item">
-                <div>
-                    <div class="post-title">{{ $post->title }}</div>
-                    <div class="post-date">{{ $post->published_at?->format('d M Y') ?? 'Belum dipublikasi' }}</div>
+        <div class="post-list">
+            @foreach($recentPosts as $post)
+                <div class="post-item">
+                    <div class="post-info">
+                        <div class="post-title">{{ $post->title }}</div>
+                        <div class="post-date">{{ $post->published_at?->format('d M Y') ?? 'Belum dipublikasi' }}</div>
+                    </div>
+                    <div>
+                        @if($post->is_published)
+                            <span class="badge badge-success">✓ Dipublikasi</span>
+                        @else
+                            <span class="badge badge-warning">Draft</span>
+                        @endif
+                    </div>
                 </div>
-                <div>
-                    @if($post->is_published)
-                        <span class="badge badge-success">Dipublikasi</span>
-                    @else
-                        <span class="badge badge-warning">Draft</span>
-                    @endif
-                </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 @endif
 @endsection
