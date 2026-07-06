@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+// Baris "use App\Http\Controllers\Controller;" udah dihapus dari sini
 use App\Models\About;
 use App\Models\BlogPost;
 use App\Models\Contact;
@@ -11,7 +11,8 @@ use App\Models\Hero;
 use App\Models\Package;
 use App\Models\Testimonial;
 
-class HomeController extends Controller
+// Hapus "extends Controller", jadi sisa begini aja:
+class HomeController
 {
     public function index()
     {
@@ -23,7 +24,6 @@ class HomeController extends Controller
         $blogPosts = BlogPost::where('is_published', true)->latest('published_at')->take(3)->get();
         $contact = Contact::first();
 
-        // Pastikan mengarah ke folder 'pages' sesuai struktur temen lu
         return view('pages.home', compact(
             'hero',
             'about',
