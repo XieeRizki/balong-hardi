@@ -23,7 +23,8 @@ class HomeController extends Controller
         $blogPosts = BlogPost::where('is_published', true)->latest('published_at')->take(3)->get();
         $contact = Contact::first();
 
-        return view('frontend.home', compact(
+        // Pastikan mengarah ke folder 'pages' sesuai struktur temen lu
+        return view('pages.home', compact(
             'hero',
             'about',
             'facilities',
