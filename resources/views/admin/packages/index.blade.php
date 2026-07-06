@@ -27,9 +27,14 @@
         <tbody>
             @forelse($packages as $package)
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="px-6 py-4 font-semibold text-secondary">{{ $package->name }}</td>
-                    <td class="px-6 py-4 text-gray-600">{{ $package->duration }}</td>
-                    <td class="px-6 py-4 text-gray-600">Rp {{ number_format($package->price, 0, ',', '.') }}</td>
+                    <td class="px-6 py-4 font-semibold text-secondary">
+                        {{ $package->name }}
+                        @if($package->is_popular)
+                            <span class="ml-2 px-2 py-1 bg-yellow-200 text-yellow-800 text-xs font-bold rounded">⭐ POPULER</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">{{ $package->time_range }}</td>
+                    <td class="px-6 py-4 text-gray-600 font-semibold">Rp {{ number_format($package->price, 0, ',', '.') }}</td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $package->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                             {{ $package->is_active ? '✓ Aktif' : '✗ Nonaktif' }}
@@ -53,5 +58,10 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
+<!-- Pagination -->
+<div class="mt-8">
+    {{ $packages->links() }}
 </div>
 @endsection

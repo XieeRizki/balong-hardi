@@ -19,9 +19,9 @@
         </div>
 
         <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Deskripsi</label>
-            <textarea name="description" rows="4" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" required>{{ old('description', $package->description) }}</textarea>
-            @error('description') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+            <label class="block text-secondary font-bold mb-2">Durasi</label>
+            <input type="text" name="time_range" value="{{ old('time_range', $package->time_range) }}" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" required>
+            @error('time_range') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-6">
@@ -31,21 +31,16 @@
         </div>
 
         <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Durasi</label>
-            <input type="text" name="duration" value="{{ old('duration', $package->duration) }}" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" placeholder="Contoh: 6 jam, 12 jam" required>
-            @error('duration') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div class="mb-6">
             <label class="block text-secondary font-bold mb-2">Fitur (Satu per baris)</label>
-            <textarea name="features" rows="6" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary">{{ old('features', is_array($package->features) ? implode("\n", $package->features) : $package->features) }}</textarea>
+            <textarea name="features[]" rows="6" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary font-mono">@if($package->features)@foreach($package->features as $feature){{ $feature->feature }}
+@endforeach@endif</textarea>
             @error('features') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-6">
             <label class="flex items-center">
                 <input type="checkbox" name="is_popular" value="1" {{ old('is_popular', $package->is_popular) ? 'checked' : '' }} class="w-4 h-4">
-                <span class="ml-3 text-secondary font-bold">Paket Paling Populer</span>
+                <span class="ml-3 text-secondary font-bold">⭐ Paket Paling Populer</span>
             </label>
         </div>
 

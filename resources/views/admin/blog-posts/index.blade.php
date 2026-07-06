@@ -28,7 +28,7 @@
             @forelse($posts as $post)
                 <tr class="border-b hover:bg-gray-50">
                     <td class="px-6 py-4 font-semibold text-secondary">{{ $post->title }}</td>
-                    <td class="px-6 py-4 text-gray-600">{{ $post->category }}</td>
+                    <td class="px-6 py-4 text-gray-600">{{ $post->category ?? '-' }}</td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $post->is_published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                             {{ $post->is_published ? '✓ Dipublikasi' : '⏱ Draft' }}
@@ -53,5 +53,10 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
+<!-- Pagination -->
+<div class="mt-8">
+    {{ $posts->links() }}
 </div>
 @endsection

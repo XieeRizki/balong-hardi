@@ -6,7 +6,7 @@
 <div class="flex justify-between items-center mb-8">
     <div>
         <h1 class="text-3xl font-bold text-secondary">Kelola Testimoni</h1>
-        <p class="text-gray-600">Manage semua testimoni pengunjung</p>
+        <p class="text-gray-600">Manage semua testimoni pelanggan</p>
     </div>
     <a href="{{ route('admin.testimonials.create') }}" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-orange-600 transition-all">
         + Tambah Testimoni
@@ -18,7 +18,7 @@
         <thead class="bg-secondary text-white">
             <tr>
                 <th class="px-6 py-4 text-left">Nama</th>
-                <th class="px-6 py-4 text-left">Lokasi</th>
+                <th class="px-6 py-4 text-left">Jabatan</th>
                 <th class="px-6 py-4 text-left">Rating</th>
                 <th class="px-6 py-4 text-left">Status</th>
                 <th class="px-6 py-4 text-center">Aksi</th>
@@ -28,13 +28,13 @@
             @forelse($testimonials as $testimonial)
                 <tr class="border-b hover:bg-gray-50">
                     <td class="px-6 py-4 font-semibold text-secondary">{{ $testimonial->name }}</td>
-                    <td class="px-6 py-4 text-gray-600">{{ $testimonial->location }}</td>
+                    <td class="px-6 py-4 text-gray-600">{{ $testimonial->role ?? '-' }}</td>
                     <td class="px-6 py-4">
-                        <span class="text-lg">{{ str_repeat('⭐', $testimonial->rating) }}</span>
+                        <span class="text-lg">{{ str_repeat('⭐', $testimonial->rating ?? 5) }}</span>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $testimonial->is_published ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                            {{ $testimonial->is_published ? '✓ Publik' : '✗ Private' }}
+                        <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $testimonial->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            {{ $testimonial->is_active ? '✓ Aktif' : '✗ Nonaktif' }}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">
@@ -55,5 +55,10 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
+<!-- Pagination -->
+<div class="mt-8">
+    {{ $testimonials->links() }}
 </div>
 @endsection

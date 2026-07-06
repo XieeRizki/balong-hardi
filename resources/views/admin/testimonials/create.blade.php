@@ -18,40 +18,39 @@
         </div>
 
         <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Lokasi</label>
-            <input type="text" name="location" value="{{ old('location') }}" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" placeholder="Kota, Provinsi" required>
-            @error('location') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+            <label class="block text-secondary font-bold mb-2">Jabatan/Pekerjaan</label>
+            <input type="text" name="role" value="{{ old('role') }}" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" placeholder="Contoh: Manager, Pengusaha">
+            @error('role') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Testimoni</label>
-            <textarea name="content" rows="5" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" required>{{ old('content') }}</textarea>
-            @error('content') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+            <label class="block text-secondary font-bold mb-2">Pesan/Testimoni</label>
+            <textarea name="message" rows="5" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" required>{{ old('message') }}</textarea>
+            @error('message') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Rating</label>
-            <select name="rating" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary" required>
-                <option value="">-- Pilih Rating --</option>
-                <option value="1" {{ old('rating') == 1 ? 'selected' : '' }}>⭐ 1 Bintang</option>
-                <option value="2" {{ old('rating') == 2 ? 'selected' : '' }}>⭐⭐ 2 Bintang</option>
-                <option value="3" {{ old('rating') == 3 ? 'selected' : '' }}>⭐⭐⭐ 3 Bintang</option>
-                <option value="4" {{ old('rating') == 4 ? 'selected' : '' }}>⭐⭐⭐⭐ 4 Bintang</option>
-                <option value="5" {{ old('rating') == 5 ? 'selected' : '' }}>⭐⭐⭐⭐⭐ 5 Bintang</option>
-            </select>
-            @error('rating') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div class="mb-6">
-            <label class="block text-secondary font-bold mb-2">Foto (Optional)</label>
+            <label class="block text-secondary font-bold mb-2">Foto Profil</label>
             <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary">
             @error('image') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-6">
+            <label class="block text-secondary font-bold mb-2">Rating</label>
+            <select name="rating" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                <option value="5" {{ old('rating', 5) == 5 ? 'selected' : '' }}>⭐⭐⭐⭐⭐ (5 Bintang)</option>
+                <option value="4" {{ old('rating') == 4 ? 'selected' : '' }}>⭐⭐⭐⭐ (4 Bintang)</option>
+                <option value="3" {{ old('rating') == 3 ? 'selected' : '' }}>⭐⭐⭐ (3 Bintang)</option>
+                <option value="2" {{ old('rating') == 2 ? 'selected' : '' }}>⭐⭐ (2 Bintang)</option>
+                <option value="1" {{ old('rating') == 1 ? 'selected' : '' }}>⭐ (1 Bintang)</option>
+            </select>
+            @error('rating') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="mb-6">
             <label class="flex items-center">
-                <input type="checkbox" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }} class="w-4 h-4">
-                <span class="ml-3 text-secondary font-bold">Publikasi Testimoni</span>
+                <input type="checkbox" name="is_active" value="1" {{ old('is_active') ? 'checked' : '' }} class="w-4 h-4">
+                <span class="ml-3 text-secondary font-bold">Aktifkan Testimoni</span>
             </label>
         </div>
 

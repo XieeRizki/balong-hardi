@@ -90,7 +90,7 @@ class PackageController extends Controller
 
     public function destroy(Package $package)
     {
-        $package->delete(); // features auto-deleted via cascade
+        $package->delete();
 
         return redirect()->route('admin.packages.index')->with('success', 'Paket berhasil dihapus.');
     }

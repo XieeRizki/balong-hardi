@@ -11,7 +11,7 @@ class TestimonialController extends Controller
 {
     public function index()
     {
-        $testimonials = Testimonial::orderBy('order')->paginate(10);
+        $testimonials = Testimonial::paginate(10);
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
@@ -24,19 +24,17 @@ class TestimonialController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'city' => 'nullable|string|max:100',
-            'rating' => 'required|integer|min:1|max:5',
+            'role' => 'nullable|string|max:100',
             'message' => 'required|string',
-            'avatar' => 'nullable|image|max:2048',
-            'order' => 'nullable|integer|min:0',
+            'image' => 'nullable|image|max:2048',
+            'rating' => 'nullable|integer|min:1|max:5',
             'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('avatar')) {
-            $validated['avatar'] = $request->file('avatar')->store('testimonials', 'public');
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('testimonials', 'public');
         }
         $validated['is_active'] = $request->boolean('is_active');
-        $validated['order'] = $validated['order'] ?? 0;
 
         Testimonial::create($validated);
 
@@ -52,22 +50,20 @@ class TestimonialController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'city' => 'nullable|string|max:100',
-            'rating' => 'required|integer|min:1|max:5',
+            'role' => 'nullable|string|max:100',
             'message' => 'required|string',
-            'avatar' => 'nullable|image|max:2048',
-            'order' => 'nullable|integer|min:0',
+            'image' => 'nullable|image|max:2048',
+            'rating' => 'nullable|integer|min:1|max:5',
             'is_active' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('avatar')) {
-            if ($testimonial->avatar) {
-                Storage::disk('public')->delete($testimonial->avatar);
+        if ($request->hasFile('image')) {
+            if ($testimonial->image) {
+                Storage::disk('public')->delete($testimonial->image);
             }
-            $validated['avatar'] = $request->file('avatar')->store('testimonials', 'public');
+            $validated['image'] = $request->file('image')->store('testimonials', 'public');
         }
         $validated['is_active'] = $request->boolean('is_active');
-        $validated['order'] = $validated['order'] ?? $testimonial->order;
 
         $testimonial->update($validated);
 
@@ -76,8 +72,8 @@ class TestimonialController extends Controller
 
     public function destroy(Testimonial $testimonial)
     {
-        if ($testimonial->avatar) {
-            Storage::disk('public')->delete($testimonial->avatar);
+        if ($testimonial->image) {
+            Storage::disk('public')->delete($testimonial->image);
         }
         $testimonial->delete();
 

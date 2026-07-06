@@ -12,12 +12,12 @@ class FacilityController extends Controller
     public function index()
     {
         $facilities = Facility::orderBy('order')->paginate(10);
-        return view('admin.facilities.index', compact('facilities'));
+        return view('admin.facility.index', compact('facilities'));
     }
 
     public function create()
     {
-        return view('admin.facilities.create');
+        return view('admin.facility.create');
     }
 
     public function store(Request $request)
@@ -39,12 +39,12 @@ class FacilityController extends Controller
 
         Facility::create($validated);
 
-        return redirect()->route('admin.facilities.index')->with('success', 'Fasilitas berhasil ditambahkan.');
+        return redirect()->route('admin.facility.index')->with('success', 'Fasilitas berhasil ditambahkan.');
     }
 
     public function edit(Facility $facility)
     {
-        return view('admin.facilities.edit', compact('facility'));
+        return view('admin.facility.edit', compact('facility'));
     }
 
     public function update(Request $request, Facility $facility)
@@ -69,7 +69,7 @@ class FacilityController extends Controller
 
         $facility->update($validated);
 
-        return redirect()->route('admin.facilities.index')->with('success', 'Fasilitas berhasil diperbarui.');
+        return redirect()->route('admin.facility.index')->with('success', 'Fasilitas berhasil diperbarui.');
     }
 
     public function destroy(Facility $facility)
@@ -79,6 +79,6 @@ class FacilityController extends Controller
         }
         $facility->delete();
 
-        return redirect()->route('admin.facilities.index')->with('success', 'Fasilitas berhasil dihapus.');
+        return redirect()->route('admin.facility.index')->with('success', 'Fasilitas berhasil dihapus.');
     }
 }

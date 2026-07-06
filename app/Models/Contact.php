@@ -9,9 +9,8 @@ class Contact extends Model
 {
     use HasFactory;
 
-    // Cuma nyimpen info kontak statis (telepon, WA, alamat, jam operasional).
-    // Pesan dari pengunjung TIDAK disimpan di sini — form kontak redirect
-    // langsung ke WhatsApp lewat JS di frontend.
+    protected $table = 'contact';
+
     protected $fillable = [
         'phone',
         'whatsapp',
