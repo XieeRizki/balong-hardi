@@ -10,6 +10,9 @@
     <style>
         * {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         :root {
@@ -25,8 +28,6 @@
         }
 
         html, body {
-            margin: 0;
-            padding: 0;
             height: 100%;
         }
 
@@ -161,25 +162,19 @@
             margin-left: 260px;
         }
 
-        .navbar {
-            background: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border-bottom: 3px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .navbar h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin: 0;
-        }
-
         .content {
             padding: 2rem;
+        }
+
+        /* Heading di dalam content biar ga ke-reset polos */
+        .content h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
         }
 
         /* Alert */
@@ -313,11 +308,6 @@
                 margin-top: 60px;
             }
 
-            .navbar {
-                padding: 0;
-                border-bottom: none;
-            }
-
             .content {
                 padding: 1.5rem;
             }
@@ -368,10 +358,6 @@
         </div>
 
         <div class="main-content">
-            <div class="navbar">
-                <h2>@yield('title')</h2>
-            </div>
-
             <div class="content">
                 @if ($errors->any())
                     <div class="alert alert-danger">
