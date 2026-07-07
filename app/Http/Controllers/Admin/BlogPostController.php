@@ -12,8 +12,8 @@ class BlogPostController extends Controller
 {
     public function index()
     {
-        $posts = BlogPost::latest()->paginate(10);
-        return view('admin.blog-posts.index', compact('posts'));
+        $blogPosts = BlogPost::latest()->paginate(10);
+        return view('admin.blog-posts.index', compact('blogPosts'));
     }
 
     public function create()

@@ -186,7 +186,6 @@
         margin: 0 0 1.5rem 0;
     }
 
-    /* Modal Styles */
     .modal-overlay {
         display: none;
         position: fixed;
@@ -197,6 +196,7 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 2000;
         animation: fadeIn 0.2s ease;
+        overflow-y: auto;
     }
 
     .modal-overlay.active {
@@ -225,13 +225,14 @@
         background: white;
         border-radius: 12px;
         padding: 2rem;
-        max-width: 560px;
+        max-width: 700px;
         width: 90%;
         max-height: 90vh;
         overflow-y: auto;
         animation: slideUp 0.3s ease;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         position: relative;
+        margin: auto;
     }
 
     .modal-header {
@@ -292,8 +293,8 @@
     }
 
     input[type="text"],
-    input[type="date"],
     input[type="file"],
+    select,
     textarea {
         width: 100%;
         padding: 0.65rem 0.8rem;
@@ -303,11 +304,12 @@
         font-size: 0.9rem;
         transition: all 0.15s ease;
         box-sizing: border-box;
+        background: white;
     }
 
     input[type="text"]:focus,
-    input[type="date"]:focus,
     input[type="file"]:focus,
+    select:focus,
     textarea:focus {
         outline: none;
         border-color: var(--primary);
@@ -316,7 +318,7 @@
 
     textarea {
         resize: vertical;
-        min-height: 160px;
+        min-height: 100px;
     }
 
     .form-hint {
@@ -393,6 +395,16 @@
         background: #D1D5DB;
     }
 
+    .image-preview {
+        margin-bottom: 1rem;
+    }
+
+    .image-preview img {
+        max-width: 200px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+    }
+
     @media (max-width: 768px) {
         .section-header {
             flex-direction: column;
@@ -415,7 +427,6 @@
 
         .modal-content {
             padding: 1.5rem;
-            margin: 1rem;
         }
 
         .modal-header h2 {
@@ -435,11 +446,11 @@
 <div class="section-header">
     <div>
         <h1>📝 Kelola Blog</h1>
-        <p class="section-header-desc">Manage semua artikel blog</p>
+        <p class="section-header-desc">Manage semua artikel blog Balong Hardi</p>
     </div>
-    <button class="btn-create" onclick="openModal('addModal')">
+    <a href="{{ route('admin.blog-posts.create') }}" class="btn-create">
         <i class="fas fa-plus"></i> Tulis Artikel
-    </button>
+    </a>
 </div>
 
 <div class="table-card">
@@ -449,13 +460,13 @@
                 <tr>
                     <th>Judul</th>
                     <th>Kategori</th>
-                    <th>Status</th>
                     <th>Tanggal</th>
+                    <th>Status</th>
                     <th style="width: 140px; text-align: center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($posts as $post)
+                @forelse($blogPosts as $post)
                     <tr>
                         <td>
                             <div class="title-cell">{{ $post->title }}</div>
@@ -464,18 +475,18 @@
                             <span class="category-cell">{{ $post->category ?? '-' }}</span>
                         </td>
                         <td>
+                            <span class="date-cell">{{ $post->created_at->format('d M Y') }}</span>
+                        </td>
+                        <td>
                             <span class="badge {{ $post->is_published ? 'badge-published' : 'badge-draft' }}">
-                                {{ $post->is_published ? '✓ Dipublikasi' : '⏱ Draft' }}
+                                {{ $post->is_published ? '✓ Dipublikasi' : '✗ Draft' }}
                             </span>
                         </td>
                         <td>
-                            <span class="date-cell">{{ $post->published_at?->format('d M Y') ?? '-' }}</span>
-                        </td>
-                        <td>
                             <div class="action-group">
-                                <a href="{{ route('admin.blog-posts.edit', $post) }}" class="btn-icon btn-edit">
+                                <button onclick="openEditBlogModal({{ $post->id }})" class="btn-icon btn-edit" data-blog-id="{{ $post->id }}" data-title="{{ $post->title }}" data-category="{{ $post->category }}" data-excerpt="{{ $post->excerpt }}" data-content="{{ str_replace('"', '&quot;', $post->content) }}" data-is-published="{{ $post->is_published }}" data-image="{{ $post->image }}">
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </button>
                                 <form action="{{ route('admin.blog-posts.destroy', $post) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-icon btn-delete" style="border: none; padding: 0.5rem 0.8rem;">
@@ -491,9 +502,9 @@
                             <div class="empty-container">
                                 <div class="empty-icon">📭</div>
                                 <p class="empty-text">Belum ada artikel</p>
-                                <button class="btn-create" onclick="openModal('addModal')">
+                                <a href="{{ route('admin.blog-posts.create') }}" class="btn-create">
                                     <i class="fas fa-plus"></i> Tulis Artikel
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -501,60 +512,63 @@
             </tbody>
         </table>
     </div>
-    @if($posts->hasPages())
+    @if($blogPosts->hasPages())
         <div style="padding: 1rem; text-align: center; border-top: 1px solid var(--border);">
-            {{ $posts->links('pagination::bootstrap-4') }}
+            {{ $blogPosts->links('pagination::bootstrap-4') }}
         </div>
     @endif
 </div>
 
-<!-- Modal Tulis Artikel -->
-<div class="modal-overlay" id="addModal">
+<!-- Modal Edit Blog -->
+<div class="modal-overlay" id="editBlogModal">
     <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('addModal')">&times;</button>
+        <button class="modal-close" onclick="closeModal('editBlogModal')">&times;</button>
         <div class="modal-header">
-            <h2>📝 Tulis Artikel</h2>
-            <p>Tambahkan artikel baru ke blog Balong Hardi</p>
+            <h2>✏️ Edit Artikel</h2>
+            <p>Perbarui informasi artikel blog</p>
         </div>
 
-        <form action="{{ route('admin.blog-posts.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" id="editBlogForm" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
             <div class="form-group">
-                <label for="title">Judul <span class="required">*</span></label>
-                <input type="text" id="title" name="title" placeholder="Contoh: Tips Liburan Seru di Balong Hardi" value="{{ old('title') }}" required>
+                <label for="edit_title">Judul Artikel <span class="required">*</span></label>
+                <input type="text" id="edit_title" name="title" required>
                 @error('title')<div class="form-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
-                <label for="category">Kategori</label>
-                <input type="text" id="category" name="category" placeholder="Contoh: Tips, Event, Berita" value="{{ old('category') }}">
+                <label for="edit_category">Kategori</label>
+                <input type="text" id="edit_category" name="category" placeholder="Contoh: Tips & Trik, Berita, Tutorial">
                 @error('category')<div class="form-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
-                <label for="content">Konten <span class="required">*</span></label>
-                <textarea id="content" name="content" placeholder="Tulis isi artikel di sini..." required>{{ old('content') }}</textarea>
+                <label for="edit_excerpt">Ringkasan</label>
+                <textarea id="edit_excerpt" name="excerpt"></textarea>
+                @error('excerpt')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_content">Konten Artikel <span class="required">*</span></label>
+                <textarea id="edit_content" name="content" required></textarea>
+                <div class="form-hint">Gunakan format plain text atau HTML</div>
                 @error('content')<div class="form-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
-                <label for="image">Gambar Sampul</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <label for="edit_image">Gambar Sampul</label>
+                <div id="edit_image_preview" class="image-preview"></div>
+                <input type="file" id="edit_image" name="image" accept="image/*" onchange="previewImageBlog()">
                 <div class="form-hint">JPG, PNG · Maks 2MB</div>
                 @error('image')<div class="form-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
-                <label for="published_at">Tanggal Publikasi</label>
-                <input type="date" id="published_at" name="published_at" value="{{ old('published_at') }}">
-                @error('published_at')<div class="form-error">{{ $message }}</div>@enderror
-            </div>
-
-            <div class="form-group">
                 <div class="checkbox-wrap">
-                    <input type="checkbox" id="is_published" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }}>
-                    <label for="is_published">Publikasikan sekarang</label>
+                    <input type="checkbox" id="edit_is_published" name="is_published" value="1">
+                    <label for="edit_is_published">✓ Publikasi Artikel</label>
                 </div>
             </div>
 
@@ -562,7 +576,7 @@
                 <button type="submit" class="btn btn-save">
                     <i class="fas fa-save"></i> Simpan
                 </button>
-                <button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">
+                <button type="button" class="btn btn-cancel" onclick="closeModal('editBlogModal')">
                     <i class="fas fa-times"></i> Batal
                 </button>
             </div>
@@ -581,7 +595,48 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Close modal when clicking outside
+    function openEditBlogModal(postId) {
+        const button = event.target.closest('.btn-edit');
+        const data = {
+            id: button.getAttribute('data-blog-id'),
+            title: button.getAttribute('data-title'),
+            category: button.getAttribute('data-category'),
+            excerpt: button.getAttribute('data-excerpt'),
+            content: button.getAttribute('data-content').replace(/&quot;/g, '"'),
+            isPublished: button.getAttribute('data-is-published'),
+            image: button.getAttribute('data-image')
+        };
+
+        document.getElementById('editBlogForm').action = `/admin/blog-posts/${postId}`;
+        document.getElementById('edit_title').value = data.title;
+        document.getElementById('edit_category').value = data.category;
+        document.getElementById('edit_excerpt').value = data.excerpt;
+        document.getElementById('edit_content').value = data.content;
+        document.getElementById('edit_is_published').checked = data.isPublished == 1;
+
+        const previewDiv = document.getElementById('edit_image_preview');
+        if (data.image) {
+            previewDiv.innerHTML = `<img src="{{ asset('storage/') }}${data.image}" alt="Preview">`;
+        } else {
+            previewDiv.innerHTML = '';
+        }
+
+        openModal('editBlogModal');
+    }
+
+    function previewImageBlog() {
+        const file = document.getElementById('edit_image').files[0];
+        const preview = document.getElementById('edit_image_preview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -590,7 +645,6 @@
         });
     });
 
-    // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(modal => {

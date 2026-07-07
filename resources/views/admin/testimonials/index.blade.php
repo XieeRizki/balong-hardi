@@ -195,6 +195,7 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 2000;
         animation: fadeIn 0.2s ease;
+        overflow-y: auto;
     }
 
     .modal-overlay.active {
@@ -230,6 +231,7 @@
         animation: slideUp 0.3s ease;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         position: relative;
+        margin: auto;
     }
 
     .modal-header {
@@ -394,6 +396,16 @@
         background: #D1D5DB;
     }
 
+    .image-preview {
+        margin-bottom: 1rem;
+    }
+
+    .image-preview img {
+        max-width: 150px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+    }
+
     @media (max-width: 768px) {
         .section-header {
             flex-direction: column;
@@ -474,9 +486,9 @@
                         </td>
                         <td>
                             <div class="action-group">
-                                <a href="{{ route('admin.testimonials.edit', $testimonial) }}" class="btn-icon btn-edit">
+                                <button onclick="openEditTestimonialModal({{ $testimonial->id }})" class="btn-icon btn-edit" data-testimonial-id="{{ $testimonial->id }}" data-name="{{ $testimonial->name }}" data-role="{{ $testimonial->role }}" data-message="{{ str_replace('"', '&quot;', $testimonial->message) }}" data-rating="{{ $testimonial->rating }}" data-is-active="{{ $testimonial->is_active }}" data-image="{{ $testimonial->image }}">
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </button>
                                 <form action="{{ route('admin.testimonials.destroy', $testimonial) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-icon btn-delete" style="border: none; padding: 0.5rem 0.8rem;">
@@ -575,6 +587,74 @@
     </div>
 </div>
 
+<!-- Modal Edit Testimoni -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('editModal')">&times;</button>
+        <div class="modal-header">
+            <h2>✏️ Edit Testimoni</h2>
+            <p>Perbarui informasi testimoni</p>
+        </div>
+
+        <form action="" method="POST" id="editForm" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="form-group">
+                <label for="edit_name">Nama <span class="required">*</span></label>
+                <input type="text" id="edit_name" name="name" required>
+                @error('name')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_role">Jabatan / Asal</label>
+                <input type="text" id="edit_role" name="role" placeholder="Contoh: Wisatawan dari Bandung">
+                @error('role')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_message">Isi Testimoni <span class="required">*</span></label>
+                <textarea id="edit_message" name="message" required></textarea>
+                @error('message')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_rating">Rating <span class="required">*</span></label>
+                <select id="edit_rating" name="rating" required>
+                    @for($i = 5; $i >= 1; $i--)
+                        <option value="{{ $i }}">{{ str_repeat('⭐', $i) }} ({{ $i }})</option>
+                    @endfor
+                </select>
+                @error('rating')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_image">Foto (Opsional)</label>
+                <div id="edit_image_preview" class="image-preview"></div>
+                <input type="file" id="edit_image" name="image" accept="image/*" onchange="previewImageTestimonial()">
+                <div class="form-hint">JPG, PNG · Maks 2MB</div>
+                @error('image')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-wrap">
+                    <input type="checkbox" id="edit_is_active" name="is_active" value="1">
+                    <label for="edit_is_active">Tampilkan testimoni ini</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+                <button type="button" class="btn btn-cancel" onclick="closeModal('editModal')">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function openModal(modalId) {
         document.getElementById(modalId).classList.add('active');
@@ -586,7 +666,48 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Close modal when clicking outside
+    function openEditTestimonialModal(testimonialId) {
+        const button = event.target.closest('.btn-edit');
+        const data = {
+            id: button.getAttribute('data-testimonial-id'),
+            name: button.getAttribute('data-name'),
+            role: button.getAttribute('data-role'),
+            message: button.getAttribute('data-message').replace(/&quot;/g, '"'),
+            rating: button.getAttribute('data-rating'),
+            isActive: button.getAttribute('data-is-active'),
+            image: button.getAttribute('data-image')
+        };
+
+        document.getElementById('editForm').action = `/admin/testimonials/${testimonialId}`;
+        document.getElementById('edit_name').value = data.name;
+        document.getElementById('edit_role').value = data.role;
+        document.getElementById('edit_message').value = data.message;
+        document.getElementById('edit_rating').value = data.rating;
+        document.getElementById('edit_is_active').checked = data.isActive == 1;
+
+        const previewDiv = document.getElementById('edit_image_preview');
+        if (data.image) {
+            previewDiv.innerHTML = `<img src="{{ asset('storage/') }}${data.image}" alt="Preview">`;
+        } else {
+            previewDiv.innerHTML = '';
+        }
+
+        openModal('editModal');
+    }
+
+    function previewImageTestimonial() {
+        const file = document.getElementById('edit_image').files[0];
+        const preview = document.getElementById('edit_image_preview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -595,7 +716,6 @@
         });
     });
 
-    // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(modal => {

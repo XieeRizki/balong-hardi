@@ -301,6 +301,8 @@
 
     input[type="text"],
     input[type="number"],
+    input[type="file"],
+    select,
     textarea {
         width: 100%;
         padding: 0.65rem 0.8rem;
@@ -310,10 +312,13 @@
         font-size: 0.9rem;
         transition: all 0.15s ease;
         box-sizing: border-box;
+        background: white;
     }
 
     input[type="text"]:focus,
     input[type="number"]:focus,
+    input[type="file"]:focus,
+    select:focus,
     textarea:focus {
         outline: none;
         border-color: var(--primary);
@@ -400,6 +405,72 @@
         background: #D1D5DB;
     }
 
+    .feature-list {
+        background: rgba(249, 115, 22, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.8rem;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .feature-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.6rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        margin-bottom: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .feature-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .feature-remove {
+        background: rgba(239, 68, 68, 0.1);
+        color: #EF4444;
+        border: none;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .feature-remove:hover {
+        background: rgba(239, 68, 68, 0.2);
+    }
+
+    .feature-input-wrapper {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .feature-input-wrapper input {
+        flex: 1;
+    }
+
+    .feature-add-btn {
+        padding: 0.65rem 0.8rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .feature-add-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    }
+
     @media (max-width: 768px) {
         .section-header {
             flex-direction: column;
@@ -434,6 +505,14 @@
         }
 
         .btn {
+            width: 100%;
+        }
+
+        .feature-input-wrapper {
+            flex-direction: column;
+        }
+
+        .feature-add-btn {
             width: 100%;
         }
     }
@@ -483,9 +562,9 @@
                         </td>
                         <td>
                             <div class="action-group">
-                                <a href="{{ route('admin.packages.edit', $package) }}" class="btn-icon btn-edit">
+                                <button onclick="openEditModal('{{ $package->id }}', '{{ $package->name }}', '{{ $package->time_range }}', '{{ $package->price }}', '{{ $package->is_popular }}', '{{ $package->is_active }}', '{{ $package->order }}')" class="btn-icon btn-edit" data-features='{{ json_encode($package->features->pluck("feature")->toArray()) }}'>
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </button>
                                 <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-icon btn-delete" style="border: none; padding: 0.5rem 0.8rem;">
@@ -549,6 +628,23 @@
             </div>
 
             <div class="form-group">
+                <label for="order">Urutan</label>
+                <input type="number" id="order" name="order" min="0" placeholder="Contoh: 1" value="{{ old('order', 0) }}">
+                @error('order')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label>Fitur Paket</label>
+                <div class="feature-input-wrapper">
+                    <input type="text" id="feature_input" placeholder="Tambahkan fitur paket..." />
+                    <button type="button" class="feature-add-btn" onclick="addFeature('addModal')">Tambah</button>
+                </div>
+                <div id="feature_list_add" class="feature-list" style="margin-top: 0.8rem; display: none;">
+                </div>
+                @error('features')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
                 <div class="checkbox-wrap">
                     <input type="checkbox" id="is_popular" name="is_popular" value="1" {{ old('is_popular') ? 'checked' : '' }}>
                     <label for="is_popular">Tandai sebagai paket populer</label>
@@ -571,10 +667,91 @@
     </div>
 </div>
 
+<!-- Modal Edit Paket -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('editModal')">&times;</button>
+        <div class="modal-header">
+            <h2>✏️ Edit Paket</h2>
+            <p>Perbarui informasi paket</p>
+        </div>
+
+        <form action="" method="POST" id="editForm">
+            @csrf
+            @method('PUT')
+
+            <div class="form-group">
+                <label for="edit_name">Nama Paket <span class="required">*</span></label>
+                <input type="text" id="edit_name" name="name" placeholder="Contoh: Paket Reguler" required>
+                @error('name')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_time_range">Durasi <span class="required">*</span></label>
+                <input type="text" id="edit_time_range" name="time_range" placeholder="Contoh: 08.00 - 17.00" required>
+                @error('time_range')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_price">Harga <span class="required">*</span></label>
+                <input type="number" id="edit_price" name="price" min="0" placeholder="Contoh: 25000" required>
+                @error('price')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_order">Urutan</label>
+                <input type="number" id="edit_order" name="order" min="0" placeholder="Contoh: 1">
+                @error('order')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label>Fitur Paket</label>
+                <div class="feature-input-wrapper">
+                    <input type="text" id="edit_feature_input" placeholder="Tambahkan fitur paket..." />
+                    <button type="button" class="feature-add-btn" onclick="addFeature('editModal')">Tambah</button>
+                </div>
+                <div id="feature_list_edit" class="feature-list" style="margin-top: 0.8rem;">
+                </div>
+                @error('features')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-wrap">
+                    <input type="checkbox" id="edit_is_popular" name="is_popular" value="1">
+                    <label for="edit_is_popular">Tandai sebagai paket populer</label>
+                </div>
+                <div class="checkbox-wrap">
+                    <input type="checkbox" id="edit_is_active" name="is_active" value="1">
+                    <label for="edit_is_active">Aktifkan paket ini</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+                <button type="button" class="btn btn-cancel" onclick="closeModal('editModal')">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
+    let currentModalFeatures = {
+        addModal: [],
+        editModal: []
+    };
+
     function openModal(modalId) {
         document.getElementById(modalId).classList.add('active');
         document.body.style.overflow = 'hidden';
+        if (modalId === 'addModal') {
+            currentModalFeatures.addModal = [];
+            renderFeatures('addModal');
+            document.getElementById('feature_input').value = '';
+        }
     }
 
     function closeModal(modalId) {
@@ -582,7 +759,104 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Close modal when clicking outside
+    function openEditModal(packageId, name, timeRange, price, isPopular, isActive, order) {
+        const button = event.target.closest('.btn-edit');
+        const featuresData = button.getAttribute('data-features');
+        const features = JSON.parse(featuresData);
+        
+        currentModalFeatures.editModal = features;
+        
+        document.getElementById('editForm').action = `/admin/packages/${packageId}`;
+        document.getElementById('edit_name').value = name;
+        document.getElementById('edit_time_range').value = timeRange;
+        document.getElementById('edit_price').value = price;
+        document.getElementById('edit_order').value = order;
+        document.getElementById('edit_is_popular').checked = isPopular == 1;
+        document.getElementById('edit_is_active').checked = isActive == 1;
+        document.getElementById('edit_feature_input').value = '';
+        
+        renderFeatures('editModal');
+        openModal('editModal');
+    }
+
+    function addFeature(modalId) {
+        const inputId = modalId === 'addModal' ? 'feature_input' : 'edit_feature_input';
+        const input = document.getElementById(inputId);
+        const feature = input.value.trim();
+        
+        if (feature === '') {
+            alert('Masukkan fitur paket terlebih dahulu');
+            return;
+        }
+        
+        if (currentModalFeatures[modalId].includes(feature)) {
+            alert('Fitur ini sudah ditambahkan');
+            return;
+        }
+        
+        currentModalFeatures[modalId].push(feature);
+        input.value = '';
+        renderFeatures(modalId);
+    }
+
+    function removeFeature(modalId, index) {
+        currentModalFeatures[modalId].splice(index, 1);
+        renderFeatures(modalId);
+    }
+
+    function renderFeatures(modalId) {
+        const listId = modalId === 'addModal' ? 'feature_list_add' : 'feature_list_edit';
+        const listContainer = document.getElementById(listId);
+        const features = currentModalFeatures[modalId];
+        
+        if (features.length === 0) {
+            listContainer.style.display = 'none';
+            listContainer.innerHTML = '';
+            return;
+        }
+        
+        listContainer.style.display = 'block';
+        listContainer.innerHTML = features.map((feature, index) => `
+            <div class="feature-item">
+                <span>${feature}</span>
+                <button type="button" class="feature-remove" onclick="removeFeature('${modalId}', ${index})">
+                    <i class="fas fa-trash"></i> Hapus
+                </button>
+            </div>
+        `).join('');
+        
+        updateFeatureInputs(modalId);
+    }
+
+    function updateFeatureInputs(modalId) {
+        const formId = modalId === 'addModal' ? 'addForm' : 'editForm';
+        const form = document.querySelector(`form[id="${formId}"]`) || 
+                     (modalId === 'addModal' ? document.querySelector('#addModal form') : document.getElementById('editForm'));
+        
+        form.querySelectorAll('input[name="features[]"]').forEach(el => el.remove());
+        
+        currentModalFeatures[modalId].forEach(feature => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'features[]';
+            input.value = feature;
+            form.appendChild(input);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const addForm = document.querySelector('#addModal form');
+        if (addForm) {
+            addForm.addEventListener('submit', function() {
+                updateFeatureInputs('addModal');
+            });
+        }
+
+        document.getElementById('editForm').addEventListener('submit', function() {
+            updateFeatureInputs('editModal');
+        });
+    });
+
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -591,12 +865,23 @@
         });
     });
 
-    // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(modal => {
                 closeModal(modal.id);
             });
+        }
+    });
+
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            if (e.target.id === 'feature_input') {
+                e.preventDefault();
+                addFeature('addModal');
+            } else if (e.target.id === 'edit_feature_input') {
+                e.preventDefault();
+                addFeature('editModal');
+            }
         }
     });
 </script>
