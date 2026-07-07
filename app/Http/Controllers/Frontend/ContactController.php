@@ -22,6 +22,6 @@ class ContactController extends Controller
         $location = Location::latest()->first();
         $packages = Package::where('is_active', true)->orderBy('order')->get(['id', 'name', 'price']);
 
-        return view('frontend.contact', compact('contact', 'location', 'packages'));
+        return view('pages.contact', compact('contact', 'location', 'packages'));
     }
 }

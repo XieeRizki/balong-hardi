@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\BlogPost;
@@ -23,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/kontak', [ContactController::class, 'index'])->name('contact');
 Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery');
 
 // Blog detail pakai slug (BlogPost model punya getRouteKeyName() = 'slug')

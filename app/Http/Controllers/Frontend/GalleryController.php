@@ -21,6 +21,8 @@ class GalleryController extends Controller
             ->distinct()
             ->pluck('category');
 
-        return view('frontend.gallery', compact('galleries', 'categories'));
+        return view('pages.home', compact(
+    'hero', 'about', 'facilities', 'packages', 'testimonials', 'blogPosts', 'contact'
+));
     }
 }

@@ -12,12 +12,12 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::orderBy('order')->paginate(12);
-        return view('admin.galleries.index', compact('galleries'));
+        return view('admin.gallery.index', compact('galleries'));
     }
 
     public function create()
     {
-        return view('admin.galleries.create');
+        return view('admin.gallery.create');
     }
 
     public function store(Request $request)
@@ -34,12 +34,12 @@ class GalleryController extends Controller
 
         Gallery::create($validated);
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Foto berhasil ditambahkan.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Foto berhasil ditambahkan.');
     }
 
     public function edit(Gallery $gallery)
     {
-        return view('admin.galleries.edit', compact('gallery'));
+        return view('admin.gallery.edit', compact('gallery'));
     }
 
     public function update(Request $request, Gallery $gallery)
@@ -59,7 +59,7 @@ class GalleryController extends Controller
 
         $gallery->update($validated);
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Foto berhasil diperbarui.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Foto berhasil diperbarui.');
     }
 
     public function destroy(Gallery $gallery)
@@ -67,6 +67,6 @@ class GalleryController extends Controller
         Storage::disk('public')->delete($gallery->image);
         $gallery->delete();
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Foto berhasil dihapus.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Foto berhasil dihapus.');
     }
 }

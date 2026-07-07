@@ -8,7 +8,7 @@
 </div>
 
 <div class="bg-white rounded-lg shadow p-8 max-w-2xl">
-    <form action="{{ route('admin.galleries.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.gallery.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-6">
@@ -46,7 +46,7 @@
             <button type="submit" class="px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-orange-600 transition-all">
                 Upload Foto
             </button>
-            <a href="{{ route('admin.galleries.index') }}" class="px-6 py-3 bg-gray-400 text-white font-bold rounded-lg hover:bg-gray-500 transition-all">
+            <a href="{{ route('admin.gallery.index') }}" class="px-6 py-3 bg-gray-400 text-white font-bold rounded-lg hover:bg-gray-500 transition-all">
                 Batal
             </a>
         </div>

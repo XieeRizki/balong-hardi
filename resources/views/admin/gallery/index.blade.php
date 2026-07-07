@@ -399,10 +399,10 @@
                 <h3 class="gallery-title">{{ $gallery->title }}</h3>
                 <span class="gallery-category">{{ $gallery->category }}</span>
                 <div class="gallery-actions">
-                    <a href="{{ route('admin.galleries.edit', $gallery) }}" class="btn-icon btn-edit">
+                    <a href="{{ route('admin.gallery.edit', $gallery) }}" class="btn-icon btn-edit">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST" style="flex: 1;" onsubmit="return confirm('Yakin ingin menghapus?');">
+                    <form action="{{ route('admin.galleryS.destroy', $gallery) }}" method="POST" style="flex: 1;" onsubmit="return confirm('Yakin ingin menghapus?');">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn-icon btn-delete">
                             <i class="fas fa-trash"></i> Hapus
@@ -437,7 +437,7 @@
             <p>Tambahkan foto baru ke galeri Balong Hardi</p>
         </div>
 
-        <form action="{{ route('admin.galleries.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.gallery.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">

@@ -330,20 +330,43 @@
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
+
+                <a href="{{ route('admin.hero.edit') }}" class="{{ request()->routeIs('admin.hero.*') ? 'active' : '' }}">
+                    <i class="fas fa-image"></i> Hero Banner
+                </a>
+
+                <a href="{{ route('admin.about.edit') }}" class="{{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
+                    <i class="fas fa-info-circle"></i> Tentang Kami
+                </a>
+
                 <a href="{{ route('admin.facility.index') }}" class="{{ request()->routeIs('admin.facility.*') ? 'active' : '' }}">
                     <i class="fas fa-swimming-pool"></i> Fasilitas
                 </a>
+
                 <a href="{{ route('admin.packages.index') }}" class="{{ request()->routeIs('admin.packages.*') ? 'active' : '' }}">
                     <i class="fas fa-tag"></i> Paket
                 </a>
+
                 <a href="{{ route('admin.blog-posts.index') }}" class="{{ request()->routeIs('admin.blog-posts.*') ? 'active' : '' }}">
                     <i class="fas fa-pen-fancy"></i> Blog
                 </a>
+
                 <a href="{{ route('admin.testimonials.index') }}" class="{{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
                     <i class="fas fa-star"></i> Testimoni
                 </a>
+
                 <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                     <i class="fas fa-images"></i> Galeri
+                </a>
+
+                <div style="margin: 0.75rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);"></div>
+
+                <a href="{{ route('admin.location.edit') }}" class="{{ request()->routeIs('admin.location.*') ? 'active' : '' }}">
+                    <i class="fas fa-map-marker-alt"></i> Lokasi
+                </a>
+
+                <a href="{{ route('admin.contact.edit') }}" class="{{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
+                    <i class="fas fa-address-book"></i> Info Kontak
                 </a>
             </nav>
 
