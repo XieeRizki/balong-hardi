@@ -198,6 +198,7 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 2000;
         animation: fadeIn 0.2s ease;
+        overflow-y: auto;
     }
 
     .modal-overlay.active {
@@ -233,6 +234,7 @@
         animation: slideUp 0.3s ease;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         position: relative;
+        margin: auto;
     }
 
     .modal-header {
@@ -304,6 +306,7 @@
         font-size: 0.9rem;
         transition: all 0.15s ease;
         box-sizing: border-box;
+        background: white;
     }
 
     input[type="text"]:focus,
@@ -394,6 +397,16 @@
         background: #D1D5DB;
     }
 
+    .image-preview {
+        margin-bottom: 1rem;
+    }
+
+    .image-preview img {
+        max-width: 150px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+    }
+
     @media (max-width: 768px) {
         .section-header {
             flex-direction: column;
@@ -475,9 +488,9 @@
                         </td>
                         <td>
                             <div class="action-group">
-                                <a href="{{ route('admin.facility.edit', $facility) }}" class="btn-icon btn-edit">
+                                <button onclick="openEditModal({{ $facility->id }})" class="btn-icon btn-edit" data-facility-id="{{ $facility->id }}" data-name="{{ $facility->name }}" data-description="{{ str_replace('"', '&quot;', $facility->description) }}" data-icon="{{ $facility->icon }}" data-order="{{ $facility->order }}" data-is-active="{{ $facility->is_active }}" data-image="{{ $facility->image }}">
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </button>
                                 <form action="{{ route('admin.facility.destroy', $facility) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin hapus?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-icon btn-delete" style="border: none; padding: 0.5rem 0.8rem;">
@@ -574,6 +587,72 @@
     </div>
 </div>
 
+<!-- Modal Edit Fasilitas -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('editModal')">&times;</button>
+        <div class="modal-header">
+            <h2>✏️ Edit Fasilitas</h2>
+            <p>Perbarui informasi fasilitas</p>
+        </div>
+
+        <form action="" method="POST" id="editForm" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="form-group">
+                <label for="edit_name">Nama Fasilitas <span class="required">*</span></label>
+                <input type="text" id="edit_name" name="name" required>
+                @error('name')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_description">Deskripsi <span class="required">*</span></label>
+                <textarea id="edit_description" name="description" required></textarea>
+                @error('description')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_image">Gambar Fasilitas</label>
+                <div id="edit_image_preview" class="image-preview"></div>
+                <input type="file" id="edit_image" name="image" accept="image/*" onchange="previewImage()">
+                <div class="form-hint">JPG, PNG · Maks 2MB</div>
+                @error('image')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_icon">Icon (Emoji)</label>
+                <input type="text" id="edit_icon" name="icon" placeholder="Contoh: 🏊 🎢 🍽️">
+                <div class="form-hint">Copy emoji dan paste di sini</div>
+                @error('icon')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edit_order">Urutan Tampil</label>
+                <input type="number" id="edit_order" name="order" min="0">
+                <div class="form-hint">Angka lebih kecil = tampil lebih depan</div>
+                @error('order')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-wrap">
+                    <input type="checkbox" id="edit_is_active" name="is_active" value="1">
+                    <label for="edit_is_active">Aktifkan fasilitas ini</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+                <button type="button" class="btn btn-cancel" onclick="closeModal('editModal')">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function openModal(modalId) {
         document.getElementById(modalId).classList.add('active');
@@ -583,6 +662,48 @@
     function closeModal(modalId) {
         document.getElementById(modalId).classList.remove('active');
         document.body.style.overflow = 'auto';
+    }
+
+    function openEditModal(facilityId) {
+        const button = event.target.closest('.btn-edit');
+        const data = {
+            id: button.getAttribute('data-facility-id'),
+            name: button.getAttribute('data-name'),
+            description: button.getAttribute('data-description').replace(/&quot;/g, '"'),
+            icon: button.getAttribute('data-icon'),
+            order: button.getAttribute('data-order'),
+            isActive: button.getAttribute('data-is-active'),
+            image: button.getAttribute('data-image')
+        };
+
+        document.getElementById('editForm').action = `/admin/facility/${facilityId}`;
+        document.getElementById('edit_name').value = data.name;
+        document.getElementById('edit_description').value = data.description;
+        document.getElementById('edit_icon').value = data.icon;
+        document.getElementById('edit_order').value = data.order;
+        document.getElementById('edit_is_active').checked = data.isActive == 1;
+
+        const previewDiv = document.getElementById('edit_image_preview');
+        if (data.image) {
+            previewDiv.innerHTML = `<img src="{{ asset('storage/') }}${data.image}" alt="Preview">`;
+        } else {
+            previewDiv.innerHTML = '';
+        }
+
+        openModal('editModal');
+    }
+
+    function previewImage() {
+        const file = document.getElementById('edit_image').files[0];
+        const preview = document.getElementById('edit_image_preview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
     }
 
     // Close modal when clicking outside
