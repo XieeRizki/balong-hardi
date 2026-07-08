@@ -269,7 +269,7 @@
 
 <div class="dashboard-header">
     <h1>Dashboard</h1>
-    <p>Selamat datang kembali, Admin! 👋</p>
+    <p>Selamat datang kembali, Admin!</p>
 </div>
 
 <!-- Stats -->
@@ -277,31 +277,31 @@
     <div class="stat-card">
         <div class="stat-label">Fasilitas</div>
         <div class="stat-value">{{ $stats['facilities'] }}</div>
-        <div class="stat-icon">🏊</div>
+        <!-- <div class="stat-icon">🏊</div> -->
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Paket</div>
         <div class="stat-value">{{ $stats['packages'] }}</div>
-        <div class="stat-icon">📦</div>
+        <!-- <div class="stat-icon">📦</div> -->
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Blog</div>
         <div class="stat-value">{{ $stats['blog_posts'] }}</div>
-        <div class="stat-icon">📝</div>
+        <!-- <div class="stat-icon">📝</div> -->
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Testimoni</div>
         <div class="stat-value">{{ $stats['testimonials'] }}</div>
-        <div class="stat-icon">⭐</div>
+        <!-- <div class="stat-icon">⭐</div> -->
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Galeri</div>
         <div class="stat-value">{{ $stats['galleries'] }}</div>
-        <div class="stat-icon">🖼️</div>
+        <!-- <div class="stat-icon">🖼️</div> -->
     </div>
 </div>
 

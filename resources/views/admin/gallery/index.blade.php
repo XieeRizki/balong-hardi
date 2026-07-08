@@ -381,7 +381,7 @@
 
 <div class="section-header">
     <div>
-        <h1>🖼️ Kelola Galeri</h1>
+        <h1>Kelola Galeri</h1>
         <p class="section-header-desc">Manage semua foto galeri</p>
     </div>
     <button class="btn-create" onclick="openModal('addModal')">

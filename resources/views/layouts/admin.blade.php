@@ -318,7 +318,7 @@
     <div class="admin-container">
         <div class="sidebar">
             <div class="sidebar-brand">
-                <h1>🏊 Balong</h1>
+                <h1>BHS</h1>
                 <p>Admin</p>
             </div>
 

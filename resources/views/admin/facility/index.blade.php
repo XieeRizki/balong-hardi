@@ -448,7 +448,7 @@
 
 <div class="section-header">
     <div>
-        <h1>🏊 Fasilitas</h1>
+        <h1>Fasilitas</h1>
         <p class="section-header-desc">Kelola semua fasilitas Balong Hardi</p>
     </div>
     <button class="btn-create" onclick="openModal('addModal')">

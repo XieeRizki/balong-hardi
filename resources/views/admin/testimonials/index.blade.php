@@ -447,7 +447,7 @@
 
 <div class="section-header">
     <div>
-        <h1>💬 Kelola Testimoni</h1>
+        <h1>Kelola Testimoni</h1>
         <p class="section-header-desc">Manage semua testimoni pelanggan</p>
     </div>
     <button class="btn-create" onclick="openModal('addModal')">

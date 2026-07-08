@@ -520,7 +520,7 @@
 
 <div class="section-header">
     <div>
-        <h1>📦 Kelola Paket</h1>
+        <h1>Kelola Paket</h1>
         <p class="section-header-desc">Manage semua paket Balong Hardi</p>
     </div>
     <button class="btn-create" onclick="openModal('addModal')">

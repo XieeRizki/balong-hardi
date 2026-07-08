@@ -445,7 +445,7 @@
 
 <div class="section-header">
     <div>
-        <h1>📝 Kelola Blog</h1>
+        <h1>Kelola Blog</h1>
         <p class="section-header-desc">Manage semua artikel blog Balong Hardi</p>
     </div>
     <a href="{{ route('admin.blog-posts.create') }}" class="btn-create">
