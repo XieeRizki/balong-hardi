@@ -402,7 +402,7 @@
                     <a href="{{ route('admin.gallery.edit', $gallery) }}" class="btn-icon btn-edit">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <form action="{{ route('admin.galleryS.destroy', $gallery) }}" method="POST" style="flex: 1;" onsubmit="return confirm('Yakin ingin menghapus?');">
+                    <form action="{{ route('admin.gallery.destroy', $gallery) }}" method="POST" style="flex: 1;" onsubmit="return confirm('Yakin ingin menghapus?');">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn-icon btn-delete">
                             <i class="fas fa-trash"></i> Hapus
