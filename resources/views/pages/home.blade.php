@@ -98,7 +98,7 @@
                             <div class="flex items-center mb-4 space-x-1">
                                 @for ($i = 0; $i < 5; $i++)
                                     <svg class="w-5 h-5 {{ $i < $testimonial->rating ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.92-.755 1.678-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.56-1.84-.198-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                     </svg>
                                 @endfor
                             </div>
@@ -169,92 +169,156 @@
     @endif
 
     {{-- Kontak (form reservasi + info + map) --}}
-    <section id="kontak" class="py-20 md:py-32 bg-light">
+    <section id="kontak" class="py-20 md:py-32 bg-white">
         <div class="container-max">
             <x-section-title
-                badge="Hubungi Kami"
-                title="Siap Membantu Anda"
-                subtitle="Hubungi kami untuk reservasi, informasi lebih lanjut, atau pertanyaan seputar Balong Hardi"
+                badge="Reservasi Sekarang"
+                title="Ajukan Permintaan Reservasi"
+                subtitle="Isi form di bawah untuk melakukan reservasi memancing di Balong Hardi Sumedang"
             />
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-                {{-- Form ini TIDAK submit ke server. JS di bawah nyusun teks pesan
-                     reservasi dari input, terus redirect langsung ke wa.me. --}}
-                <div>
-                    <h3 class="text-xl font-bold text-secondary mb-6">Form Reservasi</h3>
-                    <form id="waContactForm" class="space-y-6">
+            {{-- Form Reservasi Full Width --}}
+            <div class="bg-light rounded-2xl p-8 md:p-12 border border-gray-200 mb-12">
+                <form id="waContactForm" class="space-y-6">
+                    {{-- Row 1: Nama Lengkap & Instansi --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Nama Lengkap</label>
+                            <label class="block text-sm font-bold text-secondary mb-3">Nama Lengkap <span class="text-red-500">*</span></label>
                             <input type="text" id="waName" required placeholder="Masukkan nama Anda"
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300">
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-bold text-secondary mb-3">Tanggal Reservasi</label>
-                                <input type="date" id="waDate" required min="{{ now()->format('Y-m-d') }}"
-                                       class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-secondary mb-3">Jumlah Orang</label>
-                                <input type="number" id="waGuests" min="1" value="1" required
-                                       class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300">
-                            </div>
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Paket yang Diinginkan</label>
+                            <label class="block text-sm font-bold text-secondary mb-3">Instansi / Perusahaan</label>
+                            <input type="text" id="waCompany" placeholder="Contoh: PT Maju Jaya"
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                        </div>
+                    </div>
+
+                    {{-- Row 2: Tanggal & Jumlah Orang --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-secondary mb-3">Tanggal Reservasi <span class="text-red-500">*</span></label>
+                            <input type="date" id="waDate" required min="{{ now()->format('Y-m-d') }}"
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-secondary mb-3">Jumlah Orang <span class="text-red-500">*</span></label>
+                            <input type="number" id="waGuests" min="1" value="1" required
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                        </div>
+                    </div>
+
+                    {{-- Row 3: Jenis Paket & Lokasi --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-secondary mb-3">Jenis Paket <span class="text-red-500">*</span></label>
                             <select id="waPackage" required
-                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300">
-                                <option value="">Pilih paket...</option>
+                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                                <option value="">-- Pilih paket --</option>
                                 @foreach ($packages as $package)
-                                    <option value="{{ $package->name }} ({{ $package->formatted_price }})">{{ $package->name }} - {{ $package->formatted_price }}</option>
+                                    <option value="{{ $package->name }} ({{ $package->formatted_price }})">{{ $package->name }} - {{ $package->formatted_price }} /orang</option>
                                 @endforeach
-                                <option value="Paket Grup">Paket Grup</option>
+                                <option value="Paket Grup">Paket Grup (Custom)</option>
                             </select>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Catatan Tambahan (opsional)</label>
-                            <textarea id="waMessage" rows="3" placeholder="Contoh: mau sewa alat pancing tambahan"
-                                      class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 resize-none"></textarea>
+                            <label class="block text-sm font-bold text-secondary mb-3">Lokasi Memancing</label>
+                            <input type="text" id="waLocation" placeholder="Contoh: Kolam Utama / Kolam Samping"
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
                         </div>
+                    </div>
 
-                        <x-button type="submit" variant="primary" icon="whatsapp" class="w-full">
-                            Kirim Reservasi via WhatsApp
-                        </x-button>
-                    </form>
-                </div>
+                    {{-- Row 4: Nomor Kontak --}}
+                    <div>
+                        <label class="block text-sm font-bold text-secondary mb-3">Nomor Kontak <span class="text-red-500">*</span></label>
+                        <input type="tel" id="waPhone" placeholder="Contoh: 081234567890" required
+                               class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                    </div>
 
-                {{-- Contact Info --}}
-                <div class="space-y-6">
-                    @if ($contact?->phone)
-                        <x-contact-card icon="phone" title="Telepon">
-                            <p class="text-gray-600 font-medium">{{ $contact->phone }}</p>
-                        </x-contact-card>
-                    @endif
+                    {{-- Row 5: Catatan Tambahan --}}
+                    <div>
+                        <label class="block text-sm font-bold text-secondary mb-3">Catatan Tambahan</label>
+                        <textarea id="waMessage" rows="4" placeholder="Contoh: Ingin sewa alat pancing lengkap, butuh pemandu, dll"
+                                  class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium resize-none"></textarea>
+                        <p class="text-xs text-gray-500 mt-2">* Tim kami akan merespons dalam 1x24 jam kerja</p>
+                    </div>
 
-                    @if ($contact?->whatsapp)
-                        <x-contact-card icon="whatsapp" title="WhatsApp">
-                            <a href="https://wa.me/{{ $contact->whatsapp }}" class="text-primary hover:text-primary-dark transition-colors duration-300 font-bold">
-                                +{{ $contact->whatsapp }}
-                            </a>
-                            <p class="text-gray-600 text-sm mt-1 font-medium">Respons cepat 24/7</p>
-                        </x-contact-card>
-                    @endif
+                    {{-- Submit Button --}}
+                    <button type="submit"
+                            class="w-full py-4 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-lg rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-3 group">
+                        <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform duration-300"></i>
+                        Kirim Permintaan Reservasi
+                    </button>
+                </form>
+            </div>
 
-                    @if ($location?->address)
-                        <x-contact-card icon="map-pin" title="Alamat">
-                            <p class="text-gray-600 font-medium">{{ $location->address }}</p>
-                        </x-contact-card>
-                    @endif
+            {{-- Info Cards Row --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {{-- Info Card 1: Telepon --}}
+                @if ($contact?->phone)
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-blue-900 mb-2">Telepon</p>
+                                <p class="text-gray-700 font-bold">{{ $contact->phone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
-                    @if ($contact?->operational_hours)
-                        <x-contact-card icon="clock" title="Jam Operasional">
-                            <p class="text-gray-600 font-bold">{{ $contact->operational_hours }}</p>
-                        </x-contact-card>
-                    @endif
-                </div>
+                {{-- Info Card 2: WhatsApp --}}
+                @if ($contact?->whatsapp)
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fab fa-whatsapp text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-green-900 mb-2">WhatsApp</p>
+                                <a href="https://wa.me/{{ $contact->whatsapp }}" class="text-green-700 font-bold hover:text-green-900 transition-colors">
+                                    +{{ $contact->whatsapp }}
+                                </a>
+                                <p class="text-xs text-green-700 mt-1 font-medium">Respons Cepat 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Info Card 3: Lokasi --}}
+                @if ($location?->address)
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-red-900 mb-2">Lokasi</p>
+                                <p class="text-gray-700 font-medium">{{ $location->address }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Info Card 4: Jam Operasional --}}
+                @if ($contact?->operational_hours)
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-yellow-900 mb-2">Jam Operasional</p>
+                                <p class="text-gray-700 font-bold">{{ $contact->operational_hours }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
@@ -290,35 +354,54 @@
 
             const waNumber = '{{ $contact->whatsapp ?? '' }}';
             const name = document.getElementById('waName').value.trim();
-            const dateInput = document.getElementById('waDate').value; // format: YYYY-MM-DD
+            const company = document.getElementById('waCompany').value.trim();
+            const dateInput = document.getElementById('waDate').value;
             const guests = document.getElementById('waGuests').value;
             const pkg = document.getElementById('waPackage').value;
+            const location = document.getElementById('waLocation').value.trim();
+            const phone = document.getElementById('waPhone').value.trim();
             const message = document.getElementById('waMessage').value.trim();
 
+            // Validasi
             if (!name) {
+                alert('Nama lengkap harus diisi!');
                 document.getElementById('waName').focus();
                 return;
             }
             if (!dateInput) {
+                alert('Tanggal reservasi harus dipilih!');
                 document.getElementById('waDate').focus();
                 return;
             }
             if (!pkg) {
+                alert('Paket harus dipilih!');
                 document.getElementById('waPackage').focus();
                 return;
             }
+            if (!phone) {
+                alert('Nomor kontak harus diisi!');
+                document.getElementById('waPhone').focus();
+                return;
+            }
 
+            // Format tanggal
             const formattedDate = new Date(dateInput + 'T00:00:00').toLocaleDateString('id-ID', {
                 weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
             });
 
-            let text = `Halo, saya ingin melakukan *reservasi* di Balong Hardi Sumedang.\n\n`;
-            text += `Nama: ${name}\n`;
-            text += `Tanggal: ${formattedDate}\n`;
-            text += `Jumlah Orang: ${guests}\n`;
-            text += `Paket: ${pkg}\n`;
-            if (message) text += `Catatan: ${message}\n`;
-            text += `\nMohon konfirmasi ketersediaannya. Terima kasih!`;
+            // Buat pesan WhatsApp
+            let text = `*🎣 PERMINTAAN RESERVASI BALONG HARDI*\n`;
+            text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            text += `*Nama:* ${name}\n`;
+            if (company) text += `*Instansi:* ${company}\n`;
+            text += `*Tanggal:* ${formattedDate}\n`;
+            text += `*Jumlah Orang:* ${guests} orang\n`;
+            text += `*Paket:* ${pkg}\n`;
+            if (location) text += `*Lokasi:* ${location}\n`;
+            text += `*Kontak:* ${phone}\n`;
+            if (message) text += `*Catatan:* ${message}\n`;
+            text += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            text += `Mohon konfirmasi ketersediaan. Terima kasih! 🙏`;
 
             window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
         });
