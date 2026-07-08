@@ -177,45 +177,36 @@
                 subtitle="Isi form di bawah untuk melakukan reservasi memancing di Balong Hardi Sumedang"
             />
 
-            {{-- Form Reservasi Full Width --}}
-            <div class="bg-light rounded-2xl p-8 md:p-12 border border-gray-200 mb-12">
-                <form id="waContactForm" class="space-y-6">
-                    {{-- Row 1: Nama Lengkap & Instansi --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{-- Form Reservasi - Simplified --}}
+            <div class="bg-light rounded-2xl p-5 md:p-8 border border-gray-200 mb-12">
+                <form id="waContactForm" class="space-y-3">
+                    {{-- Row 1: Nama & Tanggal --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" id="waName" required placeholder="Masukkan nama Anda"
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                            <label class="block text-xs font-bold text-secondary mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                            <input type="text" id="waName" required placeholder="Nama Anda"
+                                   class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Instansi / Perusahaan</label>
-                            <input type="text" id="waCompany" placeholder="Contoh: PT Maju Jaya"
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
-                        </div>
-                    </div>
-
-                    {{-- Row 2: Tanggal & Jumlah Orang --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Tanggal Reservasi <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-bold text-secondary mb-1">Tanggal Reservasi <span class="text-red-500">*</span></label>
                             <input type="date" id="waDate" required min="{{ now()->format('Y-m-d') }}"
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Jumlah Orang <span class="text-red-500">*</span></label>
-                            <input type="number" id="waGuests" min="1" value="1" required
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                                   class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                         </div>
                     </div>
 
-                    {{-- Row 3: Jenis Paket & Lokasi --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Row 2: Jumlah Orang & Paket --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Jenis Paket <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-bold text-secondary mb-1">Jumlah Orang <span class="text-red-500">*</span></label>
+                            <input type="number" id="waGuests" min="1" value="1" required
+                                   class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-secondary mb-1">Jenis Paket <span class="text-red-500">*</span></label>
                             <select id="waPackage" required
-                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
+                                    class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                                 <option value="">-- Pilih paket --</option>
                                 @foreach ($packages as $package)
                                     <option value="{{ $package->name }} ({{ $package->formatted_price }})">{{ $package->name }} - {{ $package->formatted_price }} /orang</option>
@@ -223,35 +214,24 @@
                                 <option value="Paket Grup">Paket Grup (Custom)</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-secondary mb-3">Lokasi Memancing</label>
-                            <input type="text" id="waLocation" placeholder="Contoh: Kolam Utama / Kolam Samping"
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
-                        </div>
                     </div>
 
-                    {{-- Row 4: Nomor Kontak --}}
+                    {{-- Row 3: Catatan Tambahan --}}
                     <div>
-                        <label class="block text-sm font-bold text-secondary mb-3">Nomor Kontak <span class="text-red-500">*</span></label>
-                        <input type="tel" id="waPhone" placeholder="Contoh: 081234567890" required
-                               class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium">
-                    </div>
-
-                    {{-- Row 5: Catatan Tambahan --}}
-                    <div>
-                        <label class="block text-sm font-bold text-secondary mb-3">Catatan Tambahan</label>
-                        <textarea id="waMessage" rows="4" placeholder="Contoh: Ingin sewa alat pancing lengkap, butuh pemandu, dll"
-                                  class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-300 font-medium resize-none"></textarea>
-                        <p class="text-xs text-gray-500 mt-2">* Tim kami akan merespons dalam 1x24 jam kerja</p>
+                        <label class="block text-xs font-bold text-secondary mb-1">Catatan Tambahan</label>
+                        <textarea id="waMessage" rows="2" placeholder="Cth: Sewa alat pancing lengkap, butuh pemandu, dll"
+                                  class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium resize-none"></textarea>
                     </div>
 
                     {{-- Submit Button --}}
-                    <button type="submit"
-                            class="w-full py-4 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-lg rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-3 group">
-                        <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform duration-300"></i>
-                        Kirim Permintaan Reservasi
-                    </button>
+                    <div class="flex items-center justify-between gap-4 pt-1">
+                        <p class="text-xs text-gray-500">* Tim kami akan merespons dalam 1x24 jam kerja</p>
+                        <button type="submit"
+                                class="shrink-0 py-2.5 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-sm rounded-lg hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group">
+                            <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform duration-300"></i>
+                            Kirim Reservasi
+                        </button>
+                    </div>
                 </form>
             </div>
 
@@ -354,12 +334,9 @@
 
             const waNumber = '{{ $contact->whatsapp ?? '' }}';
             const name = document.getElementById('waName').value.trim();
-            const company = document.getElementById('waCompany').value.trim();
             const dateInput = document.getElementById('waDate').value;
             const guests = document.getElementById('waGuests').value;
             const pkg = document.getElementById('waPackage').value;
-            const location = document.getElementById('waLocation').value.trim();
-            const phone = document.getElementById('waPhone').value.trim();
             const message = document.getElementById('waMessage').value.trim();
 
             // Validasi
@@ -378,11 +355,6 @@
                 document.getElementById('waPackage').focus();
                 return;
             }
-            if (!phone) {
-                alert('Nomor kontak harus diisi!');
-                document.getElementById('waPhone').focus();
-                return;
-            }
 
             // Format tanggal
             const formattedDate = new Date(dateInput + 'T00:00:00').toLocaleDateString('id-ID', {
@@ -393,12 +365,9 @@
             let text = `*🎣 PERMINTAAN RESERVASI BALONG HARDI*\n`;
             text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
             text += `*Nama:* ${name}\n`;
-            if (company) text += `*Instansi:* ${company}\n`;
             text += `*Tanggal:* ${formattedDate}\n`;
             text += `*Jumlah Orang:* ${guests} orang\n`;
             text += `*Paket:* ${pkg}\n`;
-            if (location) text += `*Lokasi:* ${location}\n`;
-            text += `*Kontak:* ${phone}\n`;
             if (message) text += `*Catatan:* ${message}\n`;
             text += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
             text += `Mohon konfirmasi ketersediaan. Terima kasih! 🙏`;
