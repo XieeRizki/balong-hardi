@@ -303,7 +303,7 @@
         </div>
     </section>
 
-    <x-map :location="$location" />
+    <x-map />
 
     {{-- Final CTA --}}
     <section class="py-20 md:py-32 bg-gradient-primary text-white">
