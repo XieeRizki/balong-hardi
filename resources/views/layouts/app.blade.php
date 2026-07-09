@@ -8,7 +8,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -132,6 +133,30 @@
             mobileMenu?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
         });
     </script>
+
+    <!-- AOS JS & Init -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Inisialisasi AOS (Animasi Scroll)
+        AOS.init({
+            once: true, // Animasi cuma jalan sekali pas discroll ke bawah
+            offset: 50, // Muncul sedikit lebih awal
+            duration: 800, // Kecepatan animasi 0.8 detik
+            easing: 'ease-out-cubic',
+        });
+
+        // Efek Parallax Ringan untuk Hero Banner
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            const parallaxImg = document.querySelector('.parallax-img');
+            if (parallaxImg) {
+                // Gambar akan bergeser ke bawah sedikit demi sedikit saat di-scroll
+                parallaxImg.style.transform = 'translateY(' + (scrolled * 0.4) + 'px)';
+            }
+        });
+    });
+</script>
 
     @yield('js')
 </body>
