@@ -335,7 +335,7 @@
                     <i class="fas fa-image"></i> Hero Banner
                 </a>
 
-                <a href="{{ route('admin.about.edit') }}" class="{{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.about.index') }}" class="{{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
                     <i class="fas fa-info-circle"></i> Tentang Kami
                 </a>
 

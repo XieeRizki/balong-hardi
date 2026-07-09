@@ -260,7 +260,7 @@
 <!-- Page Header -->
 <div class="page-header">
     <div class="page-header-left">
-        <h1>🎯 Kelola Hero Banner</h1>
+        <h1>Kelola Hero Banner</h1>
         <p>Atur banner utama yang ditampilkan di halaman depan website</p>
     </div>
     <a href="{{ route('admin.hero.edit') }}" class="btn-primary">

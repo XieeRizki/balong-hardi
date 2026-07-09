@@ -56,9 +56,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/hero', [HeroController::class, 'edit'])->name('hero.edit');
     Route::put('/hero', [HeroController::class, 'update'])->name('hero.update');
 
-    Route::get('/about', [AboutController::class, 'edit'])->name('about.edit');
-    Route::put('/about', [AboutController::class, 'update'])->name('about.update');
-
     Route::get('/location', [LocationController::class, 'edit'])->name('location.edit');
     Route::put('/location', [LocationController::class, 'update'])->name('location.update');
 
@@ -66,6 +63,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/contact', [AdminContactController::class, 'update'])->name('contact.update');
 
     // Resource penuh, tapi tanpa 'show' (gak dipakai di admin)
+    Route::resource('about', AboutController::class)->except(['show']);
     Route::resource('facility', FacilityController::class)->except(['show']);
     Route::resource('gallery', AdminGalleryController::class)->except(['show']);
     Route::resource('packages', PackageController::class)->except(['show']);

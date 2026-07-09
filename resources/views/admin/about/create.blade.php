@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Edit Tentang Kami')
+@section('title', 'Tambah Tentang Kami')
 @section('content')
 
 <style>
@@ -222,26 +222,25 @@
 </style>
 
 <div class="form-header">
-    <h1>Edit Tentang Kami: {{ $about->title }}</h1>
-    <p>Perbarui informasi dan manfaat tentang perusahaan</p>
+    <h1>Tambah Konten Tentang Kami</h1>
+    <p>Isi informasi lengkap tentang perusahaan dan manfaatnya</p>
 </div>
 
 <div class="form-box">
-    <form action="{{ route('admin.about.update', $about) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.about.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
 
         <!-- Title -->
         <div class="form-group">
             <label for="title">Judul <span class="required">*</span></label>
-            <input type="text" id="title" name="title" value="{{ old('title', $about->title) }}" placeholder="Contoh: Tentang Balong Hardi" required>
+            <input type="text" id="title" name="title" value="{{ old('title') }}" placeholder="Contoh: Tentang Balong Hardi" required>
             @error('title') <p class="form-error">{{ $message }}</p> @enderror
         </div>
 
         <!-- Description -->
         <div class="form-group">
             <label for="description">Deskripsi <span class="required">*</span></label>
-            <textarea id="description" name="description" placeholder="Jelaskan tentang perusahaan, visi, misi, dan keunggulan Balong Hardi..." required>{{ old('description', $about->description) }}</textarea>
+            <textarea id="description" name="description" placeholder="Jelaskan tentang perusahaan, visi, misi, dan keunggulan Balong Hardi..." required>{{ old('description') }}</textarea>
             <p class="form-hint">Gunakan garis baru untuk paragraf terpisah</p>
             @error('description') <p class="form-error">{{ $message }}</p> @enderror
         </div>
@@ -249,42 +248,17 @@
         <!-- Image -->
         <div class="form-group">
             <label for="image">Gambar</label>
-            @if ($about->image)
-                <div class="image-preview-box">
-                    <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}">
-                </div>
-                <p class="form-hint">Gambar saat ini ditampilkan di atas. Upload gambar baru untuk menggantinya.</p>
-            @endif
             <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(this)">
             <p class="form-hint">Maksimal 2MB. Format: JPG, PNG, WebP</p>
-            <div id="imagePreview"></div>
+            <div id="imagePreview" class="image-preview-box"></div>
             @error('image') <p class="form-error">{{ $message }}</p> @enderror
         </div>
 
         <!-- Benefits Section -->
         <div class="benefits-section">
-            <h3>Manfaat / Keunggulan</h3>
+            <h3>Manfaat / Keunggulan <span class="required">*</span></h3>
             <div id="benefitsList">
-                @forelse ($about->benefits as $index => $benefit)
-                    <div class="benefit-item" id="benefit-{{ $index }}">
-                        <div class="benefit-header">
-                            <span class="benefit-number">Manfaat {{ $index + 1 }}</span>
-                            <button type="button" class="btn-remove-benefit" onclick="removeBenefit({{ $index }})">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <label>Judul Manfaat</label>
-                            <input type="text" name="benefits[{{ $index }}][title]" value="{{ old("benefits.$index.title", $benefit->title) }}" placeholder="Contoh: Kolam Luas & Terawat" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Deskripsi (Opsional)</label>
-                            <input type="text" name="benefits[{{ $index }}][description]" value="{{ old("benefits.$index.description", $benefit->description) }}" placeholder="Deskripsi singkat tentang manfaat ini">
-                        </div>
-                    </div>
-                @empty
-                    <!-- Empty benefits list -->
-                @endforelse
+                <!-- Benefits akan ditambahkan di sini -->
             </div>
             <button type="button" class="add-benefit-btn" onclick="addBenefit()">
                 <i class="fas fa-plus"></i> Tambah Manfaat
@@ -297,14 +271,14 @@
                 <i class="fas fa-times"></i> Batal
             </a>
             <button type="submit" class="btn btn-save">
-                <i class="fas fa-save"></i> Update
+                <i class="fas fa-save"></i> Simpan
             </button>
         </div>
     </form>
 </div>
 
 <script>
-    let benefitCount = {{ count($about->benefits) }};
+    let benefitCount = 0;
 
     // Add benefit item
     function addBenefit() {
@@ -345,11 +319,20 @@
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('imagePreview').innerHTML = `<div class="image-preview-box"><img src="${e.target.result}" alt="Preview"></div>`;
+                document.getElementById('imagePreview').innerHTML = `<img src="${e.target.result}" alt="Preview">`;
             };
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // Load old benefits if exist (for form re-population on error)
+    window.addEventListener('load', function() {
+        const benefitsList = document.getElementById('benefitsList');
+        if (benefitsList.children.length === 0) {
+            // Add one empty benefit by default
+            addBenefit();
+        }
+    });
 </script>
 
 @endsection
