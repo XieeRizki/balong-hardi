@@ -5,11 +5,13 @@
 @props(['about'])
 
 @if ($about)
-    <section id="tentang" class="py-20 md:py-32 bg-white">
+    {{-- Tambah overflow-hidden biar animasi dari samping gak bikin layar geser --}}
+    <section id="tentang" class="py-20 md:py-32 bg-white overflow-hidden">
         <div class="container-max">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <!-- Image -->
-                <div class="order-2 md:order-1">
+                
+                <!-- Image (Animasi masuk dari kiri) -->
+                <div class="order-2 md:order-1" data-aos="fade-right" data-aos-duration="1000">
                     <div class="relative h-96 md:h-[550px] rounded-3xl overflow-hidden shadow-2xl">
                         @if ($about->image)
                             <img src="{{ asset('storage/' . $about->image) }}"
@@ -20,8 +22,8 @@
                     </div>
                 </div>
 
-                <!-- Content -->
-                <div class="order-1 md:order-2">
+                <!-- Content (Animasi masuk dari kanan) -->
+                <div class="order-1 md:order-2" data-aos="fade-left" data-aos-duration="1000">
                     <x-section-title badge="Tentang Kami" :title="$about->title" align="left" />
 
                     <div class="text-lg text-gray-600 mb-8 leading-relaxed space-y-4 -mt-12">
@@ -31,7 +33,8 @@
                     @if ($about->benefits->isNotEmpty())
                         <div class="space-y-4 mb-10">
                             @foreach ($about->benefits as $benefit)
-                                <div class="flex items-start space-x-4">
+                                {{-- Tiap poin keunggulan muncul naik satu-satu secara berurutan --}}
+                                <div class="flex items-start space-x-4" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 150 }}">
                                     <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center mt-1 shadow-lg">
                                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -48,6 +51,7 @@
                         </div>
                     @endif
                 </div>
+                
             </div>
         </div>
     </section>

@@ -6,8 +6,9 @@
 
     {{-- Hero, About, dan Map sudah full komponen, tinggal lempar data dari HomeController --}}
     <x-hero :hero="$hero" />
+    
     <x-about :about="$about" />
-
+    
     {{-- Fasilitas: section masih di sini, tapi tiap card sudah pakai <x-facility-card> --}}
     @if ($facilities->isNotEmpty())
         <section id="fasilitas" class="py-20 md:py-32 bg-light">
