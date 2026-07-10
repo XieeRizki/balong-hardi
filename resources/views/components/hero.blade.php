@@ -3,12 +3,23 @@
     controller: Hero::with('stats')->first()).
 
     Kalau belum ada data hero di database, section ini otomatis gak nongol.
+
+    FULLSCREEN DINAMIS:
+    - Pake CSS 100dvh (dynamic viewport height) sebagai base, biar akurat
+      di HP (ngikutin address bar yg muncul/hilang) tanpa perlu JS di
+      browser modern.
+    - Ditambah fallback JS (--vh variable) buat browser lama yang belum
+      support dvh, dan supaya tetep akurat pas devtools dibuka/ditutup
+      atau window di-resize di desktop.
 --}}
 @props(['hero'])
 
 @if ($hero)
-    {{-- UBAH DI SINI: min-h-screen dan -mt-20 (menarik banner ke belakang navbar) --}}
-    <section class="relative pt-36 pb-24 md:pt-44 md:pb-32 flex items-center min-h-screen -mt-20 overflow-hidden bg-gray-900 z-0">
+    <section 
+        id="hero-fullscreen"
+        class="relative flex items-center min-h-screen -mt-20 overflow-hidden bg-gray-900 z-0"
+        style="min-height: 100vh; min-height: 100dvh;"
+    >
 
         {{-- BACKGROUND IMAGE DENGAN DARK GRADIENT OVERLAY --}}
         <div class="absolute inset-0 z-0">
@@ -27,7 +38,7 @@
             <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[100px]"></div>
         </div>
 
-        <div class="container-max relative z-10 w-full">
+        <div class="container-max relative z-10 w-full py-24 md:py-0">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 {{-- KIRI: KONTEN TEKS --}}
@@ -95,4 +106,42 @@
             </svg>
         </div>
     </section>
+
+    {{-- 
+        SCRIPT FALLBACK FULLSCREEN
+        Ini yang bikin section ini bener2 ngikutin tinggi layar asli device,
+        termasuk pas devtools dibuka/ditutup, resize window, rotate HP,
+        atau browser mobile yang address bar-nya nongol/ilang.
+        --vh dihitung dari 1% tinggi viewport ASLI (visualViewport kalo ada).
+    --}}
+    <script>
+        (function () {
+            const heroEl = document.getElementById('hero-fullscreen');
+            if (!heroEl) return;
+
+            function setFullHeight() {
+                const viewportHeight = window.visualViewport
+                    ? window.visualViewport.height
+                    : window.innerHeight;
+
+                const vh = viewportHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                heroEl.style.minHeight = `calc(var(--vh, 1vh) * 100)`;
+            }
+
+            // Jalanin pertama kali
+            setFullHeight();
+
+            // Update kalo window di-resize (termasuk buka/tutup devtools di desktop)
+            window.addEventListener('resize', setFullHeight);
+
+            // Update kalo HP di-rotate
+            window.addEventListener('orientationchange', setFullHeight);
+
+            // Update kalo ada zoom / address bar HP muncul-ilang (lebih akurat dari resize biasa)
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', setFullHeight);
+            }
+        })();
+    </script>
 @endif
