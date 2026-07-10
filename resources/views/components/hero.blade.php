@@ -99,10 +99,26 @@
             </div>
         </div>
 
-        {{-- WAVE SHAPE DIVIDER DI BAWAH HERO (Transisi ke halaman About) --}}
-        <div class="absolute bottom-0 left-0 right-0 leading-none z-20">
-            <svg viewBox="0 0 1440 80" class="w-full h-16 md:h-20" preserveAspectRatio="none">
-                <path fill="#ffffff" d="M0,32 C240,80 480,0 720,16 C960,32 1200,80 1440,48 L1440,80 L0,80 Z"></path>
+        {{-- 
+            WAVE SHAPE DIVIDER DI BAWAH HERO (Transisi ke halaman About)
+            2 layer gelombang, masing2 punya data-speed beda -> pas discroll,
+            layer belakang gerak lebih pelan, layer depan lebih cepat.
+            Bikin efek kedalaman (parallax) kayak air beneran.
+            Pattern SVG-nya sengaja dibikin looping mulus (pakai Q/T bezier
+            yang start & endpoint-nya ketemu), jadi pas di-translate gak
+            ada "patahan" di sambungannya.
+        --}}
+        <div class="absolute bottom-0 left-0 right-0 leading-none z-20 overflow-hidden pointer-events-none h-16 md:h-20">
+            {{-- Layer belakang: lebih soft, gerak lebih lambat, arah normal --}}
+            <svg viewBox="0 0 2880 80" preserveAspectRatio="none"
+                 class="wave-layer wave-back absolute bottom-0 left-0 w-[200%] max-w-none h-full opacity-40">
+                <path fill="#ffffff" d="M0,50 Q360,10 720,50 T1440,50 T2160,50 T2880,50 L2880,80 L0,80 Z"></path>
+            </svg>
+            {{-- Layer depan: gelombang utama, gerak lebih cepat, arah kebalikan
+                 (biar keliatan kayak air bener2 bergerak, gak cuma geser satu arah) --}}
+            <svg viewBox="0 0 2880 80" preserveAspectRatio="none"
+                 class="wave-layer wave-front absolute bottom-0 left-0 w-[200%] max-w-none h-full">
+                <path fill="#ffffff" d="M0,32 Q360,72 720,32 T1440,32 T2160,32 T2880,32 L2880,80 L0,80 Z"></path>
             </svg>
         </div>
     </section>

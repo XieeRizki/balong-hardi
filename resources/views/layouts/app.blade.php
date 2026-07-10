@@ -89,6 +89,32 @@
         .gradient-primary {
             background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
         }
+
+        /* 
+            Animasi gelombang di hero: looping terus-menerus, gak bergantung
+            sama scroll event (jadi dijamin selalu keliatan gerak).
+            Trik loop-nya: svg lebar-nya 200% dari container (2x pattern wave
+            yang sama persis), terus di-translateX -50% dari lebar svg itu
+            sendiri = geser sejauh 1 pattern penuh -> pas nyampe situ, posisinya
+            identik sama posisi awal, jadi keliatan nyambung mulus tanpa "patahan".
+        */
+        @keyframes wave-move {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+        .wave-layer {
+            animation-name: wave-move;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            will-change: transform;
+        }
+        .wave-back {
+            animation-duration: 22s; /* lebih pelan = kesan gelombang jauh di belakang */
+        }
+        .wave-front {
+            animation-duration: 12s;
+            animation-direction: reverse; /* arah kebalikan biar keliatan gelombang saling silang */
+        }
     </style>
 
     @yield('css')
@@ -135,29 +161,33 @@
     </script>
 
     <!-- AOS JS & Init -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Inisialisasi AOS (Animasi Scroll)
-        AOS.init({
-        once: false, // false = animasi berulang tiap kali section masuk/keluar viewport
-        mirror: true, // elemen animasi lagi juga pas discroll ke ATAS (bukan cuma pas ke bawah)
-        offset: 50,
-        duration: 800,
-        easing: 'ease-out-cubic',
-    });
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inisialisasi AOS (Animasi Scroll)
+            AOS.init({
+                once: false, // false = animasi berulang tiap kali section masuk/keluar viewport
+                mirror: true, // elemen animasi lagi juga pas discroll ke ATAS (bukan cuma pas ke bawah)
+                offset: 50,
+                duration: 800,
+                easing: 'ease-out-cubic',
+            });
 
-        // Efek Parallax Ringan untuk Hero Banner
-        window.addEventListener('scroll', function() {
-            const scrolled = window.scrollY;
-            const parallaxImg = document.querySelector('.parallax-img');
-            if (parallaxImg) {
-                // Gambar akan bergeser ke bawah sedikit demi sedikit saat di-scroll
-                parallaxImg.style.transform = 'translateY(' + (scrolled * 0.4) + 'px)';
-            }
+            // Efek Parallax Ringan untuk Hero Banner
+            // (Animasi gelombang sekarang jalan sendiri lewat CSS keyframe
+            // di atas -- .wave-move -- gak perlu JS/scroll listener lagi,
+            // jadi dijamin selalu bergerak dan lebih ringan buat browser.)
+            window.addEventListener('scroll', function () {
+                const scrolled = window.scrollY;
+
+                const parallaxImg = document.querySelector('.parallax-img');
+                if (parallaxImg) {
+                    // Gambar akan bergeser ke bawah sedikit demi sedikit saat di-scroll
+                    parallaxImg.style.transform = 'translateY(' + (scrolled * 0.4) + 'px)';
+                }
+            });
         });
-    });
-</script>
+    </script>
 
     @yield('js')
 </body>
