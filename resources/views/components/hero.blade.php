@@ -1,33 +1,45 @@
 {{--
-    Hero section. Nerima $hero (with 'stats' relation sudah di-load dari
-    controller: Hero::with('stats')->first()).
+    Hero section. Nerima $hero (with 'stats' & 'images' relation sudah
+    di-load dari controller: Hero::with(['stats','images'])->first()).
 
     Kalau belum ada data hero di database, section ini otomatis gak nongol.
 
+    SLIDESHOW:
+    - Kalau $hero->images ada isinya (lebih dari 1 foto), background-nya
+      crossfade otomatis gonta-ganti tiap beberapa detik.
+    - Kalau cuma 1 foto di $hero->images, otomatis statis (gak ada animasi).
+    - Kalau $hero->images kosong sama sekali, fallback ke $hero->image lama
+      (biar data lama yang cuma upload 1 foto tetep tampil normal).
+
     FULLSCREEN DINAMIS:
-    - Pake CSS 100dvh (dynamic viewport height) sebagai base, biar akurat
-      di HP (ngikutin address bar yg muncul/hilang) tanpa perlu JS di
-      browser modern.
-    - Ditambah fallback JS (--vh variable) buat browser lama yang belum
-      support dvh, dan supaya tetep akurat pas devtools dibuka/ditutup
-      atau window di-resize di desktop.
+    - Pake CSS 100dvh sebagai base, + fallback JS (--vh) buat browser lama
+      dan biar akurat pas devtools dibuka/ditutup atau resize.
 --}}
 @props(['hero'])
 
 @if ($hero)
-    <section 
+    @php
+        // Kumpulan gambar buat slideshow. Fallback ke $hero->image kalau
+        // tabel hero_images masih kosong.
+        $slides = $hero->images->isNotEmpty()
+            ? $hero->images->pluck('image')
+            : ($hero->image ? collect([$hero->image]) : collect());
+    @endphp
+
+    <section
         id="hero-fullscreen"
         class="relative flex items-center min-h-screen -mt-20 overflow-hidden bg-gray-900 z-0"
         style="min-height: 100vh; min-height: 100dvh;"
     >
 
-        {{-- BACKGROUND IMAGE DENGAN DARK GRADIENT OVERLAY --}}
+        {{-- BACKGROUND SLIDESHOW DENGAN DARK GRADIENT OVERLAY --}}
         <div class="absolute inset-0 z-0">
-            @if($hero->image)
-                <img src="{{ asset('storage/' . $hero->image) }}" 
-                     alt="{{ $hero->title }}" 
-                     class="w-full h-full object-cover opacity-60">
-            @endif
+            @foreach ($slides as $index => $slideImage)
+                <img src="{{ asset('storage/' . $slideImage) }}"
+                     alt="{{ $hero->title }}"
+                     data-hero-slide
+                     class="hero-slide absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-[1500ms] ease-in-out {{ $index === 0 ? 'opacity-60' : 'opacity-0' }}">
+            @endforeach
             {{-- Gradient hitam dari kiri ke kanan biar teks selalu 100% terbaca --}}
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/70 to-transparent"></div>
         </div>
@@ -40,7 +52,7 @@
 
         <div class="container-max relative z-10 w-full py-24 md:py-0">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
+
                 {{-- KIRI: KONTEN TEKS --}}
                 <div class="lg:col-span-7 text-center md:text-left" data-aos="fade-right" data-aos-duration="1000">
                     {{-- Badge Premium --}}
@@ -99,23 +111,16 @@
             </div>
         </div>
 
-        {{-- 
+        {{--
             WAVE SHAPE DIVIDER DI BAWAH HERO (Transisi ke halaman About)
             2 layer gelombang, masing2 punya data-speed beda -> pas discroll,
             layer belakang gerak lebih pelan, layer depan lebih cepat.
-            Bikin efek kedalaman (parallax) kayak air beneran.
-            Pattern SVG-nya sengaja dibikin looping mulus (pakai Q/T bezier
-            yang start & endpoint-nya ketemu), jadi pas di-translate gak
-            ada "patahan" di sambungannya.
         --}}
         <div class="absolute bottom-0 left-0 right-0 leading-none z-20 overflow-hidden pointer-events-none h-16 md:h-20">
-            {{-- Layer belakang: lebih soft, gerak lebih lambat, arah normal --}}
             <svg viewBox="0 0 2880 80" preserveAspectRatio="none"
                  class="wave-layer wave-back absolute bottom-0 left-0 w-[200%] max-w-none h-full opacity-40">
                 <path fill="#ffffff" d="M0,50 Q360,10 720,50 T1440,50 T2160,50 T2880,50 L2880,80 L0,80 Z"></path>
             </svg>
-            {{-- Layer depan: gelombang utama, gerak lebih cepat, arah kebalikan
-                 (biar keliatan kayak air bener2 bergerak, gak cuma geser satu arah) --}}
             <svg viewBox="0 0 2880 80" preserveAspectRatio="none"
                  class="wave-layer wave-front absolute bottom-0 left-0 w-[200%] max-w-none h-full">
                 <path fill="#ffffff" d="M0,32 Q360,72 720,32 T1440,32 T2160,32 T2880,32 L2880,80 L0,80 Z"></path>
@@ -123,18 +128,15 @@
         </div>
     </section>
 
-    {{-- 
-        SCRIPT FALLBACK FULLSCREEN
-        Ini yang bikin section ini bener2 ngikutin tinggi layar asli device,
-        termasuk pas devtools dibuka/ditutup, resize window, rotate HP,
-        atau browser mobile yang address bar-nya nongol/ilang.
-        --vh dihitung dari 1% tinggi viewport ASLI (visualViewport kalo ada).
+    {{--
+        SCRIPT FULLSCREEN + SLIDESHOW
     --}}
     <script>
         (function () {
             const heroEl = document.getElementById('hero-fullscreen');
             if (!heroEl) return;
 
+            // ---- Fullscreen dinamis (sama kayak sebelumnya) ----
             function setFullHeight() {
                 const viewportHeight = window.visualViewport
                     ? window.visualViewport.height
@@ -145,18 +147,28 @@
                 heroEl.style.minHeight = `calc(var(--vh, 1vh) * 100)`;
             }
 
-            // Jalanin pertama kali
             setFullHeight();
-
-            // Update kalo window di-resize (termasuk buka/tutup devtools di desktop)
             window.addEventListener('resize', setFullHeight);
-
-            // Update kalo HP di-rotate
             window.addEventListener('orientationchange', setFullHeight);
-
-            // Update kalo ada zoom / address bar HP muncul-ilang (lebih akurat dari resize biasa)
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', setFullHeight);
+            }
+
+            // ---- Slideshow crossfade ----
+            const slides = heroEl.querySelectorAll('[data-hero-slide]');
+            if (slides.length > 1) {
+                let current = 0;
+                const intervalMs = 5000; // ganti foto tiap 5 detik
+
+                setInterval(function () {
+                    slides[current].classList.remove('opacity-60');
+                    slides[current].classList.add('opacity-0');
+
+                    current = (current + 1) % slides.length;
+
+                    slides[current].classList.remove('opacity-0');
+                    slides[current].classList.add('opacity-60');
+                }, intervalMs);
             }
         })();
     </script>

@@ -53,8 +53,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Singleton: cuma edit/update, gak ada index/create/destroy
-    Route::get('/hero', [HeroController::class, 'edit'])->name('hero.edit');
+    Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');
+    Route::get('/hero/edit', [HeroController::class, 'edit'])->name('hero.edit');
     Route::put('/hero', [HeroController::class, 'update'])->name('hero.update');
+    Route::delete('/hero', [HeroController::class, 'destroy'])->name('hero.delete');
 
     Route::get('/location', [LocationController::class, 'edit'])->name('location.edit');
     Route::put('/location', [LocationController::class, 'update'])->name('location.update');

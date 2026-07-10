@@ -27,4 +27,14 @@ class Hero extends Model
     {
         return $this->hasMany(HeroStat::class)->orderBy('order');
     }
+
+    /**
+     * Gambar-gambar yang bakal ganti-ganti (slideshow) di background hero.
+     * $hero->image (kolom lama, single) TETAP dipertahankan sebagai fallback
+     * kalau belum ada satupun gambar di sini -- biar gak ngerusak data lama.
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(HeroImage::class)->orderBy('order');
+    }
 }

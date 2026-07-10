@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\Storage;
 
 class HeroController extends Controller
 {
-    /**
-     * Hero is singleton: cuma ada 1 banner utama yang dipakai di homepage.
-     * Kalau belum ada row sama sekali, bikin instance kosong biar form edit
-     * tetap bisa dipakai buat isi data pertama kali.
-     */
+    public function index()
+    {
+        $hero = Hero::with(['stats', 'images'])->first();
+
+        return view('admin.hero.index', compact('hero'));
+    }
+
     public function edit()
     {
-        $hero = Hero::with('stats')->first() ?? new Hero(['stats' => collect()]);
+        $hero = Hero::with(['stats', 'images'])->first() ?? new Hero(['stats' => collect(), 'images' => collect()]);
 
         return view('admin.hero.edit', compact('hero'));
     }
@@ -33,6 +35,12 @@ class HeroController extends Controller
             'stats.*.label' => 'required_with:stats|string|max:100',
             'stats.*.value' => 'required_with:stats|string|max:50',
             'stats.*.icon' => 'nullable|string|max:100',
+            // Gambar-gambar buat slideshow (bisa upload banyak sekaligus)
+            'images' => 'nullable|array',
+            'images.*' => 'image|max:2048',
+            // ID gambar lama yang mau dihapus (dicentang di form)
+            'delete_images' => 'nullable|array',
+            'delete_images.*' => 'integer|exists:hero_images,id',
         ]);
 
         $hero = Hero::first();
@@ -61,6 +69,44 @@ class HeroController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.hero.edit')->with('success', 'Hero berhasil diperbarui.');
+        // Hapus gambar slideshow yang dicentang buat dihapus
+        if ($request->filled('delete_images')) {
+            $imagesToDelete = $hero->images()->whereIn('id', $request->input('delete_images'))->get();
+            foreach ($imagesToDelete as $img) {
+                Storage::disk('public')->delete($img->image);
+                $img->delete();
+            }
+        }
+
+        // Tambah gambar slideshow baru (kalau ada yang diupload)
+        if ($request->hasFile('images')) {
+            $currentMaxOrder = (int) $hero->images()->max('order');
+            foreach ($request->file('images') as $index => $file) {
+                $path = $file->store('heroes', 'public');
+                $hero->images()->create([
+                    'image' => $path,
+                    'order' => $currentMaxOrder + $index + 1,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.hero.index')->with('success', 'Hero berhasil diperbarui.');
+    }
+
+    public function destroy()
+    {
+        $hero = Hero::with('images')->first();
+
+        if ($hero) {
+            if ($hero->image) {
+                Storage::disk('public')->delete($hero->image);
+            }
+            foreach ($hero->images as $img) {
+                Storage::disk('public')->delete($img->image);
+            }
+            $hero->delete(); // stats & images auto-deleted via cascade
+        }
+
+        return redirect()->route('admin.hero.index')->with('success', 'Hero banner berhasil dihapus.');
     }
 }

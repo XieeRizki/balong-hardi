@@ -257,6 +257,51 @@
         gap: 1.25rem;
     }
 
+    .slideshow-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .slideshow-item {
+        position: relative;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .slideshow-item img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .slideshow-item .checkbox-wrap {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.65);
+        padding: 0.4rem 0.6rem;
+    }
+
+    .slideshow-item .checkbox-wrap label {
+        color: white;
+        font-size: 0.75rem;
+    }
+
+    .slideshow-empty {
+        text-align: center;
+        padding: 1.5rem;
+        color: var(--neutral);
+        background: rgba(249, 115, 22, 0.05);
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+        margin-bottom: 1.25rem;
+    }
+
     @media (max-width: 768px) {
         .grid-2col {
             grid-template-columns: 1fr;
@@ -285,9 +330,9 @@
 
         <div class="form-group">
             <label>Judul Banner <span class="required">*</span></label>
-            <input type="text" name="title" value="{{ old('title', $hero->title ?? '') }}" 
-                   class="@error('title') border-red-500 @enderror" 
-                   placeholder="Contoh: Selamat Datang di Balong Hardi" 
+            <input type="text" name="title" value="{{ old('title', $hero->title ?? '') }}"
+                   class="@error('title') border-red-500 @enderror"
+                   placeholder="Contoh: Selamat Datang di Balong Hardi"
                    required>
             @error('title')
                 <p class="form-error">{{ $message }}</p>
@@ -297,7 +342,7 @@
 
         <div class="form-group">
             <label>Subtitle <span class="required">*</span></label>
-            <textarea name="subtitle" class="@error('subtitle') border-red-500 @enderror" 
+            <textarea name="subtitle" class="@error('subtitle') border-red-500 @enderror"
                       placeholder="Contoh: Kolam renang terlengkap dengan fasilitas modern">{{ old('subtitle', $hero->subtitle ?? '') }}</textarea>
             @error('subtitle')
                 <p class="form-error">{{ $message }}</p>
@@ -306,19 +351,54 @@
         </div>
 
         <div class="form-group">
-            <label>Gambar Hero <span class="required">*</span></label>
+            <label>Gambar Hero (Fallback)</label>
             @if($hero->image)
                 <div class="image-preview-box">
                     <img src="{{ asset('storage/' . $hero->image) }}" alt="{{ $hero->title }}">
                     <p class="form-hint" style="margin-top: 0.75rem;">Gambar saat ini</p>
                 </div>
             @endif
-            <input type="file" name="image" accept="image/*" 
+            <input type="file" name="image" accept="image/*"
                    class="@error('image') border-red-500 @enderror">
             @error('image')
                 <p class="form-error">{{ $message }}</p>
             @enderror
-            <p class="form-hint">Format: JPG, PNG, WebP (Max 2MB). Ukuran optimal: 1920x600px</p>
+            <p class="form-hint">Dipakai kalau Gambar Slideshow di bawah kosong. Format: JPG, PNG, WebP (Max 2MB).</p>
+        </div>
+
+        <!-- BAGIAN GAMBAR SLIDESHOW -->
+        <div class="section-divider">
+            <div class="section-title">
+                <i class="fas fa-images"></i> Gambar Slideshow
+            </div>
+            <p class="form-hint" style="margin-bottom: 1rem;">
+                Upload beberapa foto -- nanti otomatis ganti-ganti (slideshow) di background hero.
+                Kalau cuma 1 foto, otomatis statis (gak ada animasi geser).
+            </p>
+
+            @if($hero->images && $hero->images->count() > 0)
+                <div class="slideshow-grid">
+                    @foreach($hero->images as $img)
+                        <div class="slideshow-item">
+                            <img src="{{ asset('storage/' . $img->image) }}">
+                            <div class="checkbox-wrap">
+                                <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" id="delimg{{ $img->id }}">
+                                <label for="delimg{{ $img->id }}">Hapus</label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="slideshow-empty">
+                    <p style="margin:0;">Belum ada gambar slideshow. Upload minimal 2 foto biar animasinya kelihatan.</p>
+                </div>
+            @endif
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Tambah Gambar Baru</label>
+                <input type="file" name="images[]" accept="image/*" multiple>
+                <p class="form-hint">Tahan Ctrl (Windows) / Cmd (Mac) buat pilih beberapa foto sekaligus.</p>
+            </div>
         </div>
 
         <!-- BAGIAN BUTTON CTA -->
@@ -330,7 +410,7 @@
             <div class="grid-2col">
                 <div class="form-group">
                     <label>Teks Button</label>
-                    <input type="text" name="button_text" 
+                    <input type="text" name="button_text"
                            value="{{ old('button_text', $hero->button_text ?? '') }}"
                            class="@error('button_text') border-red-500 @enderror"
                            placeholder="Contoh: Pesan Sekarang">
@@ -341,7 +421,7 @@
 
                 <div class="form-group">
                     <label>Link Button</label>
-                    <input type="text" name="button_link" 
+                    <input type="text" name="button_link"
                            value="{{ old('button_link', $hero->button_link ?? '') }}"
                            class="@error('button_link') border-red-500 @enderror"
                            placeholder="Contoh: #paket atau https://...">
@@ -371,19 +451,19 @@
                         <div class="grid-2col">
                             <div class="form-group">
                                 <label>Label Statistik</label>
-                                <input type="text" name="stats[{{ $index }}][label]" 
+                                <input type="text" name="stats[{{ $index }}][label]"
                                        value="{{ $stat->label }}"
                                        placeholder="Contoh: Pengunjung/Bulan">
                             </div>
                             <div class="form-group">
                                 <label>Nilai Statistik</label>
-                                <input type="text" name="stats[{{ $index }}][value]" 
+                                <input type="text" name="stats[{{ $index }}][value]"
                                        value="{{ $stat->value }}"
                                        placeholder="Contoh: 50K+">
                             </div>
                             <div class="form-group">
                                 <label>Icon (Optional)</label>
-                                <input type="text" name="stats[{{ $index }}][icon]" 
+                                <input type="text" name="stats[{{ $index }}][icon]"
                                        value="{{ $stat->icon }}"
                                        placeholder="Contoh: fas fa-users">
                                 <p class="form-hint">Gunakan Font Awesome class</p>
@@ -438,7 +518,7 @@
     function addStat() {
         const container = document.getElementById('statsContainer');
         const emptyState = document.getElementById('emptyStats');
-        
+
         if (emptyState) {
             emptyState.remove();
         }
@@ -454,17 +534,17 @@
                 <div class="grid-2col">
                     <div class="form-group">
                         <label>Label Statistik</label>
-                        <input type="text" name="stats[${statCount}][label]" 
+                        <input type="text" name="stats[${statCount}][label]"
                                placeholder="Contoh: Pengunjung/Bulan">
                     </div>
                     <div class="form-group">
                         <label>Nilai Statistik</label>
-                        <input type="text" name="stats[${statCount}][value]" 
+                        <input type="text" name="stats[${statCount}][value]"
                                placeholder="Contoh: 50K+">
                     </div>
                     <div class="form-group">
                         <label>Icon (Optional)</label>
-                        <input type="text" name="stats[${statCount}][icon]" 
+                        <input type="text" name="stats[${statCount}][icon]"
                                placeholder="Contoh: fas fa-users">
                         <p class="form-hint">Gunakan Font Awesome class</p>
                     </div>
@@ -481,7 +561,6 @@
         btn.closest('.stat-item').remove();
         updateStatNumbers();
 
-        // Jika kosong, tampilkan empty state
         const container = document.getElementById('statsContainer');
         if (container.children.length === 0) {
             container.innerHTML = `
