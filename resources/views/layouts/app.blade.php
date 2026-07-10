@@ -17,9 +17,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#F97316',
-                        'primary-dark': '#EA580C',
-                        'primary-light': '#FB923C',
+                        primary: '#15803D',
+                        'primary-dark': '#166534',
+                        'primary-light': '#22C55E',
                         secondary: '#1F2937',
                         'secondary-light': '#374151',
                         accent: '#FEF3C7',
@@ -41,8 +41,8 @@
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #F97316; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #EA580C; }
+        ::-webkit-scrollbar-thumb { background: #15803D; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #166534; }
 
         .container-max { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
 
@@ -86,8 +86,9 @@
             transform: translateY(-8px);
         }
 
-        .gradient-primary {
-            background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
+        .gradient-primary,
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #15803D 0%, #22C55E 100%);
         }
 
         /* 

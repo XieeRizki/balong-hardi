@@ -16,8 +16,8 @@
         }
 
         :root {
-            --primary: #F97316;
-            --primary-dark: #EA580C;
+            --primary: #15803D;
+            --primary-dark: #166534;
             --secondary: #1F2937;
             --neutral: #6B7280;
             --border: #E5E7EB;
@@ -70,19 +70,33 @@
         .sidebar-brand {
             padding: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .sidebar-brand h1 {
             font-size: 1.1rem;
             font-weight: 700;
             margin: 0 0 0.25rem 0;
-            color: var(--primary);
+            color: var(--primary-light, #4ADE80);
         }
 
         .sidebar-brand p {
             font-size: 0.75rem;
             opacity: 0.7;
             margin: 0;
+        }
+
+        /* Tombol close (X), cuma keliatan di mobile pas menu slide-in aktif */
+        .sidebar-close {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.25rem;
         }
 
         .sidebar-menu {
@@ -104,15 +118,15 @@
         }
 
         .sidebar-menu a:hover {
-            background: rgba(249, 115, 22, 0.1);
+            background: rgba(21, 128, 61, 0.15);
             color: white;
             border-left-color: var(--primary);
             padding-left: 1.5rem;
         }
 
         .sidebar-menu a.active {
-            background: rgba(249, 115, 22, 0.15);
-            color: var(--primary);
+            background: rgba(21, 128, 61, 0.2);
+            color: var(--primary-light, #4ADE80);
             border-left-color: var(--primary);
             font-weight: 600;
         }
@@ -124,10 +138,7 @@
         }
 
         .sidebar-logout {
-            position: absolute;
-            bottom: 1rem;
-            width: calc(100% - 2rem);
-            left: 1rem;
+            padding: 1rem 1.25rem 1.5rem;
         }
 
         .sidebar-logout form {
@@ -153,7 +164,7 @@
 
         .sidebar-logout button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.35);
         }
 
         /* Main Content */
@@ -166,7 +177,6 @@
             padding: 2rem;
         }
 
-        /* Heading di dalam content biar ga ke-reset polos */
         .content h1 {
             font-size: 1.5rem;
             font-weight: 700;
@@ -190,14 +200,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .alert-success {
@@ -217,90 +221,93 @@
             margin-top: 0.15rem;
         }
 
-        /* Mobile */
-        .sidebar-toggle {
+        /* Topbar mobile (cuma tampil di layar kecil) */
+        .admin-topbar {
             display: none;
+        }
+
+        .sidebar-toggle {
             background: none;
             border: none;
             color: var(--secondary);
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             cursor: pointer;
-            z-index: 1001;
+            padding: 0.25rem;
         }
 
+        /* Backdrop overlay pas menu mobile aktif */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .sidebar-backdrop.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== Mobile: sidebar jadi slide-in panel dari kanan ===== */
         @media (max-width: 768px) {
-            .admin-container {
-                flex-direction: column;
+            .admin-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                height: 60px;
+                background: linear-gradient(135deg, var(--secondary) 0%, #111827 100%);
+                padding: 0 1.25rem;
+                z-index: 999;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .admin-topbar-brand h1 {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--primary-light, #4ADE80);
+            }
+
+            .admin-topbar .sidebar-toggle {
+                color: white;
             }
 
             .sidebar {
-                width: 100%;
-                height: auto;
                 position: fixed;
                 top: 0;
-                left: 0;
-                right: 0;
-                max-height: 60px;
-                overflow: visible;
+                right: -100%;
+                left: auto;
+                height: 100vh;
+                width: 80%;
+                max-width: 300px;
+                transition: right 0.3s ease-in-out;
                 display: flex;
-                align-items: center;
-                padding: 0;
-                z-index: 999;
+                flex-direction: column;
+                z-index: 1000;
             }
 
-            .sidebar-brand {
-                padding: 0.75rem 1.25rem;
-                border-bottom: none;
-                flex: 1;
-                border-right: 1px solid rgba(255, 255, 255, 0.1);
+            .sidebar.active {
+                right: 0;
             }
 
-            .sidebar-brand h1 {
-                font-size: 1rem;
-                margin-bottom: 0;
-            }
-
-            .sidebar-brand p {
-                display: none;
+            .sidebar-close {
+                display: block;
             }
 
             .sidebar-menu {
-                display: none;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, var(--secondary) 0%, #111827 100%);
-                flex-direction: column;
-                width: 100%;
-                padding: 0.5rem 0;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-
-            .sidebar-menu.active {
-                display: flex;
-            }
-
-            .sidebar-menu a {
-                margin: 0;
-                padding: 0.75rem 1.25rem;
-                border-left: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .sidebar-menu a:hover,
-            .sidebar-menu a.active {
-                background: rgba(249, 115, 22, 0.15);
-                padding-left: 1.25rem;
+                flex: 1;
             }
 
             .sidebar-logout {
-                display: none;
-            }
-
-            .sidebar-toggle {
-                display: flex;
-                padding: 0 1.25rem;
+                position: sticky;
+                bottom: 0;
+                background: linear-gradient(135deg, var(--secondary) 0%, #111827 100%);
             }
 
             .main-content {
@@ -315,18 +322,31 @@
     </style>
 </head>
 <body>
+    <!-- Topbar khusus mobile: logo + tombol hamburger -->
+    <div class="admin-topbar">
+        <div class="admin-topbar-brand">
+            <h1>BHS Admin</h1>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <div class="admin-container">
-        <div class="sidebar">
+        <div class="sidebar" id="sidebarMenu">
             <div class="sidebar-brand">
-                <h1>BHS</h1>
-                <p>Admin</p>
+                <div>
+                    <h1>BHS</h1>
+                    <p>Admin</p>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
 
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <nav class="sidebar-menu" id="sidebarMenu">
+            <nav class="sidebar-menu">
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
@@ -360,10 +380,6 @@
                 </a>
 
                 <div style="margin: 0.75rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);"></div>
-
-                <a href="{{ route('admin.location.edit') }}" class="{{ request()->routeIs('admin.location.*') ? 'active' : '' }}">
-                    <i class="fas fa-map-marker-alt"></i> Lokasi
-                </a>
 
                 <a href="{{ route('admin.contact.edit') }}" class="{{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
                     <i class="fas fa-address-book"></i> Info Kontak
@@ -410,17 +426,29 @@
 
     <script>
         const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
         const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
-        sidebarToggle?.addEventListener('click', () => {
-            sidebarMenu.classList.toggle('active');
-        });
+        const openSidebar = () => {
+            sidebarMenu.classList.add('active');
+            sidebarBackdrop.classList.add('active');
+        };
 
-        // Close menu when clicking a link
+        const closeSidebar = () => {
+            sidebarMenu.classList.remove('active');
+            sidebarBackdrop.classList.remove('active');
+        };
+
+        sidebarToggle?.addEventListener('click', openSidebar);
+        sidebarClose?.addEventListener('click', closeSidebar);
+        sidebarBackdrop?.addEventListener('click', closeSidebar);
+
+        // Tutup menu otomatis kalau salah satu link diklik (khusus mobile)
         document.querySelectorAll('.sidebar-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
-                    sidebarMenu.classList.remove('active');
+                    closeSidebar();
                 }
             });
         });

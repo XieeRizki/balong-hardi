@@ -6,13 +6,14 @@
 
 /* Base Styles */
 :root {
-  --primary: #E91E63;
-  --primary-dark: #C2185B;
-  --primary-light: #F50057;
-  --secondary: #009688;
-  --accent: #FF6F00;
+  --primary: #1B5E5A;
+  --primary-dark: #0F3B38;
+  --primary-light: #2E8985;
+  --secondary: #1A1A1A;
+  --accent: #1B5E5A;
   --dark: #1A1A1A;
   --light: #F5F5F5;
+  --navbar: #6B7280;
 }
 
 html, body {
@@ -47,7 +48,7 @@ body {
 }
 
 .btn-secondary {
-  @apply px-6 py-3 bg-secondary text-white font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-300;
+  @apply px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-300;
 }
 
 .btn-outline {

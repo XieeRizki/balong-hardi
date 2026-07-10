@@ -7,13 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#E91E63',
-        'primary-dark': '#C2185B',
-        'primary-light': '#F50057',
-        secondary: '#009688',
-        accent: '#FF6F00',
+        primary: '#1B5E5A',        // Hijau Gelap
+        'primary-dark': '#0F3B38', // Hijau Lebih Gelap
+        'primary-light': '#2E8985', // Hijau Terang
+        secondary: '#1A1A1A',      // Tetap Dark
+        accent: '#1B5E5A',         // Sama dengan Primary
         dark: '#1A1A1A',
         light: '#F5F5F5',
+        navbar: '#6B7280',         // Abu-abu untuk navbar
         gray: {
           50: '#F9FAFB',
           100: '#F3F4F6',
