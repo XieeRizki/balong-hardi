@@ -1,6 +1,6 @@
 {{--
     Hero section. Nerima $hero (with 'stats' relation sudah di-load dari
-    controller: Hero::with('stats')->where('is_active', true)->first()).
+    controller: Hero::with('stats')->first()).
 
     Kalau belum ada data hero di database, section ini otomatis gak nongol
     (daripada error null property).
@@ -11,11 +11,15 @@
     <section class="pt-20 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-secondary via-secondary-light to-dark text-white overflow-hidden relative">
 
     {{-- BLOK GAMBAR BACKGROUND --}}
+    {{-- class "parallax-img" + "overflow-hidden" di parent + "scale-110" di img:
+         ini yang bikin efek parallax dari script di app.blade.php kepakai
+         (gambar butuh sedikit "ruang lebih" biar pas digeser translateY
+         gak kelihatan tepi putihnya). --}}
         @if($hero->image)
-            <div class="absolute inset-0 z-0">
-                <img src="{{ asset('storage/' . $hero->image) }}" 
-                     alt="{{ $hero->title }}" 
-                     class="w-full h-full object-cover opacity-40 mix-blend-overlay">
+            <div class="absolute inset-0 z-0 overflow-hidden">
+                <img src="{{ asset('storage/' . $hero->image) }}"
+                     alt="{{ $hero->title }}"
+                     class="parallax-img w-full h-full object-cover opacity-40 mix-blend-overlay scale-110">
             </div>
         @endif
 

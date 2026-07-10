@@ -140,11 +140,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Inisialisasi AOS (Animasi Scroll)
         AOS.init({
-            once: true, // Animasi cuma jalan sekali pas discroll ke bawah
-            offset: 50, // Muncul sedikit lebih awal
-            duration: 800, // Kecepatan animasi 0.8 detik
-            easing: 'ease-out-cubic',
-        });
+        once: false, // false = animasi berulang tiap kali section masuk/keluar viewport
+        mirror: true, // elemen animasi lagi juga pas discroll ke ATAS (bukan cuma pas ke bawah)
+        offset: 50,
+        duration: 800,
+        easing: 'ease-out-cubic',
+    });
 
         // Efek Parallax Ringan untuk Hero Banner
         window.addEventListener('scroll', function() {

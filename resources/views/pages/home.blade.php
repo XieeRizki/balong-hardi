@@ -11,35 +11,41 @@
     {{-- Fasilitas: section masih di sini, tapi tiap card sudah pakai <x-facility-card> --}}
     @if ($facilities->isNotEmpty())
         <section id="fasilitas" class="py-20 md:py-32 bg-light">
-            <div class="container-max">
+        <div class="container-max">
+            <div data-aos="fade-up">
                 <x-section-title
                     badge="Fasilitas Kami"
                     title="Lengkap & Nyaman"
                     subtitle="Semua yang Anda butuhkan untuk pengalaman memancing yang maksimal"
                 />
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach ($facilities as $facility)
-                        <x-facility-card :facility="$facility" />
-                    @endforeach
-                </div>
             </div>
-        </section>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($facilities as $facility)
+                    <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                        <x-facility-card :facility="$facility" />
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
     @endif
 
     {{-- Harga / Paket --}}
     @if ($packages->isNotEmpty())
         <section id="harga" class="py-20 md:py-32 bg-white">
             <div class="container-max">
+                <div data-aos="fade-up">
                 <x-section-title
                     badge="Paket & Harga"
                     title="Paket Terjangkau"
                     subtitle="Pilih paket yang sesuai dengan kebutuhan dan budget Anda"
                 />
+            </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
                     @foreach ($packages as $package)
-                        <div class="card-modern p-8 flex flex-col relative {{ $package->is_popular ? 'ring-2 ring-primary shadow-2xl md:scale-105' : '' }}">
+                        <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="card-modern p-8 flex flex-col relative {{ $package->is_popular ? 'ring-2 ring-primary shadow-2xl md:scale-105' : '' }}">
                             @if ($package->is_popular)
                                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-bold">
                                     Paling Populer
@@ -86,15 +92,17 @@
     @if ($testimonials->isNotEmpty())
         <section id="testimoni" class="py-20 md:py-32 bg-light">
             <div class="container-max">
+                <div data-aos="fade-up">
                 <x-section-title
                     badge="Testimoni"
                     title="Pengalaman Pengunjung"
                     subtitle="Dengarkan cerita dari pengunjung setia Balong Hardi"
                 />
+            </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($testimonials as $testimonial)
-                        <div class="card-modern p-8">
+                         <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="card-modern p-8">
                             <div class="flex items-center mb-4 space-x-1">
                                 @for ($i = 0; $i < 5; $i++)
                                     <svg class="w-5 h-5 {{ $i < $testimonial->rating ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20">
@@ -127,15 +135,17 @@
     @if ($blogPosts->isNotEmpty())
         <section id="blog" class="py-20 md:py-32 bg-white">
             <div class="container-max">
+                <div data-aos="fade-up">
                 <x-section-title
                     badge="Blog & Tips"
                     title="Tips & Artikel Memancing"
                     subtitle="Pelajari tips memancing, teknik, dan cerita menarik dari para penggemar memancing"
                 />
+            </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($blogPosts as $post)
-                        <div class="card-modern overflow-hidden group">
+                         <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="card-modern overflow-hidden group">
                             <div class="relative h-48 overflow-hidden bg-gray-200">
                                 @if ($post->image)
                                     <img src="{{ asset('storage/' . $post->image) }}"
@@ -171,14 +181,16 @@
     {{-- Kontak (form reservasi + info + map) --}}
     <section id="kontak" class="py-20 md:py-32 bg-white">
         <div class="container-max">
+            <div data-aos="fade-up">
             <x-section-title
                 badge="Reservasi Sekarang"
                 title="Ajukan Permintaan Reservasi"
                 subtitle="Isi form di bawah untuk melakukan reservasi memancing di Balong Hardi Sumedang"
             />
+            </div>
 
             {{-- Form Reservasi - Simplified --}}
-            <div class="bg-light rounded-2xl p-5 md:p-8 border border-gray-200 mb-12">
+            <div data-aos="fade-up" class="bg-light rounded-2xl p-5 md:p-8 border border-gray-200 mb-12">
                 <form id="waContactForm" class="space-y-3">
                     {{-- Row 1: Nama & Tanggal --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -239,7 +251,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {{-- Info Card 1: Telepon --}}
                 @if ($contact?->phone)
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                    <div data-aos="fade-up" data-aos-delay="0" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-phone text-white text-lg"></i>
@@ -254,7 +266,7 @@
 
                 {{-- Info Card 2: WhatsApp --}}
                 @if ($contact?->whatsapp)
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
+                    <div data-aos="fade-up" data-aos-delay="100" class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fab fa-whatsapp text-white text-lg"></i>
@@ -272,7 +284,7 @@
 
                 {{-- Info Card 3: Lokasi --}}
                 @if ($location?->address)
-                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
+                    <div data-aos="fade-up" data-aos-delay="200" class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-map-marker-alt text-white text-lg"></i>
@@ -287,7 +299,7 @@
 
                 {{-- Info Card 4: Jam Operasional --}}
                 @if ($contact?->operational_hours)
-                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
+                    <div data-aos="fade-up" data-aos-delay="300" class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-clock text-white text-lg"></i>
@@ -300,13 +312,19 @@
                     </div>
                 @endif
             </div>
+
+             {{-- Peta lokasi -- disatuin di sini biar langsung nempel sama
+                 info kontak di atasnya, gak perlu scroll lagi ke section lain --}}
+            <div data-aos="fade-up" class="mt-8 rounded-2xl overflow-hidden shadow-lg">
+                <x-map />
+            </div>
         </div>
     </section>
 
-    <x-map />
+    
 
     {{-- Final CTA --}}
-    <section class="py-20 md:py-32 bg-gradient-primary text-white">
+    <section data-aos="zoom-in" class="py-20 md:py-32 bg-gradient-primary text-white">
         <div class="container-max">
             <div class="max-w-2xl mx-auto text-center">
                 <h2 class="text-4xl md:text-5xl font-bold mb-6">Siap Memancing?</h2>
