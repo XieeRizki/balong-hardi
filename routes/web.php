@@ -56,6 +56,17 @@ Route::prefix('admin')->group(function () {
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/stats', function () {
+        return response()->json([
+            'facilities' => \App\Models\Facility::count(),
+            'packages' => \App\Models\Package::count(),
+            'blog_posts' => \App\Models\BlogPost::count(),
+            'testimonials' => \App\Models\Testimonial::count(),
+            'galleries' => \App\Models\Gallery::count(),
+        ]);
+    })->name('dashboard.stats');
+
+
 
     // Singleton: cuma edit/update, gak ada index/create/destroy
     Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');

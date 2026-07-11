@@ -276,32 +276,32 @@
 <div class="stats-grid">
     <div class="stat-card">
         <div class="stat-label">Fasilitas</div>
-        <div class="stat-value">{{ $stats['facilities'] }}</div>
-        <!-- <div class="stat-icon">🏊</div> -->
+        <!-- Tambahkan id="stat-facilities" -->
+        <div class="stat-value" id="stat-facilities">{{ $stats['facilities'] }}</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Paket</div>
-        <div class="stat-value">{{ $stats['packages'] }}</div>
-        <!-- <div class="stat-icon">📦</div> -->
+        <!-- Tambahkan id="stat-packages" -->
+        <div class="stat-value" id="stat-packages">{{ $stats['packages'] }}</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Blog</div>
-        <div class="stat-value">{{ $stats['blog_posts'] }}</div>
-        <!-- <div class="stat-icon">📝</div> -->
+        <!-- Tambahkan id="stat-blog" -->
+        <div class="stat-value" id="stat-blog">{{ $stats['blog_posts'] }}</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Testimoni</div>
-        <div class="stat-value">{{ $stats['testimonials'] }}</div>
-        <!-- <div class="stat-icon">⭐</div> -->
+        <!-- Tambahkan id="stat-testimonials" -->
+        <div class="stat-value" id="stat-testimonials">{{ $stats['testimonials'] }}</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-label">Galeri</div>
-        <div class="stat-value">{{ $stats['galleries'] }}</div>
-        <!-- <div class="stat-icon">🖼️</div> -->
+        <!-- Tambahkan id="stat-galleries" -->
+        <div class="stat-value" id="stat-galleries">{{ $stats['galleries'] }}</div>
     </div>
 </div>
 
@@ -361,4 +361,28 @@
         </div>
     </div>
 @endif
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function fetchDashboardStats() {
+            // Memanggil route AJAX yang baru dibuat
+            fetch("{{ route('admin.dashboard.stats') }}")
+                .then(response => response.json())
+                .then(data => {
+                    // Update teks angka di layar dengan data terbaru
+                    document.getElementById('stat-facilities').innerText = data.facilities;
+                    document.getElementById('stat-packages').innerText = data.packages;
+                    document.getElementById('stat-blog').innerText = data.blog_posts;
+                    document.getElementById('stat-testimonials').innerText = data.testimonials;
+                    document.getElementById('stat-galleries').innerText = data.galleries;
+                })
+                .catch(error => console.error('Gagal mengambil data statistik:', error));
+        }
+
+        // Jalankan fungsi update setiap 15 detik (15000 ms)
+        setInterval(fetchDashboardStats, 15000);
+    });
+</script>
+@endpush
 @endsection
