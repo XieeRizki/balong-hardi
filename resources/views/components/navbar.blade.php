@@ -17,16 +17,20 @@
     <div class="container-max">
         <div class="flex items-center justify-between h-20">
             <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg">
-                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z" />
-                    </svg>
+            <a href="{{ route('home') }}" class="flex items-center space-x-0 md:space-x-1 group">
+                
+                {{-- LOGO LANGSUNG (Tanpa kotak) --}}
+                {{-- Ukurannya dibesarin jadi w-20 h-20 biar tulisan di logonya kebaca --}}
+                <img src="{{ asset('images/logo.jpeg') }}" 
+                     alt="Logo Balong Hardi" 
+                     class="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-sm transform group-hover:scale-105 transition-all duration-300">
+
+                {{-- TEKS DI SAMPING LOGO --}}
+                <div class="flex flex-col justify-center">
+                    <h1 class="text-xl md:text-2xl font-extrabold text-secondary leading-tight tracking-tight">BALONG HARDI</h1>
+                    <p class="text-[10px] md:text-xs text-gray-500 font-inter font-medium tracking-wide">Pemancingan Sumedang</p>
                 </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-secondary">BALONG HARDI</h1>
-                    <p class="text-xs text-gray-500 font-inter font-medium">Pemancingan Sumedang</p>
-                </div>
+
             </a>
 
             <!-- Desktop Menu -->

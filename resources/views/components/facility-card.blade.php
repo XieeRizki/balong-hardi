@@ -42,8 +42,14 @@
             </svg>
         </div>
         <h3 class="text-xl font-bold text-secondary mb-3">{{ $facility->name }}</h3>
-        @if ($facility->description)
-            <p class="text-gray-600 leading-relaxed">{{ $facility->description }}</p>
-        @endif
+            @if ($facility->description)
+                <p class="text-gray-600 leading-relaxed mb-4">{{ Str::limit($facility->description, 100) }}</p>
+            @endif
+            <a href="{{ route('facility.show', $facility) }}" class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all duration-300">
+                Lihat Selengkapnya
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
     </div>
 </div>

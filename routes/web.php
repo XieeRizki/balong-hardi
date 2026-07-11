@@ -30,6 +30,11 @@ Route::get('/blog/{blogPost}', function (BlogPost $blogPost) {
     return view('pages.blog-show', compact('blogPost'));
 })->name('blog.show');
 
+// Fasilitas detail
+Route::get('/fasilitas/{facility}', function (\App\Models\Facility $facility) {
+    return view('pages.facility-show', compact('facility'));
+})->name('facility.show');
+
 
 /*
 |--------------------------------------------------------------------------
