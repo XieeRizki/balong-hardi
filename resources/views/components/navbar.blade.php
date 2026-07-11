@@ -16,14 +16,20 @@
 <nav class="bg-gray-100 border-b border-gray-200 sticky top-0 z-30">
     <div class="container-max">
         <div class="flex items-center justify-between h-20">
-            <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex items-center space-x-0 md:space-x-1 group">
+           <!-- Logo -->
+            <a href="{{ route('home') }}" class="flex items-center space-x-2 md:space-x-3 group">
                 
-                {{-- LOGO LANGSUNG (Tanpa kotak) --}}
-                {{-- Ukurannya dibesarin jadi w-20 h-20 biar tulisan di logonya kebaca --}}
-                <img src="{{ asset('images/logo.jpeg') }}" 
-                     alt="Logo Balong Hardi" 
-                     class="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-sm transform group-hover:scale-105 transition-all duration-300">
+                {{-- BACKGROUND BULAT ELEGAN --}}
+                <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-700 to-green-900 rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-all duration-300 border-2 border-white relative overflow-hidden">
+                    
+                    {{-- GAMBAR LOGO --}}
+                    {{-- Angka scale diturunin jadi 1.6 biar pas di dalem lingkaran --}}
+                    <img src="{{ asset('images/logow.png') }}" 
+                         alt="Logo Balong Hardi" 
+                         class="w-full h-full object-contain drop-shadow-md"
+                         style="transform: scale(1.6);"> 
+                         
+                </div>
 
                 {{-- TEKS DI SAMPING LOGO --}}
                 <div class="flex flex-col justify-center">
