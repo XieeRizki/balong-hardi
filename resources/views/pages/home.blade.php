@@ -381,7 +381,7 @@
             });
 
             // Buat pesan WhatsApp
-            let text = `*🎣 PERMINTAAN RESERVASI BALONG HARDI*\n`;
+            let text = `*PERMINTAAN RESERVASI BALONG HARDI*\n`;
             text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
             text += `*Nama:* ${name}\n`;
             text += `*Tanggal:* ${formattedDate}\n`;
@@ -389,7 +389,7 @@
             text += `*Paket:* ${pkg}\n`;
             if (message) text += `*Catatan:* ${message}\n`;
             text += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-            text += `Mohon konfirmasi ketersediaan. Terima kasih! 🙏`;
+            text += `Mohon konfirmasi ketersediaan. Terima kasih!`;
 
             window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
         });

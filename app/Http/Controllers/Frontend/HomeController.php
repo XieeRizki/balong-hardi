@@ -22,8 +22,8 @@ class HomeController extends Controller
         $packages = Package::with('features')->where('is_active', true)->orderBy('order')->get();
         $testimonials = Testimonial::where('is_active', true)->orderBy('order')->get();
         $blogPosts = BlogPost::where('is_published', true)->latest('published_at')->take(3)->get();
-        $contact = Contact::first();
-        $location = Location::first();
+        $contact = Contact::first() ?? new Contact();
+        $location = Location::first() ?? new Location();
 
         return view('pages.home', compact(
             'hero',

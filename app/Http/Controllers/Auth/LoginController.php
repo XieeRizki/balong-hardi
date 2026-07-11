@@ -10,6 +10,11 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        // 1. Cek apakah user sudah login. Kalau sudah, langsung lempar ke dashboard admin.
+        if (Auth::check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -20,7 +25,11 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        // 2. Tangkap nilai dari checkbox "Ingat saya" (mengembalikan true jika dicentang)
+        $remember = $request->has('remember');
+
+        // 3. Masukkan variabel $remember sebagai parameter kedua di Auth::attempt
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }

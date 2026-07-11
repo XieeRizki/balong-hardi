@@ -17,7 +17,11 @@ class FacilityController extends Controller
 
     public function create()
     {
-        return view('admin.facility.create');
+        // Saranin urutan berikutnya (bukan selalu 0), biar fasilitas baru
+        // otomatis nambah di belakang, gak "nyerobot" ke depan.
+        $nextOrder = (int) Facility::max('order') + 1;
+
+        return view('admin.facility.create', compact('nextOrder'));
     }
 
     public function store(Request $request)

@@ -47,9 +47,14 @@
             <div>
                 <h4 class="text-lg font-bold mb-6 text-white">Kontak</h4>
                 <ul class="space-y-3 text-sm">
-                    <li class="text-gray-300 font-medium">📞 {{ $contact?->phone ?? 'Hubungi kami' }}</li>
+                    {{-- Tampilkan telepon, default teks kalau kosong --}}
+                    <li class="text-gray-300 font-medium">📞 {{ $contact?->phone ?? 'Belum ada nomor telepon' }}</li>
+                    
+                    {{-- Tampilkan alamat, default teks kalau kosong --}}
                     <li class="text-gray-300 font-medium">📍 {{ $contact?->address ?? 'Sumedang, Jawa Barat' }}</li>
-                    <li class="text-gray-300 font-medium">⏰ Buka 24 Jam</li>
+                    
+                    {{-- Tampilkan jam operasional --}}
+                    <li class="text-gray-300 font-medium">⏰ {{ $contact?->operational_hours ?? 'Buka 24 Jam' }}</li>
                 </ul>
             </div>
         </div>

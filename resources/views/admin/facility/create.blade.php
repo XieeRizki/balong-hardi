@@ -218,13 +218,11 @@
 
         <div class="form-group">
             <label for="order">Urutan Tampil</label>
-            <input
-                type="number"
-                id="order"
-                name="order"
-                min="0"
-                value="{{ old('order', 0) }}"
-            >
+            <input type="number" 
+            id="order" 
+            name="order" 
+            min="0" 
+            value="{{ old('order', $nextOrder) }}">
             <div class="form-hint">Angka lebih kecil = tampil lebih depan</div>
             @error('order')<div class="form-error">{{ $message }}</div>@enderror
         </div>
