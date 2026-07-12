@@ -62,7 +62,7 @@
                     </div>
 
                     {{-- Judul --}}
-                    <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
                         {{ $hero->title }}
                     </h1>
 
