@@ -44,12 +44,12 @@
                 @php
                     $navLinks = [
                         'Home' => route('home'),
-                        'Tentang' => route('home') . '#tentang',
-                        'Fasilitas' => route('home') . '#fasilitas',
+                        'Tentang' => route('about'),
+                        'Fasilitas' => route('facilities'),
                         'Harga' => route('home') . '#harga',
                         'Testimoni' => route('home') . '#testimoni',
-                        'Blog' => route('home') . '#blog',
-                        'Kontak' => route('home') . '#kontak',
+                        'Blog' => route('blog.index'),
+                        'Kontak' => route('contact'),
                     ];
                 @endphp
                 @foreach ($navLinks as $label => $url)

@@ -28,12 +28,12 @@
             @php
                 $mobileLinks = [
                     'Home' => route('home'),
-                    'Tentang Kami' => route('home') . '#tentang',
-                    'Fasilitas' => route('home') . '#fasilitas',
+                    'Tentang Kami' => route('about'),
+                    'Fasilitas' => route('facilities'),
                     'Harga' => route('home') . '#harga',
                     'Testimoni' => route('home') . '#testimoni',
-                    'Blog' => route('home') . '#blog',
-                    'Kontak' => route('home') . '#kontak',
+                    'Blog' => route('blog.index'),
+                    'Kontak' => route('contact'),
                 ];
             @endphp
             @foreach ($mobileLinks as $label => $url)

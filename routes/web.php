@@ -12,6 +12,10 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\GalleryController;
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\FacilityController as FrontendFacilityController;
+use App\Http\Controllers\Frontend\AboutController as FrontendAboutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\BlogPost;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery');
+
+// Blog: halaman daftar SEMUA artikel
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/tentang', [FrontendAboutController::class, 'index'])->name('about');
+Route::get('/kontak', [ContactController::class, 'index'])->name('contact');
+Route::get('/fasilitas', [FrontendFacilityController::class, 'index'])->name('facilities');
+
 
 // Blog detail pakai slug (BlogPost model punya getRouteKeyName() = 'slug')
 Route::get('/blog/{blogPost}', function (BlogPost $blogPost) {
