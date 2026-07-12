@@ -343,7 +343,7 @@
         <div class="form-group">
             <label>Subtitle <span class="required">*</span></label>
             <textarea name="subtitle" class="@error('subtitle') border-red-500 @enderror"
-                      placeholder="Contoh: Kolam renang terlengkap dengan fasilitas modern">{{ old('subtitle', $hero->subtitle ?? '') }}</textarea>
+                      placeholder="Contoh: Pemancingan terlengkap dengan fasilitas modern">{{ old('subtitle', $hero->subtitle ?? '') }}</textarea>
             @error('subtitle')
                 <p class="form-error">{{ $message }}</p>
             @enderror
@@ -488,7 +488,7 @@
             <button type="submit" class="btn btn-save">
                 <i class="fas fa-save"></i> Simpan Perubahan
             </button>
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-cancel">
+            <a href="{{ route('admin.hero.index') }}" class="btn btn-cancel">
                 <i class="fas fa-times"></i> Batal
             </a>
         </div>
