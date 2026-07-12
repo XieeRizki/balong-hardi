@@ -22,7 +22,7 @@
     .section-header-desc {
         font-size: 0.85rem;
         color: var(--neutral);
-        margin: 0;
+        margin: 0.2rem 0 0 0;
     }
 
     .btn-create {
@@ -47,244 +47,166 @@
         box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
     }
 
-    .table-card {
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .item-card {
         background: white;
+        border: 1px solid var(--border);
         border-radius: 10px;
-        border: 1px solid var(--border);
         overflow: hidden;
+        transition: all 0.15s ease;
     }
 
-    .table-responsive {
-        overflow-x: auto;
+    .item-card:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transform: translateY(-3px);
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
+    .item-thumb-wrap {
+        position: relative;
+        height: 150px;
+        background: var(--bg-light);
     }
 
-    thead {
-        background: linear-gradient(135deg, var(--secondary) 0%, #111827 100%);
-        color: white;
-    }
-
-    th {
-        padding: 0.9rem;
-        text-align: left;
-        font-weight: 700;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    td {
-        padding: 0.9rem;
-        border-bottom: 1px solid var(--border);
-        font-size: 0.9rem;
-    }
-
-    tbody tr {
-        transition: background 0.15s ease;
-    }
-
-    tbody tr:hover {
-        background: rgba(249, 115, 22, 0.03);
-    }
-
-    .title-cell {
-        font-weight: 600;
-        color: var(--secondary);
-        max-width: 200px;
-    }
-
-    .desc-cell {
-        color: var(--neutral);
-        font-size: 0.85rem;
-        max-width: 350px;
-        white-space: normal;
-    }
-
-    .image-cell {
-        text-align: center;
-    }
-
-    .image-thumbnail {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border-radius: 6px;
-        border: 1px solid var(--border);
-        overflow: hidden;
-        background: var(--light);
-    }
-
-    .image-thumbnail img {
+    .item-thumb-wrap img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
 
-    .action-buttons {
+    .item-thumb-placeholder {
+        width: 100%;
+        height: 100%;
         display: flex;
-        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        color: #D1D5DB;
+        font-size: 2rem;
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
     }
 
-    .btn-action {
-        padding: 0.5rem 0.75rem;
+    .item-actions {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        display: flex;
+        gap: 0.35rem;
+    }
+
+    .item-actions a,
+    .item-actions button {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
         border: none;
-        border-radius: 5px;
-        font-weight: 600;
-        font-size: 0.75rem;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 0.3rem;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.75rem;
+        text-decoration: none;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         transition: all 0.15s ease;
+    }
+
+    .act-edit {
+        background: white;
+        color: #3B82F6;
+    }
+
+    .act-edit:hover {
+        background: #3B82F6;
+        color: white;
+    }
+
+    .act-delete {
+        background: white;
+        color: #EF4444;
+    }
+
+    .act-delete:hover {
+        background: #EF4444;
+        color: white;
+    }
+
+    .item-badge {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 0.25rem 0.6rem;
+        border-radius: 20px;
+        background: rgba(249, 115, 22, 0.9);
+        color: white;
+    }
+
+    .item-body {
+        padding: 0.9rem 1rem;
+    }
+
+    .item-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--secondary);
+        margin: 0 0 0.35rem 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .item-desc {
+        font-size: 0.8rem;
+        color: var(--neutral);
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+    }
+
+    .empty-container {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 10px;
         border: 1px solid var(--border);
     }
 
-    .btn-edit {
-        background: white;
-        color: var(--secondary);
-        border-color: var(--secondary);
-    }
-
-    .btn-edit:hover {
-        background: var(--secondary);
-        color: white;
-    }
-
-    .btn-delete {
-        background: white;
-        color: var(--danger);
-        border-color: var(--danger);
-    }
-
-    .btn-delete:hover {
-        background: var(--danger);
-        color: white;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 3rem 2rem;
-        color: var(--neutral);
-    }
-
-    .empty-state svg {
-        width: 60px;
-        height: 60px;
+    .empty-icon {
+        font-size: 3rem;
+        color: #D1D5DB;
         margin-bottom: 1rem;
-        opacity: 0.5;
     }
 
-    .empty-state p {
+    .empty-text {
+        color: var(--neutral);
         font-size: 0.95rem;
-        margin-bottom: 1.5rem;
+        margin: 0 0 1.5rem 0;
     }
 
-    .alert {
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
+    @media (max-width: 768px) {
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-    .alert-success {
-        background: rgba(16, 185, 129, 0.1);
-        color: #047857;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-    }
+        .btn-create {
+            width: 100%;
+            justify-content: center;
+        }
 
-    .alert svg {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal.show {
-        display: flex;
-    }
-
-    .modal-content {
-        background: white;
-        border-radius: 10px;
-        padding: 2rem;
-        max-width: 400px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal-header h3 {
-        margin: 0;
-        color: var(--secondary);
-        font-size: 1.25rem;
-    }
-
-    .modal-body {
-        margin-bottom: 1.5rem;
-        color: var(--neutral);
-    }
-
-    .modal-actions {
-        display: flex;
-        gap: 0.75rem;
-        justify-content: flex-end;
-    }
-
-    .btn-modal {
-        padding: 0.6rem 1.2rem;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.15s ease;
-    }
-
-    .btn-cancel {
-        background: var(--light);
-        color: var(--neutral);
-    }
-
-    .btn-cancel:hover {
-        background: var(--border);
-    }
-
-    .btn-confirm {
-        background: var(--danger);
-        color: white;
-    }
-
-    .btn-confirm:hover {
-        background: #DC2626;
-    }
-
-    .badge {
-        display: inline-block;
-        padding: 0.4rem 0.75rem;
-        border-radius: 5px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    .badge-count {
-        background: rgba(249, 115, 22, 0.15);
-        color: var(--primary);
+        .card-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
     }
 </style>
 
@@ -298,138 +220,56 @@
     </a>
 </div>
 
-@if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <svg fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <span>{{ $message }}</span>
+@if (session('success'))
+    <div style="margin-bottom: 1.25rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 0.9rem 1.1rem; color: #047857; font-size: 0.85rem;">
+        <i class="fas fa-check-circle"></i> {{ session('success') }}
     </div>
 @endif
 
-<div class="table-card">
-    <div class="table-responsive">
-        @if ($abouts->isNotEmpty())
-            <table>
-                <thead>
-                    <tr>
-                        <th>Gambar</th>
-                        <th>Judul</th>
-                        <th>Deskripsi</th>
-                        <th>Manfaat</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($abouts as $about)
-                        <tr>
-                            <td class="image-cell">
-                                @if ($about->image)
-                                    <div class="image-thumbnail">
-                                        <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}">
-                                    </div>
-                                @else
-                                    <div class="image-thumbnail" style="background: var(--light); display: flex; align-items: center; justify-content: center;">
-                                        <svg fill="var(--neutral)" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                                        </svg>
-                                    </div>
-                                @endif
-                            </td>
-                            <td class="title-cell">{{ $about->title }}</td>
-                            <td class="desc-cell">
-                                {{ Str::limit(strip_tags($about->description), 60, '...') }}
-                            </td>
-                            <td>
-                                <span class="badge badge-count">
-                                    {{ $about->benefits->count() }} manfaat
-                                </span>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="{{ route('admin.about.edit', $about) }}" class="btn-action btn-edit">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <button type="button" class="btn-action btn-delete" data-id="{{ $about->id }}" onclick="openDeleteModal(this)">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <div class="empty-state">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p>Belum ada konten "Tentang Kami"</p>
-                <a href="{{ route('admin.about.create') }}" class="btn-create">
-                    <i class="fas fa-plus"></i> Buat Pertama
-                </a>
+<div class="card-grid">
+    @forelse ($abouts as $about)
+        <div class="item-card">
+            <div class="item-thumb-wrap">
+                @if ($about->image)
+                    <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}">
+                @else
+                    <div class="item-thumb-placeholder"><i class="fas fa-image"></i></div>
+                @endif
+
+                <span class="item-badge">{{ $about->benefits->count() }} manfaat</span>
+
+                <div class="item-actions">
+                    <a href="{{ route('admin.about.edit', $about) }}" class="act-edit" title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <form action="{{ route('admin.about.destroy', $about) }}" method="POST" onsubmit="return confirm('Hapus konten ini?')">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="act-delete" title="Hapus">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-        @endif
-    </div>
+            <div class="item-body">
+                <p class="item-title" title="{{ $about->title }}">{{ $about->title }}</p>
+                <p class="item-desc">{{ Str::limit(strip_tags($about->description), 90) }}</p>
+            </div>
+        </div>
+    @empty
+        <div class="empty-container">
+            <div class="empty-icon">📭</div>
+            <p class="empty-text">Belum ada konten "Tentang Kami"</p>
+            <a href="{{ route('admin.about.create') }}" class="btn-create">
+                <i class="fas fa-plus"></i> Buat Pertama
+            </a>
+        </div>
+    @endforelse
 </div>
 
-@if ($abouts->isNotEmpty())
-    <div style="margin-top: 1.5rem;">
+@if ($abouts->isNotEmpty() && $abouts->hasPages())
+    <div style="padding: 1.5rem 0; text-align: center;">
         {{ $abouts->links() }}
     </div>
 @endif
-
-<!-- Delete Modal -->
-<div id="deleteModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Hapus Tentang Kami?</h3>
-        </div>
-        <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus konten ini? Tindakan ini tidak dapat dibatalkan.</p>
-        </div>
-        <form id="deleteForm" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-        <div class="modal-actions">
-            <button type="button" class="btn-modal btn-cancel" onclick="closeDeleteModal()">
-                Batal
-            </button>
-            <button type="button" class="btn-modal btn-confirm" onclick="confirmDelete()">
-                Hapus
-            </button>
-        </div>
-    </div>
-</div>
-
-<script>
-    let deleteId = null;
-
-    function openDeleteModal(btn) {
-        deleteId = btn.getAttribute('data-id');
-        document.getElementById('deleteModal').classList.add('show');
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('show');
-        deleteId = null;
-    }
-
-    function confirmDelete() {
-        if (deleteId) {
-            const form = document.getElementById('deleteForm');
-            form.action = `/admin/about/${deleteId}`;
-            form.submit();
-        }
-    }
-
-    // Close modal when clicking outside
-    document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeDeleteModal();
-        }
-    });
-</script>
 
 @endsection
