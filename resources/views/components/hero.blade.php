@@ -38,10 +38,12 @@
                 <img src="{{ asset('storage/' . $slideImage) }}"
                      alt="{{ $hero->title }}"
                      data-hero-slide
-                     class="hero-slide absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-[1500ms] ease-in-out {{ $index === 0 ? 'opacity-60' : 'opacity-0' }}">
+                     class="hero-slide absolute inset-0 w-full h-full object-cover {{ $index === 0 ? 'is-active' : '' }}">
             @endforeach
             {{-- Gradient hitam dari kiri ke kanan biar teks selalu 100% terbaca --}}
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/70 to-transparent"></div>
+            {{-- Veil hitam: nge-dip bentar tiap kali foto slideshow ganti --}}
+            <div id="hero-veil" class="absolute inset-0 bg-black opacity-0 pointer-events-none z-10"></div>
         </div>
 
         {{-- AKSEN DEKORASI BLUR CAHAYA --}}
@@ -129,6 +131,42 @@
     </section>
 
     {{--
+        STYLE SLIDESHOW: crossfade + efek zoom pelan (Ken Burns)
+        biar transisi antar foto gak keliatan plain/kaku.
+    --}}
+    <style>
+        .hero-slide {
+            opacity: 0;
+            transform: scale(1.15);
+            filter: blur(8px);
+            transition: opacity 1.4s ease, filter 1.4s ease;
+        }
+
+        .hero-slide.is-active {
+            opacity: 0.85;
+            filter: blur(0);
+            animation: heroKenBurns 6.5s ease-out forwards;
+        }
+
+        @keyframes heroKenBurns {
+            from {
+                transform: scale(1.15);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        #hero-veil {
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        #hero-veil.is-active {
+            opacity: 1;
+        }
+    </style>
+
+    {{--
         SCRIPT FULLSCREEN + SLIDESHOW
     --}}
     <script>
@@ -154,21 +192,39 @@
                 window.visualViewport.addEventListener('resize', setFullHeight);
             }
 
-            // ---- Slideshow crossfade ----
+            // ---- Slideshow: veil dip item + crossfade + Ken Burns (zoom) ----
             const slides = heroEl.querySelectorAll('[data-hero-slide]');
+            const veil = document.getElementById('hero-veil');
+
             if (slides.length > 1) {
                 let current = 0;
-                const intervalMs = 5000; // ganti foto tiap 5 detik
+                const intervalMs = 6500;  // total durasi 1 foto tampil
+                const veilInMs = 400;     // durasi veil nge-dip ke hitam
+                const veilHoldMs = 150;   // jeda bentar pas item-nya lagi item-itemnya
 
-                setInterval(function () {
-                    slides[current].classList.remove('opacity-60');
-                    slides[current].classList.add('opacity-0');
+                function goToNextSlide() {
+                    // 1) veil nge-dip ke hitam
+                    veil.classList.add('is-active');
 
-                    current = (current + 1) % slides.length;
+                    setTimeout(function () {
+                        // 2) pas layar lagi item, baru ganti foto
+                        slides[current].classList.remove('is-active');
+                        current = (current + 1) % slides.length;
 
-                    slides[current].classList.remove('opacity-0');
-                    slides[current].classList.add('opacity-60');
-                }, intervalMs);
+                        const nextSlide = slides[current];
+                        nextSlide.style.animation = 'none';
+                        void nextSlide.offsetWidth; // force reflow biar animasi ke-reset
+                        nextSlide.style.animation = '';
+                        nextSlide.classList.add('is-active');
+
+                        // 3) tahan bentar di item, baru veil dibuka lagi
+                        setTimeout(function () {
+                            veil.classList.remove('is-active');
+                        }, veilHoldMs);
+                    }, veilInMs);
+                }
+
+                setInterval(goToNextSlide, intervalMs);
             }
         })();
     </script>
