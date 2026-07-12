@@ -3,82 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - Balong Hardi</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Login - Balong Hardi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --primary: #FF6B35;
-            --secondary: #1a3a52;
-            --accent: #00A8E8;
-            --light: #F8F9FA;
-            --dark: #1F2937;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --moss-green: #3D5A47;
+            --soil-brown: #5C4A3A;
+            --river-stone: #E6E2DE;
+            --water-blue: #A2C5AC;
+            --soft-white: #FBFBF9;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            background-color: #D9D4CE;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
+            /* Tekstur kertas/batu halus */
+            background-image: radial-gradient(#c5c1bc 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: 'Outfit', sans-serif;
         }
 
-        .login-container {
+        .nature-card {
+            background: var(--soft-white);
             width: 100%;
-            max-width: 420px;
-            padding: 1.5rem;
+            max-width: 400px;
+            padding: 3rem;
+            /* Bentuk organik tidak beraturan */
+            border-radius: 60px 40px 50px 30px; 
+            border: 2px solid var(--moss-green);
+            box-shadow: 10px 10px 0px rgba(61, 90, 71, 0.2);
+            position: relative;
         }
 
-        .login-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, var(--secondary) 0%, #0f2744 100%);
-            color: white;
-            padding: 2.5rem 2rem;
+        .brand-logo {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .login-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
+        .brand-logo i {
+            font-size: 3rem;
+            color: var(--moss-green);
+            margin-bottom: 1rem;
         }
 
-        .login-header p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .login-form {
-            padding: 2rem;
+        .brand-logo h2 {
+            font-weight: 600;
+            color: var(--moss-green);
+            font-size: 1.5rem;
         }
 
         .form-group {
@@ -87,175 +64,119 @@
 
         .form-group label {
             display: block;
+            color: var(--soil-brown);
+            font-size: 0.8rem;
             font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
 
-        .form-group input {
+        .input-container {
+            position: relative;
+        }
+
+        .input-container input {
             width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #E5E7EB;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            padding: 1rem 1rem 1rem 1rem;
+            background: #F1F0ED;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: var(--moss-green);
             transition: all 0.3s ease;
-            font-family: inherit;
         }
 
-        .form-group input:focus {
+        .input-container input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            border-color: var(--moss-green);
+            background: white;
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.05);
         }
 
-        .error-message {
-            color: #EF476F;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
+        .remember-check {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
+            color: var(--soil-brown);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
         }
 
-        .login-button {
+        .btn-login {
             width: 100%;
-            padding: 0.875rem;
-            background: linear-gradient(135deg, var(--primary) 0%, #ff8555 100%);
+            background: var(--moss-green);
             color: white;
             border: none;
-            border-radius: 10px;
+            padding: 1.2rem;
+            border-radius: 20px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        .btn-login:hover {
+            background: #2d4234;
+            transform: scale(1.02);
         }
 
-        .login-button:active {
-            transform: translateY(0);
-        }
-
-        .login-footer {
-            padding: 1rem 2rem;
-            background-color: var(--light);
-            text-align: center;
-            font-size: 0.875rem;
-            color: #6B7280;
-            border-top: 1px solid #E5E7EB;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .remember-me input {
-            width: auto;
-            accent-color: var(--primary);
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 1rem;
-            }
-
-            .login-header {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .login-form {
-                padding: 1.5rem;
-            }
+        /* Dekorasi elemen daun/ranting */
+        .decoration-leaf {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            color: var(--water-blue);
+            font-size: 2rem;
+            transform: rotate(-30deg);
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h1>
-                    <i class="fas fa-swimming-pool"></i>
-                    Balong Hardi
-                </h1>
-                <p>Admin Panel</p>
-            </div>
 
-            <form action="{{ route('login') }}" method="POST" class="login-form">
-                @csrf
-
-                <div class="form-group">
-                    <label for="email">
-                        <i class="fas fa-envelope"></i> Email
-                    </label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        value="{{ old('email') }}" 
-                        required 
-                        autofocus
-                        placeholder="admin@test.com"
-                    >
-                    @error('email')
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i>
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        required
-                        placeholder="••••••••"
-                    >
-                    @error('password')
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i>
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="login-button">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Masuk ke Admin
-                </button>
-
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember" style="margin-bottom: 0; font-weight: 500;">Ingat saya</label>
-                </div>
-            </form>
-
-            <div class="login-footer">
-                <p>
-                    <i class="fas fa-info-circle"></i>
-                    Hanya untuk admin. Jangan bagikan password!
-                </p>
-            </div>
+    <div class="nature-card">
+        <i class="fas fa-leaf decoration-leaf"></i>
+        
+        <div class="brand-logo">
+            <i class="fas fa-fish"></i>
+            <h2>Balong Hardi</h2>
         </div>
+
+        @if ($errors->any())
+            <div style="color: #bc4749; font-size: 0.8rem; margin-bottom: 1rem; text-align: center; font-weight: 700;">
+                <i class="fas fa-exclamation-triangle"></i> {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label>Email Akses</label>
+                <div class="input-container">
+                    <input type="email" name="email" value="{{ old('email') }}" required placeholder="admin@balonghardi.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Kata Sandi</label>
+                <div class="input-container">
+                    <input type="password" name="password" required placeholder="••••••••">
+                </div>
+            </div>
+
+            <label class="remember-check">
+                <input type="checkbox" name="remember"> 
+                Ingat sesi saya
+            </label>
+
+            <button type="submit" class="btn-login">
+                Masuk ke Area Admin <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
     </div>
+
 </body>
 </html>
