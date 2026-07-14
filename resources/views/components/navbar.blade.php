@@ -46,8 +46,8 @@
                         'Home' => route('home'),
                         'Tentang' => route('about'),
                         'Fasilitas' => route('facilities'),
-                        'Harga' => route('home') . '#harga',
-                        'Testimoni' => route('home') . '#testimoni',
+                        'Harga' => route('pricing'),
+                        'Testimoni' => route('testimonials'),
                         'Blog' => route('blog.index'),
                         'Kontak' => route('contact'),
                     ];

@@ -17,6 +17,8 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FacilityController as FrontendFacilityController;
 use App\Http\Controllers\Frontend\AboutController as FrontendAboutController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\PricingController as FrontendPricingController;
+use App\Http\Controllers\Frontend\TestimonialController as FrontendTestimonialController;
 use App\Models\BlogPost;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,8 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/tentang', [FrontendAboutController::class, 'index'])->name('about');
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact');
 Route::get('/fasilitas', [FrontendFacilityController::class, 'index'])->name('facilities');
+Route::get('/harga', [FrontendPricingController::class, 'index'])->name('pricing');
+Route::get('/testimoni', [FrontendTestimonialController::class, 'index'])->name('testimonials');
 
 
 // Blog detail pakai slug (BlogPost model punya getRouteKeyName() = 'slug')
