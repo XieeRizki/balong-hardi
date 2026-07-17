@@ -11,7 +11,7 @@
     
     {{-- Fasilitas: 1 featured (besar) + 4 kecil, sama kayak layout di halaman /fasilitas --}}
     @if ($facilities->isNotEmpty())
-        <section id="fasilitas" class="py-20 md:py-32 bg-light">
+        <section id="fasilitas" class="pt-20 md:pt-32 pb-12 md:pb-16 bg-light">
         <div class="container-max">
             <div data-aos="fade-up">
                 <x-section-title
@@ -20,15 +20,6 @@
                     subtitle="Semua yang Anda butuhkan untuk pengalaman memancing yang maksimal"
                 />
             </div>
-
-            @if ($facilities->count() > 5)
-                <div data-aos="fade-up" class="flex justify-center md:justify-end -mt-6 mb-8">
-                    <a href="{{ route('facilities') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg">
-                        Lihat Semua Fasilitas
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-            @endif
 
             @php
                 $homeFeatured = $facilities->first();
@@ -69,10 +60,10 @@
                 </a>
 
                 {{-- ================= LIST KECIL (4 ITEM) ================= --}}
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col justify-between h-auto lg:h-[460px] gap-3">
                     @foreach ($homeOthers as $facility)
-                        <a href="{{ route('facility.show', $facility) }}" class="group flex items-center gap-4 bg-white rounded-xl border border-gray-100 p-3 hover:shadow-lg hover:border-primary/30 transition-all" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                            <div class="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                        <a href="{{ route('facility.show', $facility) }}" class="group flex items-center gap-3 bg-white rounded-xl border border-gray-100 p-2.5 hover:shadow-lg hover:border-primary/30 transition-all" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                            <div class="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                                 @if ($facility->image)
                                     <img
                                         src="{{ asset('storage/' . $facility->image) }}"
@@ -80,26 +71,35 @@
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                     >
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-3xl bg-gradient-to-br from-gray-100 to-gray-200">
+                                    <div class="w-full h-full flex items-center justify-center text-2xl bg-gradient-to-br from-gray-100 to-gray-200">
                                         {{ $facility->icon ?? '🎣' }}
                                     </div>
                                 @endif
                             </div>
 
                             <div class="min-w-0 flex-1">
-                                <h4 class="font-semibold text-secondary truncate group-hover:text-primary transition-colors">
+                                <h4 class="font-semibold text-sm text-secondary truncate group-hover:text-primary transition-colors">
                                     {{ $facility->name }}
                                 </h4>
-                                <p class="text-sm text-gray-500 line-clamp-1 mt-0.5">
+                                <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">
                                     {{ $facility->description }}
                                 </p>
                             </div>
 
-                            <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                            <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 text-sm"></i>
                         </a>
                     @endforeach
                 </div>
             </div>
+
+            @if ($facilities->count() > 5)
+                <div data-aos="fade-up" class="mt-8 text-center">
+                    <a href="{{ route('facilities') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg">
+                        Lihat Semua Fasilitas
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            @endif
 
         </div>
     </section>
