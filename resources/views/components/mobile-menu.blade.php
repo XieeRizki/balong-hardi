@@ -30,8 +30,8 @@
                     'Home' => route('home'),
                     'Tentang Kami' => route('about'),
                     'Fasilitas' => route('facilities'),
-                    'Harga' => route('home') . '#harga',
-                    'Testimoni' => route('home') . '#testimoni',
+                    'Harga' => route('pricing'),
+                    'Testimoni' => route('testimonials'),
                     'Blog' => route('blog.index'),
                     'Kontak' => route('contact'),
                 ];
@@ -50,7 +50,7 @@
         <p class="text-sm text-gray-600 mb-6 leading-relaxed">
             Datang ke Balong Hardi untuk pengalaman memancing terbaik dengan fasilitas lengkap dan aman.
         </p>
-        <a href="https://wa.me/{{ $waNumber }}"
+        <a href="https://wa.me/62895385703917{{ $waNumber }}"
            target="_blank"
            class="w-full mb-3 inline-flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-white bg-green-800 hover:bg-green-900 shadow-lg transition-colors duration-300">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -59,11 +59,11 @@
             </svg>
             Hubungi Sekarang
         </a>
-        <a href="https://wa.me/{{ $waNumber }}"
+        <!-- <a href="https://wa.me/{{ $waNumber }}"
            target="_blank"
            class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-green-800 border border-green-800 hover:bg-green-50 transition-colors duration-300">
             Chat WhatsApp
-        </a>
+        </a> -->
     </div>
 
     <!-- Footer Info -->

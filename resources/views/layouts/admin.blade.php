@@ -375,9 +375,9 @@
                     <i class="fas fa-star"></i> Testimoni
                 </a>
 
-                <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
+                <!-- <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                     <i class="fas fa-images"></i> Galeri
-                </a>
+                </a> -->
 
                 <div style="margin: 0.75rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);"></div>
 
