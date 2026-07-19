@@ -60,10 +60,10 @@
                 </a>
 
                 {{-- ================= LIST KECIL (4 ITEM) ================= --}}
-                <div class="flex flex-col justify-between h-auto lg:h-[460px] gap-3">
+                <div class="flex flex-col justify-between h-auto lg:h-[460px] gap-4">
                     @foreach ($homeOthers as $facility)
-                        <a href="{{ route('facility.show', $facility) }}" class="group flex items-center gap-3 bg-white rounded-xl border border-gray-100 p-2.5 hover:shadow-lg hover:border-primary/30 transition-all" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                            <div class="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                        <a href="{{ route('facility.show', $facility) }}" class="group flex items-center gap-4 bg-white rounded-xl border border-gray-100 p-4 hover:shadow-lg hover:border-primary/30 transition-all" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                            <div class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                                 @if ($facility->image)
                                     <img
                                         src="{{ asset('storage/' . $facility->image) }}"
@@ -71,22 +71,22 @@
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                     >
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-2xl bg-gradient-to-br from-gray-100 to-gray-200">
+                                    <div class="w-full h-full flex items-center justify-center text-3xl bg-gradient-to-br from-gray-100 to-gray-200">
                                         {{ $facility->icon ?? '🎣' }}
                                     </div>
                                 @endif
                             </div>
 
                             <div class="min-w-0 flex-1">
-                                <h4 class="font-semibold text-sm text-secondary truncate group-hover:text-primary transition-colors">
+                                <h4 class="font-semibold text-base text-secondary truncate group-hover:text-primary transition-colors">
                                     {{ $facility->name }}
                                 </h4>
-                                <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                <p class="text-sm text-gray-500 line-clamp-1 mt-0.5">
                                     {{ $facility->description }}
                                 </p>
                             </div>
 
-                            <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 text-sm"></i>
+                            <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                         </a>
                     @endforeach
                 </div>
@@ -239,15 +239,6 @@
                     {{-- Dot indicator --}}
                     <div id="testiHomeDots" class="flex items-center justify-center gap-2 mt-8"></div>
                 </div>
-
-                <div data-aos="fade-up" class="mt-2 text-center">
-                    <a href="{{ route('testimonials') }}" class="group inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg">
-                        Lihat Semua Testimoni
-                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
             </div>
         </section>
     @endif
@@ -391,50 +382,6 @@
                  info kontak di atasnya, gak perlu scroll lagi ke section lain --}}
             <div data-aos="fade-up" class="mt-8 rounded-2xl overflow-hidden shadow-lg">
                 <x-map />
-            </div>
-        </div>
-    </section>
-
-    
-
-    {{-- Final CTA --}}
-    <section data-aos="zoom-in" class="relative py-20 md:py-32 bg-primary overflow-hidden">
-        {{-- Background Decoration (Pattern titik-titik tipis biar elegan) --}}
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
-            <svg class="absolute left-0 top-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="cta-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
-                        <circle cx="2" cy="2" r="1.5" fill="currentColor"></circle>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#cta-pattern)"></rect>
-            </svg>
-        </div>
-
-        <div class="container-max relative z-10">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                    Masih Punya Pertanyaan?
-                </h2>
-                <p class="text-lg md:text-xl text-green-50 mb-10 leading-relaxed font-light">
-                    Jangan ragu untuk menghubungi kami. Tim kami siap menjawab pertanyaan Anda atau membantu memandu proses reservasi.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    {{-- Tombol 1: Balik ke atas untuk booking --}}
-                    <a href="#kontak" class="w-full sm:w-auto px-8 py-3.5 bg-white text-primary font-bold rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-clipboard-list"></i>
-                        Isi Form Reservasi
-                    </a>
-
-                    {{-- Tombol 2: Tanya-tanya umum via WA (Bukan booking) --}}
-                    <a href="https://wa.me/{{ $contact?->whatsapp ?? '' }}?text=Halo%20Admin%20Balong%20Hardi,%20saya%20masih%20bingung%20dan%20ingin%20bertanya%20seputar%20fasilitas/pemancingan..." 
-                       target="_blank" 
-                       class="w-full sm:w-auto px-8 py-3.5 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp text-lg"></i>
-                        Tanya via WhatsApp
-                    </a>
-                </div>
             </div>
         </div>
     </section>

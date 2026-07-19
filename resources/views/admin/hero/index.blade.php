@@ -318,7 +318,7 @@
                     <a href="{{ route('admin.hero.edit') }}" class="btn-edit">
                         <i class="fas fa-pencil-alt"></i> Edit
                     </a>
-                    <form action="{{ route('admin.hero.delete') }}" method="POST" style="flex: 1;">
+                    <form action="{{ route('admin.hero.delete') }}" method="POST" style="flex: 1; display: flex;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus hero banner ini?')">
