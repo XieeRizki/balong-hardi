@@ -158,7 +158,7 @@
 </style>
 
 <div class="form-header">
-    <h1>➕ Tambah Fasilitas</h1>
+    <h1>Tambah Fasilitas</h1>
     <p>Tambahkan fasilitas baru ke Balong Hardi</p>
 </div>
 

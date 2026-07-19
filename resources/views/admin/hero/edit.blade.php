@@ -314,7 +314,7 @@
 </style>
 
 <div class="form-header">
-    <h1>⚙️ Edit Hero Banner</h1>
+    <h1>Edit Hero Banner</h1>
     <p>Kelola banner utama yang ditampilkan di halaman depan website Anda</p>
 </div>
 

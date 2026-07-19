@@ -194,7 +194,7 @@
 </style>
 
 <div class="form-header">
-    <h1>📝 Tulis Artikel Baru</h1>
+    <h1>Tulis Artikel Baru</h1>
     <p>Buat artikel blog baru untuk ditampilkan di website</p>
 </div>
 

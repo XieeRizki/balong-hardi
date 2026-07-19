@@ -3,7 +3,6 @@
 @section('content')
 
 <style>
-    /* Mengambil style persis dari form blog kamu[cite: 10, 11] */
     .form-header h1 {
         font-size: 1.5rem;
         font-weight: 700;
@@ -167,7 +166,7 @@
 </style>
 
 <div class="form-header">
-    <h1>📞 Pengaturan Kontak</h1>
+    <h1>Pengaturan Kontak</h1>
     <p>Kelola nomor telepon, alamat, dan sosial media untuk website utama</p>
 </div>
 

@@ -170,7 +170,7 @@
 </style>
 
 <div class="form-header">
-    <h1>✏️ Edit Fasilitas</h1>
+    <h1>Edit Fasilitas</h1>
     <p>{{ $facility->name }}</p>
 </div>
 

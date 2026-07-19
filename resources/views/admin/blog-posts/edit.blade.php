@@ -214,7 +214,7 @@
 
 <div class="form-header">
     <h1>
-        ✏️ Edit Artikel
+        Edit Artikel
         @if($blogPost->is_published)
             <span class="status-badge status-published">Terbit</span>
         @else
