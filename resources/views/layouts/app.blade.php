@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Balong Hardi Sumedang - Tempat Pemancingan Terbaik dengan Fasilitas Lengkap dan Harga Terjangkau.">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Balong Hardi Sumedang - Tempat Pemancingan')</title>
 
     <!-- Fonts -->
@@ -206,5 +207,6 @@
     </script>
 
     @yield('js')
+    @stack('js')
 </body>
 </html>

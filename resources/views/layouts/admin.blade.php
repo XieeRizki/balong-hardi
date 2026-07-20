@@ -375,6 +375,10 @@
                     <i class="fas fa-star"></i> Testimoni
                 </a>
 
+                <a href="{{ route('admin.reservations.index') }}"class="{{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
+                    <i class="fas fa-calendar-check"></i> Reservasi
+                </a>
+
                 <!-- <a href="{{ route('admin.gallery.index') }}" class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                     <i class="fas fa-images"></i> Galeri
                 </a> -->

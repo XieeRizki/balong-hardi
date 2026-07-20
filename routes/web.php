@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\BlogController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Frontend\AboutController as FrontendAboutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PricingController as FrontendPricingController;
 use App\Http\Controllers\Frontend\TestimonialController as FrontendTestimonialController;
+use App\Http\Controllers\Frontend\ReservationController;
 use App\Models\BlogPost;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery');
+
+Route::post('/reservasi', [ReservationController::class, 'store'])
+    ->name('reservation.store');
 
 // Blog: halaman daftar SEMUA artikel
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
@@ -82,6 +87,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     })->name('dashboard.stats');
 
 
+    Route::get('/reservations', [AdminReservationController::class, 'index'])
+    ->name('reservations.index');
+    Route::put('/reservations/{reservation}/status', [AdminReservationController::class, 'updateStatus'])
+    ->name('reservations.update-status');
+    Route::delete('/reservations/{reservation}', [AdminReservationController::class, 'destroy'])
+    ->name('reservations.destroy');
 
     // Singleton: cuma edit/update, gak ada index/create/destroy
     Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');

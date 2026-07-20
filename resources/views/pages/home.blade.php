@@ -243,7 +243,7 @@
         </section>
     @endif
 
-    {{-- Kontak (form reservasi + info + map) --}}
+   {{-- Kontak (form reservasi + info + map) --}}
     <section id="kontak" class="py-20 md:py-32 bg-white">
         <div class="container-max">
             <div data-aos="fade-up">
@@ -253,8 +253,8 @@
                 subtitle="Isi form di bawah untuk melakukan reservasi memancing di Balong Hardi Sumedang"
             />
             </div>
-
-            {{-- Form Reservasi - Simplified --}}
+ 
+            {{-- Form Reservasi --}}
             <div data-aos="fade-up" class="bg-light rounded-2xl p-5 md:p-8 border border-gray-200 mb-12">
                 <form id="waContactForm" class="space-y-3">
                     {{-- Row 1: Nama & Tanggal --}}
@@ -264,14 +264,14 @@
                             <input type="text" id="waName" required placeholder="Nama Anda"
                                    class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                         </div>
-
+ 
                         <div>
                             <label class="block text-xs font-bold text-secondary mb-1">Tanggal Reservasi <span class="text-red-500">*</span></label>
                             <input type="date" id="waDate" required min="{{ now()->format('Y-m-d') }}"
                                    class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                         </div>
                     </div>
-
+ 
                     {{-- Row 2: Jumlah Orang & Paket --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -279,7 +279,7 @@
                             <input type="number" id="waGuests" min="1" value="1" required
                                    class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium">
                         </div>
-
+ 
                         <div>
                             <label class="block text-xs font-bold text-secondary mb-1">Jenis Paket <span class="text-red-500">*</span></label>
                             <select id="waPackage" required
@@ -292,14 +292,14 @@
                             </select>
                         </div>
                     </div>
-
+ 
                     {{-- Row 3: Catatan Tambahan --}}
                     <div>
                         <label class="block text-xs font-bold text-secondary mb-1">Catatan Tambahan</label>
                         <textarea id="waMessage" rows="2" placeholder="Cth: Sewa alat pancing lengkap, butuh pemandu, dll"
                                   class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 font-medium resize-none"></textarea>
                     </div>
-
+ 
                     {{-- Submit Button --}}
                     <div class="flex items-center justify-between gap-4 pt-1">
                         <p class="text-xs text-gray-500">* Tim kami akan merespons dalam 1x24 jam kerja</p>
@@ -311,9 +311,9 @@
                     </div>
                 </form>
             </div>
-
+ 
             {{-- Info Cards Row --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 {{-- Info Card 1: Telepon --}}
                 @if ($contact?->phone)
                     <div data-aos="fade-up" data-aos-delay="0" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
@@ -328,7 +328,7 @@
                         </div>
                     </div>
                 @endif
-
+ 
                 {{-- Info Card 2: WhatsApp --}}
                 @if ($contact?->whatsapp)
                     <div data-aos="fade-up" data-aos-delay="100" class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
@@ -346,7 +346,24 @@
                         </div>
                     </div>
                 @endif
-
+ 
+                {{-- Info Card: Email --}}
+                @if ($contact?->email)
+                    <div data-aos="fade-up" data-aos-delay="150" class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-purple-900 mb-2">Email</p>
+                                <a href="mailto:{{ $contact->email }}" class="text-gray-700 font-bold hover:text-purple-700 transition-colors duration-300 break-all">
+                                    {{ $contact->email }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+ 
                 {{-- Info Card 3: Lokasi --}}
                 @if ($location?->address)
                     <div data-aos="fade-up" data-aos-delay="200" class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
@@ -361,10 +378,10 @@
                         </div>
                     </div>
                 @endif
-
+ 
                 {{-- Info Card 4: Jam Operasional --}}
                 @if ($contact?->operational_hours)
-                    <div data-aos="fade-up" data-aos-delay="300" class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
+                    <div data-aos="fade-up" data-aos-delay="250" class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <i class="fas fa-clock text-white text-lg"></i>
@@ -377,66 +394,99 @@
                     </div>
                 @endif
             </div>
-
-             {{-- Peta lokasi -- disatuin di sini biar langsung nempel sama
-                 info kontak di atasnya, gak perlu scroll lagi ke section lain --}}
+ 
+            {{-- Peta lokasi --}}
             <div data-aos="fade-up" class="mt-8 rounded-2xl overflow-hidden shadow-lg">
-                <x-map />
+                <x-map :location="$location" />
             </div>
         </div>
     </section>
 
 @endsection
 
-@section('js')
+
+    @push('js')
     <script>
-        document.getElementById('waContactForm')?.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const waNumber = '{{ $contact->whatsapp ?? '' }}';
-            const name = document.getElementById('waName').value.trim();
-            const dateInput = document.getElementById('waDate').value;
-            const guests = document.getElementById('waGuests').value;
-            const pkg = document.getElementById('waPackage').value;
-            const message = document.getElementById('waMessage').value.trim();
-
-            // Validasi
-            if (!name) {
-                alert('Nama lengkap harus diisi!');
-                document.getElementById('waName').focus();
-                return;
-            }
-            if (!dateInput) {
-                alert('Tanggal reservasi harus dipilih!');
-                document.getElementById('waDate').focus();
-                return;
-            }
-            if (!pkg) {
-                alert('Paket harus dipilih!');
-                document.getElementById('waPackage').focus();
-                return;
-            }
-
-            // Format tanggal
-            const formattedDate = new Date(dateInput + 'T00:00:00').toLocaleDateString('id-ID', {
-                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // ================= FORM RESERVASI =================
+            const formReservasi = document.getElementById('waContactForm');
+            
+            formReservasi?.addEventListener('submit', function (e) {
+                e.preventDefault(); // Ini yang menahan agar web tidak refresh!
+     
+                const name = document.getElementById('waName').value.trim();
+                const dateInput = document.getElementById('waDate').value;
+                const guests = document.getElementById('waGuests').value;
+                const pkg = document.getElementById('waPackage').value;
+                const message = document.getElementById('waMessage').value.trim();
+     
+                if (!name || !dateInput || !pkg) return;
+     
+                const form = this;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnHtml = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+     
+                const csrfToken = document.querySelector('meta[name="csrf-token"]');
+                if (!csrfToken) {
+                    alert('System Error: CSRF token hilang dari layout.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                    return;
+                }
+     
+                fetch('{{ route('reservation.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken.content,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        reservation_date: dateInput,
+                        guests: guests,
+                        package_name: pkg,
+                        message: message,
+                    }),
+                })
+                .then(async response => {
+                    if (response.status === 422) {
+                        const data = await response.json();
+                        const errorMessages = Object.values(data.errors).flat().join('\n');
+                        throw new Error(errorMessages);
+                    }
+                    if (!response.ok) throw new Error('Gagal menyimpan reservasi. Server error.');
+                    return response.json();
+                })
+                .then(data => {
+                    form.innerHTML = `
+                        <div class="text-center py-8">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-secondary mb-2">Reservasi Berhasil Dikirim!</h4>
+                            <p class="text-gray-600 text-sm">Terima kasih, <b>${name}</b>. Tim kami akan menghubungi Anda dalam 1x24 jam kerja untuk konfirmasi.</p>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    alert(error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                });
             });
-
-            // Buat pesan WhatsApp
-            let text = `*PERMINTAAN RESERVASI BALONG HARDI*\n`;
-            text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-            text += `*Nama:* ${name}\n`;
-            text += `*Tanggal:* ${formattedDate}\n`;
-            text += `*Jumlah Orang:* ${guests} orang\n`;
-            text += `*Paket:* ${pkg}\n`;
-            if (message) text += `*Catatan:* ${message}\n`;
-            text += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-            text += `Mohon konfirmasi ketersediaan. Terima kasih!`;
-
-            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
-        });
-
-        // ================= CAROUSEL TESTIMONI (HOME) =================
+               
+        }); // Penutup DOMContentLoaded
+          
+     
+    
+         // ================= CAROUSEL TESTIMONI (HOME) =================
         document.addEventListener('DOMContentLoaded', function () {
             const track   = document.getElementById('testiHomeTrack');
             const prevBtn = document.getElementById('testiHomePrevBtn');
@@ -552,8 +602,11 @@
 
             updateDots();
         });
+
     </script>
-@endsection
+    @endpush
+
+       
 
 @section('css')
     <style>
